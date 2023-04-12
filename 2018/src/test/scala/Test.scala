@@ -13,16 +13,19 @@ class Test extends AnyFunSuite:
 	}
 
 	test("Day03") {
-		assertResult(true)(actual = Day03.answerPart1)
-		assertResult(true)(actual = Day03.answerPart2)
+		assertResult(114946)(actual = Day03.answerPart1)
+		assertResult(877)(actual = Day03.answerPart2)
 	}
 
 //import scala.io.Source
 //
 //object Day01 extends App:
+//	private val day: String =
+//		this.getClass.getName.dropRight(1).toLowerCase
+//
 //	private val input: Vector[Int] =
 //		Source
-//			.fromResource("day01-test.txt")
+//			.fromResource(s"$day-test.txt")
 //			.getLines
 //			.map(_.toInt)
 //			.toVector
@@ -32,11 +35,11 @@ class Test extends AnyFunSuite:
 //
 //	val answerPart1 = ???// test: , input:
 //
-//	println(s"The answer to part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
+//	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 //
 //	private val startTimePart2: Long =
 //		System.currentTimeMillis
 //
 //	val answerPart2 = ??? // test: , input:
 //
-//	println(s"The answer to part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
+//	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
