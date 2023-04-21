@@ -22,18 +22,21 @@ class Test extends AnyFunSuite:
 		assertResult(41668)(actual = Day04.answerPart2)
 	}
 
+	test("Day05") {
+		assertResult(9078)(actual = Day05.answerPart1)
+		assertResult(5698)(actual = Day05.answerPart2)
+	}
+
 //import scala.io.Source
 //
-//object Day01 extends App:
+//object Day00 extends App:
 //	private val day: String =
 //		this.getClass.getName.dropRight(1).toLowerCase
 //
-//	private val input: Vector[Int] =
+//	private val input =
 //		Source
 //			.fromResource(s"$day-test.txt")
 //			.getLines
-//			.map(_.toInt)
-//			.toVector
 //
 //	private val startTimePart1: Long =
 //		System.currentTimeMillis
