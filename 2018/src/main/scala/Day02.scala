@@ -10,9 +10,6 @@ object Day02 extends App:
 			.getLines
 			.toVector
 
-	private val startTimePart1: Long =
-		System.currentTimeMillis
-
 	private def multipleLetterCount(input: Vector[String], n: Int): Int =
 		input.map {
 			l => l
@@ -35,6 +32,9 @@ object Day02 extends App:
 				None
 
 		go(input.map(_.zipWithIndex.toVector))
+
+	private val startTimePart1: Long =
+		System.currentTimeMillis
 
 	val answerPart1 = multipleLetterCount(input, 2) * multipleLetterCount(input, 3) // test: 12 [1ms], input: 7105
 
