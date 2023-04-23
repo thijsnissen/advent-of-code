@@ -3,7 +3,8 @@ version := "0.1.0"
 
 ThisBuild / scalaVersion := "3.2.2"
 ThisBuild / libraryDependencies ++= Seq(
-	"org.scalatest"  %% "scalatest"  % "3.2.15" % "test"
+	"org.scalatest"  %% "scalatest"  % "3.2.15" % "test",
+	"com.lihaoyi" %% "pprint" % "0.8.1"
 )
 
 lazy val aoc2018 = project.in(file("2018"))
