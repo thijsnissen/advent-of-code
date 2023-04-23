@@ -27,6 +27,11 @@ class Test extends AnyFunSuite:
 		assertResult(5698)(actual = Day05.answerPart2)
 	}
 
+	test("Day06") {
+		assertResult(3989)(actual = Day06.answerPart1)
+		assertResult(49715)(actual = Day06.answerPart2)
+	}
+
 //import scala.io.Source
 //
 //object Day00 extends App:
