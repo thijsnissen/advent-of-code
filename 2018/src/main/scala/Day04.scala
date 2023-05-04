@@ -10,7 +10,7 @@ object Day04 extends App:
 			.getLines
 			.toVector
 			.sorted
-			.foldLeft((0L, Vector.empty[Guard])) {
+			.foldLeft((0L, Vector.empty[Guard])):
 				case ((_, state), s"[$_] Guard #${guardId} begins shift") =>
 					(guardId.toLong, state)
 				case ((id, state), s"[${_}:${minutes}] falls asleep") =>
@@ -18,7 +18,7 @@ object Day04 extends App:
 				case ((id, state), s"[${_}:${minutes}] wakes up") =>
 					(id, state.updated(0, state(0).copy(till = minutes.toInt)))
 				case (state, _) => state
-			}._2
+			._2
 
 	private final case class Guard(guardId: Long, from: Int = 0, till: Int = 0):
 		val sleepTime: Int = till - from
@@ -50,7 +50,9 @@ object Day04 extends App:
 
 	private val mostAsleepOnSameMinute: (Long, Int, Int) =
 		input
-			.groupMap { case Guard(id, _, _) => id }(_.sleepWindow)
+			.groupMap:
+				case Guard(id, _, _) => id
+			.apply(_.sleepWindow)
 			.map((x, y) => (x, y.flatten.groupBy(identity).maxBy(_._2.size)))
 			.map((x, y) => (x, y._1, y._2.size))
 			.maxBy(_._3)

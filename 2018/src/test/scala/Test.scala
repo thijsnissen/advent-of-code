@@ -1,36 +1,37 @@
 import org.scalatest.funsuite.AnyFunSuite
 
 class Test extends AnyFunSuite:
-
-	test("Day01") {
+	test("Day01"):
 		assertResult(585)(actual = Day01.answerPart1)
 		assertResult(83173)(actual = Day01.answerPart2)
-	}
 
-	test("Day02") {
+	test("Day02"):
 		assertResult(7105)(actual = Day02.answerPart1)
 		assertResult("omlvgdokxfncvqyersasjziup")(actual = Day02.answerPart2)
-	}
 
-	test("Day03") {
+	test("Day03"):
 		assertResult(114946)(actual = Day03.answerPart1)
 		assertResult(877)(actual = Day03.answerPart2)
-	}
 
-	test("Day04") {
+	test("Day04"):
 		assertResult(76357)(actual = Day04.answerPart1)
 		assertResult(41668)(actual = Day04.answerPart2)
-	}
 
-	test("Day05") {
+	test("Day05"):
 		assertResult(9078)(actual = Day05.answerPart1)
 		assertResult(5698)(actual = Day05.answerPart2)
-	}
 
-	test("Day06") {
+	test("Day06"):
 		assertResult(3989)(actual = Day06.answerPart1)
 		assertResult(49715)(actual = Day06.answerPart2)
-	}
+
+	test("Day07"):
+		assertResult("IBJTUWGFKDNVEYAHOMPCQRLSZX")(actual = Day07.answerPart1)
+		assertResult(0)(actual = Day07.answerPart2)
+
+	test("Day08"):
+		assertResult(0)(actual = Day08.answerPart1)
+		assertResult(0)(actual = Day08.answerPart2)
 
 //import scala.io.Source
 //

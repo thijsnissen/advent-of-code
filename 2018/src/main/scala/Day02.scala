@@ -11,12 +11,13 @@ object Day02 extends App:
 			.toVector
 
 	private def multipleLetterCount(input: Vector[String], n: Int): Int =
-		input.map {
-			l => l
-				.groupBy(identity)
-				.map(x => x._2.length)
-				.toVector
-		}.count(l => l.contains(n))
+		input
+			.map:
+				l => l
+					.groupBy(identity)
+					.map(x => x._2.length)
+					.toVector
+			.count(l => l.contains(n))
 
 	private def findCommonLetters(input: Vector[String]): Option[String] =
 		@annotation.tailrec
