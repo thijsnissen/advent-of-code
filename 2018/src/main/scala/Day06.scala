@@ -6,7 +6,7 @@ object Day06 extends App:
 
 	private val input: Vector[Coordinate] =
 		Source
-			.fromResource(s"$day-input.txt")
+			.fromResource(s"$day-test.txt")
 			.getLines
 			.zipWithIndex
 			.collect:
