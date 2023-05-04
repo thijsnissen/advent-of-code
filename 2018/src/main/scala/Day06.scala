@@ -9,9 +9,9 @@ object Day06 extends App:
 			.fromResource(s"$day-input.txt")
 			.getLines
 			.zipWithIndex
-			.collect {
+			.collect:
 				case (s"$x, $y", i) => Coordinate(i, x.toInt, y.toInt)
-			}.toVector
+			.toVector
 
 	private case class Coordinate(id: Int, x: Int, y: Int):
 		def distanceTo(tx: Int, ty: Int): Int =
@@ -24,16 +24,14 @@ object Day06 extends App:
 	private val maxY: Int = input.map(_.y).max + 1
 
 	private val grid1: Vector[Vector[Int]] =
-		(0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))) {
-			(state, x) => (0 until maxY).foldLeft(state) {
+		(0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):
+			(state, x) => (0 until maxY).foldLeft(state):
 				(state, y) =>
 					val point = input.groupBy(_.distanceTo(x, y)).minBy(_._1)._2
 					if point.size == 1 then
 						state.updated(y, state(y).updated(x, point.head.id))
 					else
 						state
-			}
-		}
 
 	private val infiniteAreas: Set[Int] =
 		(grid1.head ++ grid1.last ++ grid1.flatMap(x => Vector(x.head, x.last))).toSet
@@ -57,16 +55,14 @@ object Day06 extends App:
 	private val maxDistance = 10000 // 32
 
 	private val grid2: Vector[Vector[Int]] =
-		(0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))) {
+		(0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):
 			(state, x) =>
-				(0 until maxY).foldLeft(state) {
+				(0 until maxY).foldLeft(state):
 					(state, y) =>
 						if input.map(_.distanceTo(x, y)).sum < maxDistance then
 							state.updated(y, state(y).updated(x, 0))
 						else
 							state
-				}
-		}
 
 	private val sizeOfSafeRegion: Int =
 		grid2
