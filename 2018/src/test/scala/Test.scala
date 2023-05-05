@@ -25,9 +25,9 @@ class Test extends AnyFunSuite:
 		assertResult(3989)(actual = Day06.answerPart1)
 		assertResult(49715)(actual = Day06.answerPart2)
 
-//	test("Day07"):
-//		assertResult("IBJTUWGFKDNVEYAHOMPCQRLSZX")(actual = Day07.answerPart1)
-//		assertResult(0)(actual = Day07.answerPart2)
+	ignore("Day07"):
+		assertResult("IBJTUWGFKDNVEYAHOMPCQRLSZX")(actual = Day07.answerPart1)
+		assertResult(0)(actual = Day07.answerPart2)
 
 	test("Day08"):
 		assertResult(37439)(actual = Day08.answerPart1)
