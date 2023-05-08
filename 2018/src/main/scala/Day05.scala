@@ -22,8 +22,9 @@ object Day05 extends App:
 	private val startTimePart1: Long =
 		System.currentTimeMillis
 
-	val answerPart1 = removeReactingUnits(input).length // test: 10 [0ms], input: 9078 [98ms]
+	val answerPart1 = removeReactingUnits(input).length
 
+	// test: 10 [0ms], input: 9078 [98ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
@@ -34,8 +35,9 @@ object Day05 extends App:
 			.map(x => input.filterNot(_.toLower == x))
 			.map(removeReactingUnits(_).length).min
 
-	val answerPart2 = shortestPolymer // test: 4 [1ms] , input: 5698 [1791ms]
+	val answerPart2 = shortestPolymer
 
+	// test: 4 [1ms] , input: 5698 [1791ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
 
 // The implementation below takes about 8 seconds to complete part 1 and about 4 minutes to complete part 2

@@ -41,8 +41,9 @@ object Day04 extends App:
 			.maxBy(_._2)
 			._1
 
-	val answerPart1 = guardIdIsMostAsleep * minuteIsMostAsleep // test: 240 [1ms] , input: 76357 [1ms]
+	val answerPart1 = guardIdIsMostAsleep * minuteIsMostAsleep
 
+	// test: 240 [1ms] , input: 76357 [1ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
@@ -57,6 +58,7 @@ object Day04 extends App:
 			.map((x, y) => (x, y._1, y._2.size))
 			.maxBy(_._3)
 
-	val answerPart2 = mostAsleepOnSameMinute._1 * mostAsleepOnSameMinute._2 // test: 4455 [0ms], input: 41668 [2ms]
+	val answerPart2 = mostAsleepOnSameMinute._1 * mostAsleepOnSameMinute._2
 
+	// test: 4455 [0ms], input: 41668 [2ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")

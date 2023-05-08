@@ -23,13 +23,15 @@ object Day01 extends App:
 	private val startTimePart1: Long =
 		System.currentTimeMillis
 
-	val answerPart1 = input.sum // test: 4 [0ms], input: 585 [0ms]
+	val answerPart1 = input.sum
 
+	// test: 4 [0ms], input: 585 [0ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
 		System.currentTimeMillis
 
-	val answerPart2 = firstSumSeenTwice(input) // test: 10 [0ms], input: 83173 [46ms]
+	val answerPart2 = firstSumSeenTwice(input)
 
+	// test: 10 [0ms], input: 83173 [46ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
