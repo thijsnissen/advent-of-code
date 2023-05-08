@@ -25,15 +25,20 @@ object Day07 extends App:
 				queue.isEmpty && working.isEmpty
 
 			def process(edgesNoDeps: SortedMap[A, Set[A]], currentTime: Int): Workload =
-				val (newWork, newQueue) = (queue ++ edgesNoDeps.keys).splitAt(workers - working.size)
-				val newWorking          = working ++ newWork.map(s => s -> (currentTime + timer(s) - 1))
-				val (done, notDone)     = newWorking.partition(_._2 == currentTime)
+				val (newWork, newQueue) =
+					(queue ++ edgesNoDeps.keys)
+						.splitAt(workers - working.size)
+
+				val (done, notDone) =
+					(working ++ newWork.map(s => s -> (currentTime + timer(s) - 1)))
+						.partition(_._2 == currentTime)
 
 				Workload(newQueue, notDone, completed ++ done.keys)
 
 		val edges: SortedMap[A, Set[A]] = steps.foldLeft(SortedMap.empty[A, Set[A]]):
 			(acc, edge) =>
-				acc + (edge._1 -> acc.getOrElse(edge._1, Set())) + (edge._2 -> (acc.getOrElse(edge._2, Set()) + edge._1))
+				acc + (edge._1 -> acc.getOrElse(edge._1, Set())) +
+					(edge._2 -> (acc.getOrElse(edge._2, Set()) + edge._1))
 
 		@annotation.tailrec
 		def go(
@@ -46,8 +51,11 @@ object Day07 extends App:
 			if noDeps.isEmpty && workload.isDone then
 				(workload.completed, currentTime)
 			else
-				val newWorkload = workload.process(noDeps, currentTime)
-				val newEdges    = hasDeps.map((key, deps) => key -> (deps -- newWorkload.completed))
+				val newWorkload =
+					workload.process(noDeps, currentTime)
+
+				val newEdges =
+					hasDeps.map((key, deps) => key -> (deps -- newWorkload.completed))
 
 				go(newEdges, newWorkload, currentTime + 1)
 
