@@ -25,12 +25,12 @@ object Day07 extends App:
 				queue.isEmpty && working.isEmpty
 
 			def process(edgesNoDeps: SortedMap[A, Set[A]], currentTime: Int): Workload =
-				val (newWork, newQueue) =
+				val (newWorking, newQueue) =
 					(queue ++ edgesNoDeps.keys)
 						.splitAt(workers - working.size)
 
 				val (done, notDone) =
-					(working ++ newWork.map(s => s -> (currentTime + timer(s) - 1)))
+					(working ++ newWorking.map(s => s -> (currentTime + timer(s) - 1)))
 						.partition(_._2 == currentTime)
 
 				Workload(newQueue, notDone, completed ++ done.keys)
