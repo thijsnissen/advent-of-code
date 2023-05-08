@@ -48,8 +48,9 @@ object Day03 extends App:
 			.flatMap(_.getSquares)
 			.groupBy:
 				case Square(x, y, _) => (x, y)
-			.count((_, s) => s.size > 1) // test: 4 [0ms], input: 114946 [350ms]
+			.count((_, s) => s.size > 1)
 
+	// test: 4 [0ms], input: 114946 [350ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
@@ -58,6 +59,7 @@ object Day03 extends App:
 	val answerPart2 =
 		input
 			.map(_.id)
-			.diff(findClaimIDsWithOverlap(input).toVector).head // test: 3 [1ms], input: 877 [475ms]
+			.diff(findClaimIDsWithOverlap(input).toVector).head
 
+	// test: 3 [1ms], input: 877 [475ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")

@@ -44,14 +44,16 @@ object Day08 extends App:
 		System.currentTimeMillis
 
 	val answerPart1 =
-		parseTree(input).licenseNumber // test: 138 [0ms], input: 37439 [2ms]
+		parseTree(input).licenseNumber
 
+	// test: 138 [0ms], input: 37439 [2ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
 		System.currentTimeMillis
 
 	val answerPart2 =
-		parseTree(input).value // test: 66 [1ms], input: 20815 [1ms]
+		parseTree(input).value
 
+	// test: 66 [1ms], input: 20815 [1ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")

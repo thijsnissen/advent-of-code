@@ -37,13 +37,15 @@ object Day02 extends App:
 	private val startTimePart1: Long =
 		System.currentTimeMillis
 
-	val answerPart1 = multipleLetterCount(input, 2) * multipleLetterCount(input, 3) // test: 12 [1ms], input: 7105
+	val answerPart1 = multipleLetterCount(input, 2) * multipleLetterCount(input, 3)
 
+	// test: 12 [1ms], input: 7105
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
 		System.currentTimeMillis
 
-	val answerPart2 = findCommonLetters(input).getOrElse("Not Found") // test: fgij [0ms], input: omlvgdokxfncvqyersasjziup [29ms]
+	// test: fgij [0ms], input: omlvgdokxfncvqyersasjziup [29ms]
+	val answerPart2 = findCommonLetters(input).getOrElse("Not Found")
 
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")

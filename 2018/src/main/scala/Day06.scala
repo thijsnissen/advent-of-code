@@ -45,8 +45,9 @@ object Day06 extends App:
 			.maxBy(_._2)
 			._2
 
-	val answerPart1 = LargestNonInfiniteArea // test: 17 [1ms], input: 3989 [999ms]
+	val answerPart1 = LargestNonInfiniteArea
 
+	// test: 17 [1ms], input: 3989 [999ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
@@ -73,6 +74,7 @@ object Day06 extends App:
 			.getOrElse((0, 0))
 			._2
 
-	val answerPart2 = sizeOfSafeRegion // test: 16 [0ms], input: 49715 [73ms]
+	val answerPart2 = sizeOfSafeRegion
 
+	// test: 16 [0ms], input: 49715 [73ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
