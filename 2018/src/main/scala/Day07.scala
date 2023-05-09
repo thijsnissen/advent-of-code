@@ -22,7 +22,7 @@ object Day07 extends App:
 			queue: SortedSet[A] = SortedSet.empty[A],
 			working: SortedMap[A, Int] = SortedMap.empty[A, Int],
 			completed: List[A] = List.empty[A]
-			):
+		):
 			def isDone: Boolean =
 				queue.isEmpty && working.isEmpty
 
@@ -44,10 +44,10 @@ object Day07 extends App:
 
 		@annotation.tailrec
 		def go(
-						edges: SortedMap[A, Set[A]],
-						workload: Workload,
-						currentTime: Int
-					): (List[A], Int) =
+			edges: SortedMap[A, Set[A]],
+			workload: Workload,
+			currentTime: Int
+		): (List[A], Int) =
 			val (noDeps, hasDeps) = edges.partition((_, deps) => deps.isEmpty)
 
 			if noDeps.isEmpty && workload.isDone then
