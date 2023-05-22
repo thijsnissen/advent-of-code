@@ -33,6 +33,10 @@ class Test extends AnyFunSuite:
 		assertResult(37439)(actual = Day08.answerPart1)
 		assertResult(20815)(actual = Day08.answerPart2)
 
+	test("Day09"):
+		assertResult(388024)(actual = Day09.answerPart1)
+		assertResult(3180929875L)(actual = Day09.answerPart2)
+
 //import scala.io.Source
 //
 //object Day00 extends App:
@@ -47,13 +51,15 @@ class Test extends AnyFunSuite:
 //	private val startTimePart1: Long =
 //		System.currentTimeMillis
 //
-//	val answerPart1 = ???// test: , input:
+//	val answerPart1 = ???
 //
+//	test: , input:
 //	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 //
 //	private val startTimePart2: Long =
 //		System.currentTimeMillis
 //
-//	val answerPart2 = ??? // test: , input:
+//	val answerPart2 = ???
 //
+//	test: , input:
 //	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
