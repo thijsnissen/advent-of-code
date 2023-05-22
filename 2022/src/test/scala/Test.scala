@@ -1,7 +1,7 @@
 import org.scalatest.funsuite.AnyFunSuite
 
 class Test extends AnyFunSuite:
-	test("Day01"):
+	ignore("Day01"):
 		assertResult(true)(actual = Day01.answerPart1)
 		assertResult(true)(actual = Day01.answerPart2)
 

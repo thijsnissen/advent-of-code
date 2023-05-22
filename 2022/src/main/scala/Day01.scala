@@ -4,20 +4,10 @@ object Day01 extends App:
 	private val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Inventory =
+	private val input =
 		Source
 			.fromResource(s"$day-test.txt")
 			.getLines
-			.foldLeft()(Inventory.parse)
-
-	type Calories = List[Int]
-
-	case class Inventory(lists: List[Calories])
-
-	object Inventory:
-		def parse(s: String): Inventory =
-			if s.isEmpty then List.empty[Calories]
-			else
 
 	private val startTimePart1: Long =
 		System.currentTimeMillis
