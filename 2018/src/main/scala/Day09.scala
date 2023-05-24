@@ -12,13 +12,13 @@ object Day09 extends App:
 			.toList
 
 	case class Game(players: Map[Int, Long], player: Int, game: Vector[Long], lastMarble: Long):
-		def play: Game =
-			(1.toLong to lastMarble).foldLeft(this):
+		def play(multiplier: Int = 1): Game =
+			(1L to lastMarble * multiplier).foldLeft(this):
 				case (g, m) if m % 23 == 0 =>
 					val (score, board) = g.removeMarble(-7)
 
 					g.copy(
-						players = g.players.updated(g.player, g.players(g.player) + m + score),
+						players = g.players.updatedWith(g.player)(_.map(_ + m + score)),
 						player = g.nextPlayer,
 						game = board
 					)
@@ -42,7 +42,7 @@ object Day09 extends App:
 		def fromString(s: String): Game =
 			s match
 				case s"$players players; last marble is worth $lastMarble points" =>
-					Game((1 to players.toInt).map((_, 0.toLong)).toMap, player = 1, Vector[Long](0), lastMarble.toLong)
+					Game((1 to players.toInt).map((_, 0L)).toMap, player = 1, Vector[Long](0), lastMarble.toLong)
 
 	private val startTimePart1: Long =
 		System.currentTimeMillis
@@ -50,7 +50,7 @@ object Day09 extends App:
 	val answerPart1 =
 		input
 			.head
-			.play
+			.play()
 			.players
 			.maxBy((_, score) => score)
 			._2
@@ -59,14 +59,12 @@ object Day09 extends App:
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	private val startTimePart2: Long =
-		System.currentTimeMillis
-
-	private val inputMarble = input.head
+	System.currentTimeMillis
 
 	val answerPart2 =
-		inputMarble
-			.copy(lastMarble = inputMarble.lastMarble * 100)
-			.play
+		input
+			.head
+			.play(100)
 			.players
 			.maxBy((_, score) => score)
 			._2
