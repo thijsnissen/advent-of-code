@@ -51,13 +51,15 @@ class Test extends AnyFunSuite:
 //	private val startTimePart1: Long =
 //		System.currentTimeMillis
 //
-//	val answerPart1 = ???// test: , input:
+//	val answerPart1 = ???
 //
+//	// test: , input:
 //	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 //
 //	private val startTimePart2: Long =
 //		System.currentTimeMillis
 //
-//	val answerPart2 = ??? // test: , input:
+//	val answerPart2 = ???
 //
+//	// test: , input:
 //	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")

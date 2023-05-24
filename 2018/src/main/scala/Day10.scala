@@ -11,37 +11,39 @@ object Day10 extends App:
 			.map(Point.fromString)
 			.toVector
 
-	private type Grid = Vector[Vector[String]]
+	private object Grid:
+		type Grid[A] = Vector[Vector[A]]
 
-	case class Point(x: Int, y: Int, vx: Int, vy: Int)
-
-	private object Point:
-		def fromString(s: String): Point =
-			s match
-				case s"position=<${x}, ${y}> velocity=<${vx}, ${vy}>" =>
-					Point(x.trim.toInt, y.trim.toInt, vx.trim.toInt, vy.trim.toInt)
-
-		def updatePosition(p: Point): Point =
-			p.copy(x = p.x + p.vx, y = p.y + p.vy)
-
-		def renderGrid(points: Vector[Point]): Grid =
+		def fromPoints(points: Vector[Point]): Grid[Char] =
 			val xCor = math.abs(points.minBy(_.x).x)
 			val yCor = math.abs(points.minBy(_.y).y)
 
 			val xLimit = 62
 			val yLimit = 10
 
-			points.foldLeft(Vector.fill(yLimit)(Vector.fill(xLimit)(" "))):
+			points.foldLeft(Vector.fill(yLimit)(Vector.fill(xLimit)(' '))):
 				case (g, p) if (0 until xLimit).contains(p.x - xCor) && (0 until yLimit).contains(p.y - yCor)
-						=> g.updated(p.y - yCor, g(p.y - yCor).updated(p.x - xCor, "■"))
+				=> g.updated(p.y - yCor, g(p.y - yCor).updated(p.x - xCor, '■'))
 				case (g, _) => g
 
+	case class Point(x: Int, y: Int, vx: Int, vy: Int):
+		def addVelocity(): Point =
+			copy(x = x + vx, y = y + vy)
+
+	private object Point:
+		def fromString(s: String): Point =
+			s match
+				case s"position=<$x, $y> velocity=<$vx, $vy>" =>
+					Point(x.trim.toInt, y.trim.toInt, vx.trim.toInt, vy.trim.toInt)
+
+	import Grid._
+
 	@annotation.tailrec
-	private def lookForMessagesInTheSky(input: Vector[Point], time: Int): Grid =
+	private def lookForMessagesInTheSky(input: Vector[Point], time: Int): Grid[Char] =
 		if time == 0 then
-			Point.renderGrid(input)
+			Grid.fromPoints(input)
 		else
-			lookForMessagesInTheSky(input.map(Point.updatePosition), time - 1)
+			lookForMessagesInTheSky(input.map(_.addVelocity()), time - 1)
 
 	private val startTime: Long =
 		System.currentTimeMillis
@@ -50,7 +52,7 @@ object Day10 extends App:
 
 	val answerPart2 = 10946
 
-	private val foundMessage: Grid = lookForMessagesInTheSky(input, answerPart2)
+	private val foundMessage: Grid[Char] = lookForMessagesInTheSky(input, answerPart2)
 
 	// test: HI [1ms], input: RPNNXFZR [26ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTime}ms]")

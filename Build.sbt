@@ -1,7 +1,7 @@
 name    := "advent-of-code"
 version := "0.1.0"
 
-ThisBuild / scalaVersion := "3.3.1-RC1-bin-20230428-a89fbf5-NIGHTLY"
+ThisBuild / scalaVersion := "3.3.0"
 ThisBuild / libraryDependencies ++= Seq(
 	"org.scalatest"  %% "scalatest"  % "3.2.15" % "test",
 	"com.lihaoyi" %% "pprint" % "0.8.1"
@@ -17,7 +17,8 @@ scalacOptions ++= Seq(
 	"-language:existentials",
 	"-unchecked",
 	"-Werror",
-	"-deprecation"
+	"-deprecation",
+	"-Wunused:all"
 )
 
 Compile / run / fork := true
