@@ -33,6 +33,10 @@ class Test extends AnyFunSuite:
 		assertResult(37439)(actual = Day08.answerPart1)
 		assertResult(20815)(actual = Day08.answerPart2)
 
+	test("Day09"):
+		assertResult(388024)(actual = Day09.answerPart1)
+		assertResult(3180929875L)(actual = Day09.answerPart2)
+
 	test("Day10"):
 		assertResult(
 			"""
