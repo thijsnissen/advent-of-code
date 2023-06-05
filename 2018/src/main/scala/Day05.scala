@@ -1,17 +1,17 @@
 import scala.io.Source
 
 object Day05 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: String =
+	val input: String =
 		Source
 			.fromResource(s"day05-input.txt")
 			.getLines
 			.mkString
 
 	@annotation.tailrec
-	private def removeReactingUnits(input: String, acc: String = " "): String =
+	def removeReactingUnits(input: String, acc: String = " "): String =
 		if input.isEmpty then
 			acc.reverse.trim
 		else if input.head.toLower == acc.head.toLower && input.head != acc.head then
@@ -19,7 +19,7 @@ object Day05 extends App:
 		else
 			removeReactingUnits(input.tail, input.head + acc)
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
 	val answerPart1 = removeReactingUnits(input).length
@@ -27,10 +27,10 @@ object Day05 extends App:
 	// test: 10 [0ms], input: 9078 [98ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
-	private val shortestPolymer =
+	val shortestPolymer =
 		('a' to 'z')
 			.map(x => input.filterNot(_.toLower == x))
 			.map(removeReactingUnits(_).length).min

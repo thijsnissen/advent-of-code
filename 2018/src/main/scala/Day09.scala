@@ -1,10 +1,10 @@
 import scala.io.Source
 
 object Day09 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: List[Game] =
+	val input: List[Game] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
@@ -25,17 +25,17 @@ object Day09 extends App:
 				case (g, m) =>
 					g.copy(player = g.nextPlayer, game = g.addMarble(m))
 
-		private def addMarble(value: Long): Vector[Long] =
+		def addMarble(value: Long): Vector[Long] =
 			val (l, r) = game.splitAt(2)
 
 			(value +: r) ++ l
 
-		private def removeMarble(index: Long): (Long, Vector[Long]) =
+		def removeMarble(index: Long): (Long, Vector[Long]) =
 			val (l, r) = game.splitAt((((index % game.length) + game.length) % game.length).toInt)
 
 			(r.head, r.tail ++ l)
 
-		private def nextPlayer: Int =
+		def nextPlayer: Int =
 			player % players.size + 1
 
 	private object Game:
@@ -44,7 +44,7 @@ object Day09 extends App:
 				case s"$players players; last marble is worth $lastMarble points" =>
 					Game((1 to players.toInt).map((_, 0L)).toMap, player = 1, Vector[Long](0), lastMarble.toLong)
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
 	val answerPart1 =
@@ -58,7 +58,7 @@ object Day09 extends App:
 	// test: 32 [1ms], input: 388024 [17ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 	System.currentTimeMillis
 
 	val answerPart2 =

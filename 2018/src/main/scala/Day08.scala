@@ -1,10 +1,10 @@
 import scala.io.Source
 
 object Day08 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Vector[Long] =
+	val input: Vector[Long] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
@@ -23,7 +23,7 @@ object Day08 extends App:
 			else
 				meta.map(i => children.lift(i.toInt - 1).map(_.value).getOrElse(0L)).sum
 
-	private def parseTree(input: Vector[Long]): Node =
+	def parseTree(input: Vector[Long]): Node =
 		def go(
 			input: Vector[Long],
 			childCount: Long,
@@ -40,7 +40,7 @@ object Day08 extends App:
 
 		go(input.drop(2), input.head, input.drop(1).head)._1
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
 	val answerPart1 =
@@ -49,7 +49,7 @@ object Day08 extends App:
 	// test: 138 [0ms], input: 37439 [2ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
 	val answerPart2 =

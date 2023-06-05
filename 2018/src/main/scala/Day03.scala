@@ -1,10 +1,10 @@
 import scala.io.Source
 
 object Day03 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Vector[Claim] =
+	val input: Vector[Claim] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
@@ -13,11 +13,11 @@ object Day03 extends App:
 					Claim(id.toInt, left.toInt, top.toInt, width.toInt, height.toInt)
 			.toVector
 
-	private final case class Claim(id: Int, left: Int, top: Int, width: Int, height: Int):
-		private val xStart: Int = left
-		private val xEnd: Int = left + width - 1
-		private val yStart: Int = top
-		private val yEnd: Int = top + height - 1
+	case class Claim(id: Int, left: Int, top: Int, width: Int, height: Int):
+		val xStart: Int = left
+		val xEnd: Int = left + width - 1
+		val yStart: Int = top
+		val yEnd: Int = top + height - 1
 
 		def getSquares: Set[Square] =
 			(yStart to yEnd)
@@ -27,9 +27,9 @@ object Day03 extends App:
 							x => Square(x, y, id)
 				.toSet
 
-	private final case class Square(x: Int, y: Int, id: Int)
+	case class Square(x: Int, y: Int, id: Int)
 
-	private def findClaimIDsWithOverlap(input: Vector[Claim]): Set[Int] =
+	def findClaimIDsWithOverlap(input: Vector[Claim]): Set[Int] =
 		input
 			.flatMap(_.getSquares)
 			.groupBy:
@@ -40,7 +40,7 @@ object Day03 extends App:
 				case Square(_, _, id) => id
 			.toSet
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
 	val answerPart1 =
@@ -53,7 +53,7 @@ object Day03 extends App:
 	// test: 4 [0ms], input: 114946 [350ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
 	val answerPart2 =

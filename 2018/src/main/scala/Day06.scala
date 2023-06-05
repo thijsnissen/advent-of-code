@@ -1,10 +1,10 @@
 import scala.io.Source
 
 object Day06 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Vector[Coordinate] =
+	val input: Vector[Coordinate] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
@@ -13,17 +13,17 @@ object Day06 extends App:
 				case (s"$x, $y", i) => Coordinate(i, x.toInt, y.toInt)
 			.toVector
 
-	private case class Coordinate(id: Int, x: Int, y: Int):
+	case class Coordinate(id: Int, x: Int, y: Int):
 		def distanceTo(tx: Int, ty: Int): Int =
 			math.abs(x - tx) + math.abs(y - ty)
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
-	private val maxX: Int = input.map(_.x).max + 1
-	private val maxY: Int = input.map(_.y).max + 1
+	val maxX: Int = input.map(_.x).max + 1
+	val maxY: Int = input.map(_.y).max + 1
 
-	private val grid1: Vector[Vector[Int]] =
+	val grid1: Vector[Vector[Int]] =
 		(0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):
 			(state, x) => (0 until maxY).foldLeft(state):
 				(state, y) =>
@@ -33,10 +33,10 @@ object Day06 extends App:
 					else
 						state
 
-	private val infiniteAreas: Set[Int] =
+	val infiniteAreas: Set[Int] =
 		(grid1.head ++ grid1.last ++ grid1.flatMap(x => Vector(x.head, x.last))).toSet
 
-	private val LargestNonInfiniteArea: Int =
+	val LargestNonInfiniteArea: Int =
 		grid1
 			.flatten
 			.groupBy(identity)
@@ -50,12 +50,12 @@ object Day06 extends App:
 	// test: 17 [1ms], input: 3989 [999ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
-	private val maxDistance = 10000 // 32
+	val maxDistance = 10000 // 32
 
-	private val grid2: Vector[Vector[Int]] =
+	val grid2: Vector[Vector[Int]] =
 		(0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):
 			(state, x) =>
 				(0 until maxY).foldLeft(state):
@@ -65,7 +65,7 @@ object Day06 extends App:
 						else
 							state
 
-	private val sizeOfSafeRegion: Int =
+	val sizeOfSafeRegion: Int =
 		grid2
 			.flatten
 			.groupBy(identity)

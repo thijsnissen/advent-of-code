@@ -1,17 +1,17 @@
 import scala.io.Source
 
 object Day01 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Vector[Long] =
+	val input: Vector[Long] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
 			.map(_.toLong)
 			.toVector
 
-	private def firstSumSeenTwice(input: Vector[Long]): Long =
+	def firstSumSeenTwice(input: Vector[Long]): Long =
 		@annotation.tailrec
 		def go(in: Vector[Long], seen: Set[Long] = Set(0), acc: Long = 0): Long =
 			if in.isEmpty then go(input, seen, acc)
@@ -20,7 +20,7 @@ object Day01 extends App:
 
 		go(input)
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
 	val answerPart1 = input.sum
@@ -28,7 +28,7 @@ object Day01 extends App:
 	// test: 4 [0ms], input: 585 [0ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
 	val answerPart2 = firstSumSeenTwice(input)

@@ -1,10 +1,10 @@
 import scala.io.Source
 
 object Day04 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Vector[Guard] =
+	val input: Vector[Guard] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
@@ -20,19 +20,19 @@ object Day04 extends App:
 				case (state, _) => state
 			._2
 
-	private final case class Guard(guardId: Long, from: Int = 0, till: Int = 0):
+	case class Guard(guardId: Long, from: Int = 0, till: Int = 0):
 		val sleepTime: Int = till - from
 		val sleepWindow: Vector[Int] = (from until till).toVector
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
-	private val guardIdIsMostAsleep: Long =
+	val guardIdIsMostAsleep: Long =
 		input
 			.groupMapReduce { case Guard(id, _, _) => id }(g => g.sleepTime)(_ + _)
 			.maxBy(_._2)._1
 
-	private val minuteIsMostAsleep: Int =
+	val minuteIsMostAsleep: Int =
 		input
 			.filter(g => g.guardId == guardIdIsMostAsleep)
 			.flatMap(g => g.sleepWindow)
@@ -46,10 +46,10 @@ object Day04 extends App:
 	// test: 240 [1ms] , input: 76357 [1ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
-	private val mostAsleepOnSameMinute: (Long, Int, Int) =
+	val mostAsleepOnSameMinute: (Long, Int, Int) =
 		input
 			.groupMap:
 				case Guard(id, _, _) => id

@@ -1,16 +1,16 @@
 import scala.io.Source
 
 object Day02 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: Vector[String] =
+	val input: Vector[String] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
 			.toVector
 
-	private def multipleLetterCount(input: Vector[String], n: Int): Int =
+	def multipleLetterCount(input: Vector[String], n: Int): Int =
 		input
 			.map:
 				l => l
@@ -19,7 +19,7 @@ object Day02 extends App:
 					.toVector
 			.count(l => l.contains(n))
 
-	private def findCommonLetters(input: Vector[String]): Option[String] =
+	def findCommonLetters(input: Vector[String]): Option[String] =
 		@annotation.tailrec
 		def go(ids: Vector[Vector[(Char, Int)]]): Option[String] =
 			if ids.nonEmpty then
@@ -34,15 +34,15 @@ object Day02 extends App:
 
 		go(input.map(_.zipWithIndex.toVector))
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
 	val answerPart1 = multipleLetterCount(input, 2) * multipleLetterCount(input, 3)
 
-	// test: 12 [1ms], input: 7105
+	// test: 12 [1ms], input: 7105 [35ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
 	// test: fgij [0ms], input: omlvgdokxfncvqyersasjziup [29ms]
