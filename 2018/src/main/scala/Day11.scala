@@ -1,5 +1,3 @@
-import Day11.Grid.summedAreaTable
-
 import scala.io.Source
 
 object Day11 extends App:
