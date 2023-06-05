@@ -53,18 +53,22 @@ class Test extends AnyFunSuite:
 				.stripMargin)(actual = Day10.answerPart1)
 		assertResult(10946)(actual = Day10.answerPart2)
 
+	test("Day11"):
+		assertResult("243,27")(actual = Day11.answerPart1)
+		assertResult("284,172,12")(actual = Day11.answerPart2)
+
 //import scala.io.Source
 //
 //object Day00 extends App:
-//	private val day: String =
+//	val day: String =
 //		this.getClass.getName.dropRight(1).toLowerCase
 //
-//	private val input =
+//	val input =
 //		Source
 //			.fromResource(s"$day-test.txt")
 //			.getLines
 //
-//	private val startTimePart1: Long =
+//	val startTimePart1: Long =
 //		System.currentTimeMillis
 //
 //	val answerPart1 = ???
@@ -72,7 +76,7 @@ class Test extends AnyFunSuite:
 //	// test: , input:
 //	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 //
-//	private val startTimePart2: Long =
+//	val startTimePart2: Long =
 //		System.currentTimeMillis
 //
 //	val answerPart2 = ???

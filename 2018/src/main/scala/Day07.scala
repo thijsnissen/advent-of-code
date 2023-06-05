@@ -3,10 +3,10 @@ import scala.collection.immutable.SortedMap
 import scala.collection.immutable.SortedSet
 
 object Day07 extends App:
-	private val day: String =
+	val day: String =
 		this.getClass.getName.dropRight(1).toLowerCase
 
-	private val input: List[Step[Char]] =
+	val input: List[Step[Char]] =
 		Source
 			.fromResource(s"$day-input.txt")
 			.getLines
@@ -15,9 +15,9 @@ object Day07 extends App:
 					Step(value.head, dependsOn.head)
 			.toList
 
-	private case class Step[A](value: A, dependsOn: A)
+	case class Step[A](value: A, dependsOn: A)
 
-	private def orderSteps[A](steps: List[Step[A]], timer: A => Int, workers: Int)(using Ordering[A]): (List[A], Int) =
+	def orderSteps[A](steps: List[Step[A]], timer: A => Int, workers: Int)(using Ordering[A]): (List[A], Int) =
 		case class Workload(
 			queue: SortedSet[A] = SortedSet.empty[A],
 			working: SortedMap[A, Int] = SortedMap.empty[A, Int],
@@ -63,20 +63,20 @@ object Day07 extends App:
 
 		go(edges, Workload(), currentTime = 0)
 
-	private val startTimePart1: Long =
+	val startTimePart1: Long =
 		System.currentTimeMillis
 
-	private val (order, _) = orderSteps(input, timer = _ => 1, workers = 1)
+	val (order, _) = orderSteps(input, timer = _ => 1, workers = 1)
 
 	val answerPart1 = order.mkString("")
 
 	// test: CABDFE [1ms], input: IBJTUWGFKDNVEYAHOMPCQRLSZX [2ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
-	private val startTimePart2: Long =
+	val startTimePart2: Long =
 		System.currentTimeMillis
 
-	private val (_, timeToComplete) = orderSteps(input, timer = _.toInt - 4, workers = 5)
+	val (_, timeToComplete) = orderSteps(input, timer = _.toInt - 4, workers = 5)
 
 	val answerPart2 = timeToComplete
 
