@@ -11,23 +11,30 @@ object Day11 extends App:
 			.map(_.toInt)
 			.next
 
+	case class Result(cell: Cell, squareSize: Int, totalPower: Int)
+
 	case class Window(xMin: Int, xMax: Int, yMin: Int, yMax: Int):
-		def size: Int =
+		def maxSquareSize: Int =
 			math.min(math.abs(xMin - xMax), math.abs(yMin - yMax)) + 1
 
 	case class Cell(x: Int, y: Int):
-		def powerLevel(gsn: Int): Int =
-			val rackId: Int =
-				x + 10
+		val powerLevel: Int => Int =
+			gsn =>
+				val rackId: Int =
+					x + 10
 
-			val hundredsDigit: Int => Int =
-				_ / 100 % 10
+				val hundredsDigit: Int => Int =
+					_ / 100 % 10
 
-			hundredsDigit((rackId * y + gsn) * rackId) - 5
+				hundredsDigit((rackId * y + gsn) * rackId) - 5
 
 	type Grid[A] = Map[Cell, A]
 
 	object Grid:
+		def empty: Grid[Int] =
+			Map.empty[Cell, Int].withDefaultValue(0)
+
+		// ref: https://en.wikipedia.org/wiki/Summed-area_table
 		def summedAreaTable(gsn: Int, window: Window): Grid[Int] =
 			val grid =
 				for
@@ -36,28 +43,41 @@ object Day11 extends App:
 				yield
 					Cell(x, y)
 
-			grid.foldLeft(Map.empty[Cell, Int].withDefaultValue(0)):
-				(g, c) =>
-					g + (c -> (c.powerLevel(gsn) + g(Cell(c.x, c.y - 1)) + g(Cell(c.x - 1, c.y)) - g(Cell(c.x - 1, c.y - 1))))
+			grid.foldLeft(Grid.empty):
+				(acc, c) =>
+					acc + (c -> (
+						c.powerLevel(gsn) +
+						acc(Cell(c.x, c.y - 1)) +
+						acc(Cell(c.x - 1, c.y)) -
+						acc(Cell(c.x - 1, c.y - 1))
+					))
 
-		def largestTotalPowerForSquare(grid: Grid[Int], window: Window, squareSize: Int): (Cell, Int, Int) =
+		def largestTotalPowerForSquare(grid: Grid[Int], window: Window, squareSize: Int): Result =
 			val result =
 				for
 					x <- window.xMin to window.xMax
 					y <- window.yMin to window.yMax
+					if x >= squareSize && y >= squareSize
 				yield
-					(Cell(x - squareSize + 1, y - squareSize + 1), squareSize, grid(Cell(x, y)) - grid(Cell(x, y - squareSize)) - grid(Cell(x - squareSize, y)) + grid(Cell(x - squareSize, y - squareSize)))
+					Result(
+						Cell(x - squareSize + 1, y - squareSize + 1),
+						squareSize,
+						grid(Cell(x, y)) -
+							grid(Cell(x, y - squareSize)) -
+							grid(Cell(x - squareSize, y)) +
+							grid(Cell(x - squareSize, y - squareSize))
+					)
 
-			result.maxBy((_, _, totalPower) => totalPower)
+			result.maxBy(_.totalPower)
 
-		def largestTotalPower(grid: Grid[Int], window: Window): (Cell, Int, Int) =
+		def largestTotalPower(grid: Grid[Int], window: Window): Result =
 			val result =
 				for
-					squareSize <- 1 to window.size
+					squareSize <- 1 to window.maxSquareSize
 				yield
 					largestTotalPowerForSquare(grid, window, squareSize)
 
-			result.maxBy((_, _, totalPower) => totalPower)
+			result.maxBy(_.totalPower)
 
 	import Grid._
 
@@ -66,19 +86,19 @@ object Day11 extends App:
 	val startTimePart1: Long =
 		System.currentTimeMillis
 
-	val (c1, _, _) = largestTotalPowerForSquare(summedAreaTable(input, window), window, 3)
+	val r1 = largestTotalPowerForSquare(summedAreaTable(input, window), window, 3)
 
-	val answerPart1 = s"${c1.x},${c1.y}"
+	val answerPart1 = s"${r1.cell.x},${r1.cell.y}"
 
-	// test: 33,45 [100ms], input: 243,27 [130ms]
+	// test: 33,45 [78ms], input: 243,27 [77ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	val startTimePart2: Long =
 		System.currentTimeMillis
 
-	val (c2, size, _) = largestTotalPower(summedAreaTable(input, window), window)
+	val r2 = largestTotalPower(summedAreaTable(input, window), window)
 
-	val answerPart2 = s"${c2.x},${c2.y},$size"
+	val answerPart2 = s"${r2.cell.x},${r2.cell.y},${r2.squareSize}"
 
-	// test: 90,269,16 [4799ms], input: 284,172,12 [4596ms]
+	// test: 90,269,16 [2209ms], input: 284,172,12 [2159ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
