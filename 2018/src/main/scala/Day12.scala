@@ -21,7 +21,7 @@ object Day12 extends App:
 			else
 				val mutatedState =
 					("..." + state + "...").sliding(5).foldLeft(""):
-						case (acc, s) if rules.contains(s) => acc + "#"
+						case (acc, s) if rules.contains(s) => acc + '#'
 						case (acc, _) => acc + '.'
 
 				copy(state = mutatedState, generation = generation + 1).mutate(generations - 1)
