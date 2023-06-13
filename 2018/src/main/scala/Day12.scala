@@ -29,13 +29,16 @@ object Day12 extends App:
 		def sumOfAllPotsWithPlants: Long =
 			state
 				.zipWithIndex
-				.filter((c, _) => c == '#')
-				.map((_, i) => i - generation)
+				.collect:
+					case ('#', i) => i - generation
 				.sum
 
 	object Mutation:
 		def fromInput(input: Vector[String]): Mutation =
 			Mutation(input.head, input.tail, 0)
+
+		def empty: Mutation =
+			Mutation("", Vector.empty[String], 0)
 
 	val startTimePart1: Long =
 		System.currentTimeMillis
@@ -46,31 +49,28 @@ object Day12 extends App:
 			.mutate(20)
 			.sumOfAllPotsWithPlants
 
-	// test: 325 [2ms], input: 3915 [3ms]
+	// test: 325 [1ms], input: 3915 [2ms]
 	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
 
 	val startTimePart2: Long =
 		System.currentTimeMillis
 
-	// After a while the sum of every next generation increases with a fixed amount
-	// Here I pick a generation to start from of which I know the incremented value is constant.
-	// TODO: https://en.wikipedia.org/wiki/Cycle_detection
-	val generation: Long = 100
+	val comparisonIterator =
+		Iterator
+			.iterate((Mutation.fromInput(input), Mutation.empty)):
+				(curr, _) => (curr.mutate(1), curr)
 
-	val sum: Long =
-		Mutation
-			.fromInput(input)
-			.mutate(generation)
-			.sumOfAllPotsWithPlants
-
-	val interval: Long =
-		Mutation
-			.fromInput(input)
-			.mutate(generation + 1)
-			.sumOfAllPotsWithPlants
-		- sum
+	val (generation, sum, interval) =
+		comparisonIterator
+			.dropWhile:
+				(curr, prev) =>
+					curr.state.dropWhile(_ == '.') != prev.state.dropWhile(_ == '.')
+			.map:
+				(curr, prev) =>
+					(curr.generation, curr.sumOfAllPotsWithPlants, curr.sumOfAllPotsWithPlants - prev.sumOfAllPotsWithPlants)
+			.next
 
 	val answerPart2 = sum + (50000000000L - generation) * interval
 
-	// test: 999999999374 [11ms], input: 4900000001793 [15ms]
+	// test: 999999999374 [5ms], input: 4900000001793 [8ms]
 	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
