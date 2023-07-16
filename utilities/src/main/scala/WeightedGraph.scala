@@ -11,15 +11,20 @@ object WeightedGraph:
 				l.filter((from, _, _) => from == a)
 					.map((_, to, edge) => (to, edge))
 
+	given dijkstraToVisitOrdering[A]: Ordering[(A, Int)] =
+		Ordering.by(a => a._2)
+
 	extension [A](self: WeightedGraph[A])
 		def dijkstraShortestPath(source: A): (Map[A, Int], Map[A, A]) =
+
 			@annotation.tailrec
-			def loop(toVisit: Map[A, Int], visited: Map[A, Int], tree: Map[A, A]): (Map[A, Int], Map[A, A]) =
-				if toVisit.isEmpty then
+			def loop(toVisit: Vector[(A, Int)], visited: Map[A, Int], tree: Map[A, A])
+							(using Ordering[(A, Int)]): (Map[A, Int], Map[A, A]) =
+				if toVisit.isEmpty || self(source).isEmpty then
 					(visited, tree)
 				else
 					val (vertex, edge) =
-						toVisit.minBy((_, e) => e)
+						toVisit.head
 
 					val neighbors: Map[A, Int] =
 						for
@@ -34,15 +39,15 @@ object WeightedGraph:
 							v -> (edge + e)
 
 					loop(
-						toVisit.filterNot((v, _) => v == vertex) ++ neighbors,
+						(toVisit.tail ++ neighbors)
+							.groupMapReduce((v, _) => v)((_, e) => e)(_ min _)
+							.toVector
+							.sorted,
 						visited + (vertex -> edge),
 						tree ++ neighbors.map((v, _) => (v, vertex))
 					)
 
-			if self(source).isEmpty then
-				(Map.empty[A, Int], Map.empty[A, A])
-			else
-				loop(Map(source -> 0), Map.empty[A, Int], Map.empty[A, A])
+			loop(Vector((source, 0)), Map.empty[A, Int], Map.empty[A, A])
 
 		def shortestPathTo(source: A)(target: A => Boolean): Option[(List[A], Int)] =
 			val (edges, tree) = self.dijkstraShortestPath(source)
