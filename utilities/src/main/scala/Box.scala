@@ -11,6 +11,13 @@ case class Box(min: Pos, max: Pos):
 	def contains(p: Pos): Boolean =
 		p.x >= min.x && p.x <= max.x && p.y >= min.y && p.y <= max.y
 
+	def iterator: Iterator[Pos] =
+		for
+			x <- (min.x to max.x).iterator
+			y <- (min.y to max.y).iterator
+		yield
+			Pos(x, y)
+
 object Box:
 	def apply(p: Pos): Box = Box(p, p)
 

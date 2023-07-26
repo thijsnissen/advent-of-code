@@ -1,33 +1,24 @@
 import org.scalatest.funsuite.AnyFunSuite
 
 class Test extends AnyFunSuite:
-	ignore("Day01"):
-		assertResult(true)(actual = Day01.answerPart1)
-		assertResult(true)(actual = Day01.answerPart2)
+	test("Day01"):
+		if Day01.given_Mode == Day01.Mode.Test then
+			assertResult(24000)(Day01.pt1) // [0ms]
+			assertResult(45000)(Day01.pt2) // [0ms]
 
-//import scala.io.Source
+		if Day01.given_Mode == Day01.Mode.Prod then
+			assertResult(68923)(Day01.pt1) // [0ms]
+			assertResult(200044)(Day01.pt2) // [1ms]
+
+// object Day00 extends AdventOfCode:
+// 	given Mode = Mode.Test
 //
-//object Day00 extends App:
-//	private val day: String =
-//		this.getClass.getName.dropRight(1).toLowerCase
+// 	val myInput = input
 //
-//	private val input =
-//		Source
-//			.fromResource(s"$day-test.txt")
-//			.getLines
+// 	lazy val pt1 = ???
 //
-//	private val startTimePart1: Long =
-//		System.currentTimeMillis
+// 	lazy val pt2 = ???
 //
-//	val answerPart1 = ???
+// 	answer(1)(pt1)
 //
-//	test: , input:
-//	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
-//
-//	private val startTimePart2: Long =
-//		System.currentTimeMillis
-//
-//	val answerPart2 = ???
-//
-//	test: , input:
-//	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
+// 	answer(2)(pt2)

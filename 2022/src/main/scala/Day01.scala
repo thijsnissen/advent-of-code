@@ -1,26 +1,24 @@
-import scala.io.Source
+object Day01 extends AdventOfCode:
+	given Mode = Mode.Prod
 
-object Day01 extends App:
-	private val day: String =
-		this.getClass.getName.dropRight(1).toLowerCase
+	val calories: Vector[Vector[Int]] =
+		input
+			.foldLeft(Vector(Vector.empty[Int])):
+				case (acc, "") => Vector.empty[Int] +: acc
+				case (acc, cal) => acc.updated(0, cal.toInt +: acc(0))
 
-	private val input =
-		Source
-			.fromResource(s"$day-test.txt")
-			.getLines
+	lazy val pt1 =
+		calories
+			.map(_.sum)
+			.max
 
-	private val startTimePart1: Long =
-		System.currentTimeMillis
+	lazy val pt2 =
+		calories
+			.map(_.sum)
+			.sorted
+			.takeRight(3)
+			.sum
 
-	val answerPart1 = ???
+	answer(1)(pt1)
 
-	// test: , input:
-	println(s"The answer to $day part 1 is: $answerPart1 [${System.currentTimeMillis - startTimePart1}ms]")
-
-	private val startTimePart2: Long =
-		System.currentTimeMillis
-
-	val answerPart2 = ???
-
-	// test: , input:
-	println(s"The answer to $day part 2 is: $answerPart2 [${System.currentTimeMillis - startTimePart2}ms]")
+	answer(2)(pt2)

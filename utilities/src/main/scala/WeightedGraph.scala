@@ -7,9 +7,10 @@ object WeightedGraph:
 
 	def fromTupleList[A](l: List[(A, A, Int)]): WeightedGraph[A] =
 		a =>
-			Map.empty[A, Int] ++
-				l.filter((from, _, _) => from == a)
-					.map((_, to, edge) => (to, edge))
+			l.view
+				.filter((from, _, _) => from == a)
+				.map((_, to, edge) => (to, edge))
+				.toMap
 
 	given dijkstraToVisitOrdering[A]: Ordering[(A, Int)] =
 		Ordering.by(a => a._2)
