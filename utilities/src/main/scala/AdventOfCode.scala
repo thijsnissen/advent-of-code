@@ -13,8 +13,14 @@ trait AdventOfCode extends App:
 			.fromResource(s"$day-${mode.m}.txt")
 			.getLines
 
-	def answer[A](part: Int)(a: => A): Unit =
+	def answer[A](part: Int)(a: => A)(using mode: Mode): Unit =
 		val startTime: Long =
 			System.currentTimeMillis
 
-		println(s"The answer to $day part $part is: $a [${System.currentTimeMillis - startTime}ms]")
+		val modes: List[String] = List(
+			s"${Console.YELLOW} ${Mode.fromOrdinal(mode.ordinal)} ${Console.RESET}",
+			s"${Console.GREEN} ${Mode.fromOrdinal(mode.ordinal)} ${Console.RESET}"
+		)
+
+		println(s"${modes(mode.ordinal)}The answer to $day part $part is: " +
+			s"${Console.BLUE}$a${Console.RESET} [${System.currentTimeMillis - startTime}ms]")
