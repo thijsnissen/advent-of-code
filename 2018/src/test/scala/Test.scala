@@ -67,8 +67,8 @@ class Test extends AnyFunSuite:
 			assertResult("7,3")(Day13.pt2) // [0ms]
 
 		if Day13.given_Mode == Day13.Mode.Prod then
-			assertResult("103,85")(Day13.pt1) // [0ms]
-			assertResult("88,64")(Day13.pt2) // [0ms]
+			assertResult("103,85")(Day13.pt1) // [4ms]
+			assertResult("88,64")(Day13.pt2) // [20ms]
 
 //import scala.io.Source
 //
