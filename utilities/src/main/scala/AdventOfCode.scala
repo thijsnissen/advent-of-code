@@ -1,5 +1,5 @@
 trait AdventOfCode extends App:
-	enum Mode(val m: String):
+	enum Mode(val input: String):
 		case Test extends Mode("test")
 		case Prod extends Mode("input")
 
@@ -10,7 +10,7 @@ trait AdventOfCode extends App:
 
 	def input(using mode: Mode): Iterator[String] =
 		Source
-			.fromResource(s"$day-${mode.m}.txt")
+			.fromResource(s"$day-${mode.input}.txt")
 			.getLines
 
 	def answer[A](part: Int)(a: => A)(using mode: Mode): Unit =
