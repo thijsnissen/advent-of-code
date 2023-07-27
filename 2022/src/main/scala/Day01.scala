@@ -4,7 +4,7 @@ object Day01 extends AdventOfCode:
 	val calories: Vector[Vector[Int]] =
 		input
 			.foldLeft(Vector(Vector.empty[Int])):
-				case (acc, "") => Vector.empty[Int] +: acc
+				case (acc, "")  => Vector.empty[Int] +: acc
 				case (acc, cal) => acc.updated(0, cal.toInt +: acc(0))
 
 	lazy val pt1 =
