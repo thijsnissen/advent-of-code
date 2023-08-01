@@ -63,7 +63,7 @@ object WeightedGraph:
 					case Some(v) => loop(v, k :: acc)
 					case None => k :: acc
 
-			tree.toVector.sorted.find((k, _) => target(k)).map((k, _) => k) match
-				case Some(t) => Some(loop(t, List.empty[A]), edges.getOrElse(t, 0))
+			edges.toVector.sorted.find((k, _) => target(k)) match
+				case Some(t, _) => Some(loop(t, List.empty[A]), edges.getOrElse(t, 0))
 				case None if target(source) => Some((List(source), 0))
 				case None => None

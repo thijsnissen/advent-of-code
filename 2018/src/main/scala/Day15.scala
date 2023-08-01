@@ -1,5 +1,5 @@
 object Day15 extends AdventOfCode:
-	given Mode = Mode.Test
+	given Mode = Mode.Prod
 
 	import BattleState.posReadingOrder
 
@@ -15,7 +15,7 @@ object Day15 extends AdventOfCode:
 
 		result.toVector
 
-	val units: Vector[CombatUnit] =
+	def units(elfAttackPower: Int): Vector[CombatUnit] =
 		val result =
 			for
 				(l, y) <- input.zipWithIndex
@@ -24,7 +24,7 @@ object Day15 extends AdventOfCode:
 				if c == 'E' | c == 'G'
 			yield
 				c match
-					case 'E' => CombatUnit(Pos(x, y), UnitType.Elf, 200, 3)
+					case 'E' => CombatUnit(Pos(x, y), UnitType.Elf, 200, elfAttackPower)
 					case 'G' => CombatUnit(Pos(x, y), UnitType.Goblin, 200, 3)
 
 		result.toVector.sortBy(_.loc)
@@ -40,7 +40,7 @@ object Day15 extends AdventOfCode:
 		def findShortestPath(map: Vector[Pos], targets: Vector[Pos]): Option[(List[Pos], Int)] =
 			val dijkstra: WeightedGraph[Pos] =
 				WeightedGraph.unit:
-					s => BattleState.adjacentSquares(s, map).map(_ -> 0).toMap
+					s => BattleState.adjacentSquares(s, map).map(_ -> 1).toMap
 
 			import WeightedGraph.shortestPathTo
 
@@ -52,6 +52,9 @@ object Day15 extends AdventOfCode:
 	case class BattleState(map: Vector[Pos], openUnits: Vector[CombatUnit], closedUnits: Vector[CombatUnit], rounds: Int):
 		def allUnits: Vector[CombatUnit] =
 			openUnits ++ closedUnits
+
+		def elfCount: Int =
+			allUnits.count(_.unitType == UnitType.Elf)
 
 		def targetUnits(activeUnit: CombatUnit, nonActiveUnits: Vector[CombatUnit]): Vector[CombatUnit] =
 			nonActiveUnits.filterNot(_.unitType == activeUnit.unitType)
@@ -86,6 +89,7 @@ object Day15 extends AdventOfCode:
 			val unitToAttack =
 				BattleState.adjacentSquares(activeUnit.loc, targetUnits(activeUnit, nonActiveUnits).map(_.loc))
 					.map(u => findUnit(u).get)
+					.sortBy(_.loc)
 					.minBy(_.hitPoints)
 
 			val attackedUnit = activeUnit.attack(unitToAttack)
@@ -94,23 +98,30 @@ object Day15 extends AdventOfCode:
 				copy(openUnits = openUnits.tail, closedUnits = activeUnit +: closedUnits)
 					.updateUnit(attackedUnit.loc, attackedUnit)
 
-			if attackedUnit.isAlive then
-				newBattleState
-			else
-				newBattleState.copy(
-					openUnits = newBattleState.openUnits.filterNot(_.loc == attackedUnit.loc),
-					closedUnits = newBattleState.closedUnits.filterNot(_.loc == attackedUnit.loc),
-				)
+			newBattleState.copy(
+				openUnits = newBattleState.openUnits.filter(_.isAlive),
+				closedUnits = newBattleState.closedUnits.filter(_.isAlive)
+			)
 
 		def nextRound: BattleState =
-			if isFinished then
+			if isFinished && openUnits.nonEmpty then
 				this
 			else
 				takeTurn.nextRound
 
+		def nextRoundSaveElves(initialElfCount: Int, elfAttackPower: Int): BattleState =
+			if elfCount != initialElfCount then
+				val newBattleState =
+					BattleState.fromInput(map, units(elfAttackPower + 1))
+
+				newBattleState.nextRoundSaveElves(initialElfCount, elfAttackPower + 1)
+			else if isFinished && openUnits.nonEmpty then
+				this
+			else
+				takeTurn.nextRoundSaveElves(initialElfCount, elfAttackPower)
+
 		def takeTurn: BattleState =
 			if openUnits.isEmpty then
-				printer(closedUnits, map, rounds, 7)
 				copy(openUnits = closedUnits.sortBy(_.loc), closedUnits = Vector.empty[CombatUnit], rounds = rounds + 1)
 			else
 				val activeUnit     = openUnits.head
@@ -124,7 +135,6 @@ object Day15 extends AdventOfCode:
 						openSquaresInRangeOfTargets(activeUnit, nonActiveUnits)
 					) match
 						case Some(l, _) =>
-							pprint.log(l)
 							val movedUnit = activeUnit.copy(loc = l(1))
 
 							if canAttack(movedUnit, nonActiveUnits) then
@@ -136,7 +146,7 @@ object Day15 extends AdventOfCode:
 
 	object BattleState:
 		def fromInput(map: Vector[Pos], units: Vector[CombatUnit]): BattleState =
-			BattleState(map, units, Vector.empty[CombatUnit], 1)
+			BattleState(map, units, Vector.empty[CombatUnit], 0)
 
 		def adjacentSquares(pos: Pos, map: Vector[Pos]): Vector[Pos] =
 			Vector(
@@ -153,13 +163,20 @@ object Day15 extends AdventOfCode:
 	lazy val pt1 =
 		val result =
 			BattleState
-				.fromInput(map, units)
+				.fromInput(map, units(3))
 				.nextRound
 
 		result.outcome
 
 	lazy val pt2 =
-		???
+		val initialBattleState =
+			BattleState.fromInput(map, units(4))
+
+		val result =
+			initialBattleState
+				.nextRoundSaveElves(initialBattleState.elfCount, 4)
+
+		result.outcome
 
 	answer(1)(pt1)
 
@@ -172,9 +189,10 @@ object Day15 extends AdventOfCode:
 		val box2 = map.filterNot(p => units.exists(_.loc == p)).foldLeft(box1):
 			(acc, loc) => acc.updated(loc.y, acc(loc.y).updated(loc.x, '.'))
 
+		print("\u001b[2J")
 		println("\nRound: " + rounds +
-			((0 until size).map(_.toString.charAt(0)).toVector +: box2)
+			((0 until size).map(_.toString.last).toVector +: box2)
 				.zipWithIndex
-				.map((row, y) => (math.max(y - 1, 0) +: row).map(_.toString).mkString("\n", " ", ""))
+				.map((row, y) => (math.max(y - 1, 0).toString.last +: row).map(_.toString).mkString("\n", " ", ""))
 				.mkString
 		)

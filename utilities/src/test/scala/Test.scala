@@ -43,7 +43,7 @@ class Test extends AnyFunSuite:
 		// assertResult(None)(WeightedGraph.fromTupleList(weightedGraph).shortestPathTo('x')(_ == 'f'))
 		// assertResult(None)(WeightedGraph.fromTupleList(weightedGraph).shortestPathTo('a')(_ == 'x'))
 		// assertResult(Some((List('b'), 0)))(WeightedGraph.fromTupleList(weightedGraph).shortestPathTo('b')(_ == 'b'))
-		//
+
 		// def tree(depth: Int): WeightedGraph[List[Boolean]] =
 		// 	WeightedGraph.unit:
 		// 		case x if x.size < depth => Map((true :: x) -> 1, (false :: x) -> 2)
