@@ -70,12 +70,9 @@ object Day13 extends AdventOfCode:
 				case '+'  => intersection
 				case _    => this
 
-	given Ordering[Pos] with
-		override def compare(a: Pos, b: Pos): Int =
-			val y = a.y.compareTo(b.y)
-			val x = a.x.compareTo(b.x)
-
-			y.compareTo(-x)
+	given Ordering[Pos] =
+		Ordering.fromLessThan:
+			(a, b) => a.y < b.y || (a.y == b.y && a.x < b.x)
 
 	def findCollisionPos(carts: Vector[Cart], cart: Cart): Option[Pos] =
 		carts.find(_.loc == cart.loc).map(_.loc)

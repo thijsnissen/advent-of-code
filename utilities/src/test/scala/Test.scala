@@ -35,7 +35,7 @@ class Test extends AnyFunSuite:
 		// 	('e', 'g', 5),
 		// 	('f', 'g', 10)
 		// )
-
+		//
 		// pprint.log(WeightedGraph.fromTupleList(weightedGraph).dijkstraShortestPath('x'))
 		// pprint.log(WeightedGraph.fromTupleList(weightedGraph).dijkstraShortestPath('a'))
 		//
