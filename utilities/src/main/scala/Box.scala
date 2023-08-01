@@ -18,10 +18,6 @@ case class Box(min: Pos, max: Pos):
 		yield
 			Pos(x, y)
 
-	def asString: String =
-		val box = max - min
-		Vector.fill(box.x, box.y)('.').map(row => row.map(_.toString).mkString("\n", " ", "")).mkString
-
 object Box:
 	def apply(p: Pos): Box = Box(p, p)
 
