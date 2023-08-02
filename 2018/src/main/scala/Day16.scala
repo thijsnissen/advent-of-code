@@ -70,7 +70,7 @@ object Day16 extends AdventOfCode:
 					result.filter(_.nonEmpty) :: acc
 
 		def analyzeSamplesByOpcode: List[(String, List[Int])] =
-			Device.unorderedOpcodes
+			unorderedOpcodes
 				.foldLeft(List.empty[(String, List[Int])]):
 					(acc, opcode) =>
 						val result = samples.map:
@@ -121,7 +121,7 @@ object Day16 extends AdventOfCode:
 			orderedOpcodes(analyzeSamplesByOpcode, List.empty[(Int, String)])
 
 		val result =
-			instructions.foldLeft(Device.unit(Map(0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0))):
+			instructions.foldLeft(unit(Map(0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0))):
 				(device, inst) => device.run(opcodes(inst.opcode), inst.a, inst.b, inst.c)
 
 		result(0)
