@@ -12,11 +12,15 @@ object WeightedGraph:
 				.map((_, to, edge) => (to, edge))
 				.toMap
 
-	given dijkstraToVisitOrdering[A]: Ordering[(A, Int)] =
-		Ordering.by(a => a._2)
+	given [A](using ordA: Ordering[A], ordInt: Ordering[Int]): Ordering[(A, Int)] with
+		override def compare(x: (A, Int), y: (A, Int)): Int =
+			if x._2 == y._2 then
+				ordA.compare(x._1, y._1)
+			else
+				ordInt.compare(x._2, y._2)
 
-	extension [A](self: WeightedGraph[A])
-		def dijkstraShortestPath(source: A): (Map[A, Int], Map[A, A]) =
+	extension[A] (self: WeightedGraph[A])
+		def dijkstraShortestPath(source: A)(using Ordering[A]): (Map[A, Int], Map[A, A]) =
 
 			@annotation.tailrec
 			def loop(toVisit: Vector[(A, Int)], visited: Map[A, Int], tree: Map[A, A])
@@ -31,11 +35,11 @@ object WeightedGraph:
 						for
 							(v, e) <- self(vertex)
 
-							if ! visited.contains(v) &&
-									edge + e < toVisit
-									            .find((v1, _) => v == v1)
-									            .map((_, e1) => e1)
-									            .getOrElse(Int.MaxValue)
+							if !visited.contains(v) &&
+								edge + e < toVisit
+									.find((v1, _) => v == v1)
+									.map((_, e1) => e1)
+									.getOrElse(Int.MaxValue)
 						yield
 							v -> (edge + e)
 
@@ -50,16 +54,16 @@ object WeightedGraph:
 
 			loop(Vector((source, 0)), Map.empty[A, Int], Map.empty[A, A])
 
-		def shortestPathTo(source: A)(target: A => Boolean): Option[(List[A], Int)] =
+		def shortestPathTo(source: A)(target: A => Boolean)(using Ordering[A]): Option[(List[A], Int)] =
 			val (edges, tree) = self.dijkstraShortestPath(source)
 
 			@annotation.tailrec
 			def loop(k: A, acc: List[A]): List[A] =
 				tree.get(k) match
 					case Some(v) => loop(v, k :: acc)
-					case None    => k :: acc
+					case None => k :: acc
 
-			tree.find((k, _) => target(k)).map((k, _) => k) match
-				case Some(t)                => Some(loop(t, List.empty[A]), edges.getOrElse(t, 0))
+			edges.toVector.sorted.find((k, _) => target(k)) match
+				case Some(t, _) => Some(loop(t, List.empty[A]), edges.getOrElse(t, 0))
 				case None if target(source) => Some((List(source), 0))
-				case None                   => None
+				case None => None
