@@ -47,20 +47,20 @@ object Day12 extends AdventOfCode:
 			.sumOfAllPotsWithPlants
 
 	lazy val pt2 =
-		val comparisonIterator =
-			Iterator
-				.iterate((Mutation.fromInput(myInput), Mutation.empty)):
-					(curr, _) => (curr.mutate(1), curr)
+		import utilities.Cycle
 
-		val (generation, sum, interval) =
-			comparisonIterator
-				.dropWhile:
-					(curr, prev) =>
-						curr.state.dropWhile(_ == '.') != prev.state.dropWhile(_ == '.')
-				.map:
-					(curr, prev) =>
-						(curr.generation, curr.sumOfAllPotsWithPlants, curr.sumOfAllPotsWithPlants - prev.sumOfAllPotsWithPlants)
-				.next
+		val f: Mutation => Mutation =
+			m => m.mutate(1)
+
+		val g: Mutation => String =
+			m => m.state.dropWhile(_ == '.').reverse.dropWhile(_ == '.').reverse
+
+		val cycle: Mutation =
+			Cycle.find(f, Mutation.fromInput(myInput))(g).head
+
+		val generation = cycle.generation
+		val sum        = cycle.sumOfAllPotsWithPlants
+		val interval   = cycle.mutate(1).sumOfAllPotsWithPlants - cycle.sumOfAllPotsWithPlants
 
 		sum + (50000000000L - generation) * interval
 

@@ -1,7 +1,7 @@
 package adventofcode
 package utilities
 
-case class Cycle[A](stemLength: Int, cycleLength: Int, first: A, last: A)
+case class Cycle[A](stemLength: Int, cycleLength: Int, head: A, last: A)
 
 object Cycle:
 	def find[A, B](f: A => A, x0: A)(g: A => B): Cycle[A] =
@@ -28,7 +28,7 @@ object Cycle:
 			(0 until cycleLength).foldLeft(x0):
 				(acc, _) => f(acc)
 
-		val (stemLength, first, last) =
+		val (stemLength, head, last) =
 			findStemLength(x0, hare, hare, 0)
 
-		Cycle(stemLength, cycleLength, first, last)
+		Cycle(stemLength, cycleLength, head, last)
