@@ -9,6 +9,7 @@ object Day17 extends AdventOfCode:
 	given Mode = Mode.Prod
 
 	import scala.collection.immutable.Queue
+
 	import Tiles.*
 
 	val clay: Tiles =
@@ -32,7 +33,9 @@ object Day17 extends AdventOfCode:
 			case Sand
 
 		def unit: Tiles =
-			Map.empty[Pos, TileType]
+			Map
+				.empty[Pos, TileType]
+				.withDefaultValue(TileType.Sand)
 
 		def fromMap(m: Map[Pos, TileType]): Tiles =
 			m.withDefaultValue(TileType.Sand)
@@ -61,28 +64,28 @@ object Day17 extends AdventOfCode:
 								(None, modified)
 
 		@annotation.tailrec
-		def move(queue: Queue[Pos], tiles: Tiles, maxY: Int): Tiles =
+		def createWater(queue: Queue[Pos], tiles: Tiles, maxY: Int): Tiles =
 			queue.distinct.dequeueOption match
 				case None => tiles
 				case Some(pos, tail) =>
 					tiles(pos) match
 						case TileType.Sand | TileType.Flow =>
 							tryDown(pos, maxY) match
-								case Some(p) => move(tail.enqueue(p), tiles + (pos -> TileType.Flow), maxY)
-								case None    => move(tail, tiles, maxY)
+								case Some(p) => createWater(tail.enqueue(p), tiles + (pos -> TileType.Flow), maxY)
+								case None    => createWater(tail, tiles, maxY)
 						case TileType.Clay | TileType.Still =>
 							val (leftPos, leftTiles)   = trySide(pos - Pos(0, 1), Pos(-1, 0), tiles, Vector.empty[Pos])
 							val (rightPos, rightTiles) = trySide(pos - Pos(0, 1), Pos(1, 0), tiles, Vector.empty[Pos])
 
 							(leftPos, rightPos) match
 								case (Some(lp), Some(rp)) =>
-									move(tail.enqueueAll(List(lp, rp)), tiles ++ (leftTiles ++ rightTiles).map(_ ->TileType.Flow), maxY)
+									createWater(tail.enqueueAll(List(lp, rp)), tiles ++ (leftTiles ++ rightTiles).map(_ ->TileType.Flow), maxY)
 								case (Some(lp), None) =>
-									move(tail.enqueue(lp), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Flow), maxY)
+									createWater(tail.enqueue(lp), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Flow), maxY)
 								case (None, Some(rp)) =>
-									move(tail.enqueue(rp), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Flow), maxY)
+									createWater(tail.enqueue(rp), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Flow), maxY)
 								case (None, None) =>
-									move(tail.enqueue(pos - Pos(0, 2)), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Still), maxY)
+									createWater(tail.enqueue(pos - Pos(0, 2)), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Still), maxY)
 
 	lazy val pt1 =
 		val Box(min, max) =
@@ -92,7 +95,7 @@ object Day17 extends AdventOfCode:
 			Box(min - Pos(1, 0), max + Pos(1, 0))
 
 		val result =
-			move(Queue(springOfWater), clay, max.y)
+			createWater(Queue(springOfWater), clay, max.y)
 
 		// printer(boundingBox.min, boundingBox.max, result)
 
@@ -104,7 +107,7 @@ object Day17 extends AdventOfCode:
 		val Box(_, max) =
 			Box.bounding(clay.keys)
 
-		move(Queue(springOfWater), clay, max.y)
+		createWater(Queue(springOfWater), clay, max.y)
 			.count((_, t) => t == TileType.Still)
 
 	answer(1)(pt1)

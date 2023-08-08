@@ -29,23 +29,28 @@ class Test extends AnyFunSuite:
 
 		assertResult(Cycle(5, 6, 5, 10))(Cycle.find(cycle, 0)(identity))
 
-	test("Graph"):
+	test("Graph & Graph Traversal"):
 		val graphList = List(
 			(1, 2), (1, 5), (1, 9),
 			(2, 3), (3, 4), (3, 2),
 			(4, 1), (5, 6), (5, 8),
-			(6, 7), (9, 10)
+			(6, 7), (9, 10), (10, 9),
+			(7, 6), (6, 8), (8, 5),
+			(5, 1), (9, 2), (8, 3)
 		)
 
 		val graph = Graph.fromTupleList(graphList)
 
 		import GraphTraversal.*
 
-		assertResult(List((2, 1), (5, 1), (9, 1), (3, 2), (6, 5), (8, 5), (10, 9)))(graph.breadthFirstSearch(1)(_ == 10).getOrElse("not found"))
+		assertResult(List((1, 1), (2, 1), (5, 1), (9, 1), (3, 2), (6, 5), (8, 5), (10, 9)))(graph.breadthFirstSearch(1)(_ == 10).getOrElse("not found"))
 		assertResult(List((1, 1), (2, 1), (3, 2), (4, 3), (5, 1), (6, 5), (7, 6), (8, 5), (9, 1), (10, 9)))(graph.depthFirstSearch(1)(_ == 10).getOrElse("not found"))
 		assertResult("not found")(graph.breadthFirstSearch(1)(_ == 11).getOrElse("not found"))
 		assertResult("not found")(graph.depthFirstSearch(1)(_ == 11).getOrElse("not found"))
 		assertResult(List(1, 9, 10))(graph.findPathBreadthFirst(1)(_ == 10).getOrElse("not found"))
+		assertResult(List(2))(graph.findPathBreadthFirst(2)(_ == 2).getOrElse("not found"))
+		assertResult(List(4, 1, 5, 8))(graph.findPathBreadthFirst(4)(_ == 8).getOrElse("not found"))
+		assertResult(List(10, 9, 2, 3))(graph.findPathBreadthFirst(10)(_ == 3).getOrElse("not found"))
 
 	test("JSON"):
 		val jsonTxt =
@@ -134,7 +139,7 @@ class Test extends AnyFunSuite:
 		assertResult(3)(-7 +% 10)
 		assertResult(3)(33 +% 10)
 
-	test("Dijkstra"):
+	test("Weighted Graph & Dijkstra"):
 		import Dijkstra.*
 
 		val weightedGraph = List(

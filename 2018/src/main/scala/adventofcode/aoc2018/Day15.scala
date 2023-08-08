@@ -2,7 +2,7 @@ package adventofcode
 package aoc2018
 
 import utilities.AdventOfCode
-import utilities.WeightedGraph
+import utilities.Graph
 import utilities.Pos
 
 object Day15 extends AdventOfCode:
@@ -44,14 +44,15 @@ object Day15 extends AdventOfCode:
 		def isAlive: Boolean =
 			hitPoints > 0
 
-		def findShortestPath(map: Vector[Pos], targets: Vector[Pos]): Option[(List[Pos], Int)] =
-			val dijkstra: WeightedGraph[Pos] =
-				WeightedGraph.unit:
-					s => BattleState.adjacentSquares(s, map).map(_ -> 1).toMap
+		def findShortestPath(map: Vector[Pos], targets: Vector[Pos]): Option[List[Pos]] =
+			import scala.collection.immutable.SortedSet
+			import utilities.GraphTraversal.findPathBreadthFirst
 
-			import utilities.Dijkstra.shortestPathTo
+			val bfs: Graph[Pos] =
+				Graph.unit:
+					s => SortedSet.empty[Pos] ++ BattleState.adjacentSquares(s, map)
 
-			dijkstra.shortestPathTo(loc)(targets.contains)
+			bfs.findPathBreadthFirst(loc)(targets.contains)
 
 		def attack(that: CombatUnit): CombatUnit =
 			that.copy(hitPoints = that.hitPoints - attackPower)
@@ -129,7 +130,7 @@ object Day15 extends AdventOfCode:
 
 		def takeTurn: BattleState =
 			if openUnits.isEmpty then
-				//printer(closedUnits, map, rounds, size = 32)
+			//printer(closedUnits, map, rounds, size = 32)
 				copy(openUnits = closedUnits.sortBy(_.loc), closedUnits = Vector.empty[CombatUnit], rounds = rounds + 1)
 			else
 				val activeUnit     = openUnits.head
@@ -142,7 +143,7 @@ object Day15 extends AdventOfCode:
 						map.filterNot(p => nonActiveUnits.exists(_.loc == p)),
 						openSquaresInRangeOfTargets(activeUnit, nonActiveUnits)
 					) match
-						case Some(l, _) =>
+						case Some(l) =>
 							val movedUnit = activeUnit.copy(loc = l(1))
 
 							if canAttack(movedUnit, nonActiveUnits) then
@@ -189,6 +190,7 @@ object Day15 extends AdventOfCode:
 	answer(1)(pt1)
 
 	answer(2)(pt2)
+
 
 
 	def printer(units: Vector[CombatUnit], map: Vector[Pos], rounds: Int, size: Int): Unit =
