@@ -7,21 +7,30 @@ object GraphTraversal:
 	@annotation.tailrec
 	def treeToPath[A](target: A, tree: List[(A, A)], acc: List[A]): List[A] =
 		tree.find((node, _) => node == target) match
-			case Some(to, from) => treeToPath(from, tree, to :: acc)
-			case None => target :: acc
+			case Some(to, from) if to == from => target :: acc
+			case Some(to, from)               => treeToPath(from, tree, to :: acc)
+			case None                         => target :: acc
 
-	private def updateToVisit[A](as: SortedSet[A], visited: List[(A, A)], from: A): Vector[(A, A)] =
+	private def updateToVisit[A](as: SortedSet[A], toVisit: Vector[(A, A)], visited: List[(A, A)], from: A): Vector[(A, A)] =
 		as
+			.view
 			.filterNot(visited.map((node, _) => node).contains)
+			.filterNot(toVisit.map((node, _) => node).contains)
 			.toVector
 			.map(_ -> from)
 
 	extension[A] (self: Graph[A])
 		def breadthFirstSearch(source: A)(target: A => Boolean): Option[List[(A, A)]] =
-			loop(Vector.empty[(A, A)] ++ self.run(source).toVector.map(_ -> source), List.empty[(A, A)], false)(target)
+			if target(source) then
+				Some(List(source -> source))
+			else
+				loop(Vector.empty[(A, A)] ++ self.run(source).toVector.map(_ -> source), List(source -> source), false)(target)
 
 		def depthFirstSearch(source: A)(target: A => Boolean): Option[List[(A, A)]] =
-			loop(Vector.empty[(A, A)] ++ self.run(source).toVector.map(_ -> source), List(source -> source), true)(target)
+			if target(source) then
+				Some(List(source -> source))
+			else
+				loop(Vector.empty[(A, A)] ++ self.run(source).toVector.map(_ -> source), List(source -> source), true)(target)
 
 		def findPathBreadthFirst(source: A)(target: A => Boolean): Option[List[A]] =
 			breadthFirstSearch(source)(target) match
@@ -37,7 +46,8 @@ object GraphTraversal:
 				case (visit, from) +: _ if target(visit) =>
 					Some(((visit -> from) :: visited).reverse)
 				case (visit, from) +: tail if lifo =>
-					loop(updateToVisit(self.run(visit), visited, visit) ++ tail, (visit, from) :: visited, lifo)(target)
+					loop(updateToVisit(self.run(visit), toVisit, visited, visit) ++ tail, (visit, from) :: visited, lifo)(target)
 				case (visit, from) +: tail =>
-					loop(tail ++ updateToVisit(self.run(visit), visited, visit), (visit, from) :: visited, lifo)(target)
-				case _ => None
+					loop(tail ++ updateToVisit(self.run(visit), toVisit, visited, visit), (visit, from) :: visited, lifo)(target)
+				case _ =>
+					None
