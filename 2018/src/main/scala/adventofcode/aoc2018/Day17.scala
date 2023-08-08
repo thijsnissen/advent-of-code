@@ -45,47 +45,49 @@ object Day17 extends AdventOfCode:
 				case s"x=$x, y=$y1..$y2" => Box(Pos(x.toInt, y1.toInt), Pos(x.toInt, y2.toInt)).iterator
 				case s"y=$y, x=$x1..$x2" => Box(Pos(x1.toInt, y.toInt), Pos(x2.toInt, y.toInt)).iterator
 
-		def tryDown(pos: Pos, maxY: Int): Option[Pos] =
-			if pos.y > maxY then
-				None
-			else
-				Some(pos + Pos(0, 1))
-
 		@annotation.tailrec
-		def trySide(pos: Pos, vector: Pos, tiles: Tiles, modified: Vector[Pos]): (Option[Pos], Vector[Pos]) =
+		def moveWater(queue: Queue[Pos], tiles: Tiles, maxY: Int): Tiles =
+			def tryDown(pos: Pos): Option[Pos] =
+				if pos.y > maxY then
+					None
+				else
+					Some(pos + Pos(0, 1))
+
+			@annotation.tailrec
+			def trySide(pos: Pos, vector: Pos, modified: Vector[Pos]): (Option[Pos], Vector[Pos]) =
 				tiles(pos + Pos(0, 1)) match
 					case TileType.Sand | TileType.Flow =>
 						(Some(pos), modified)
 					case TileType.Clay | TileType.Still =>
 						tiles(pos) match
 							case TileType.Sand | TileType.Flow =>
-								trySide(pos + vector, vector, tiles, pos +: modified)
+								trySide(pos + vector, vector, pos +: modified)
 							case TileType.Clay | TileType.Still =>
 								(None, modified)
 
-		@annotation.tailrec
-		def moveWater(queue: Queue[Pos], tiles: Tiles, maxY: Int): Tiles =
 			queue.distinct.dequeueOption match
 				case None => tiles
 				case Some(pos, tail) =>
 					tiles(pos) match
 						case TileType.Sand | TileType.Flow =>
-							tryDown(pos, maxY) match
+							tryDown(pos) match
 								case Some(p) => moveWater(tail.enqueue(p), tiles + (pos -> TileType.Flow), maxY)
 								case None    => moveWater(tail, tiles, maxY)
 						case TileType.Clay | TileType.Still =>
-							val (leftPos, leftTiles)   = trySide(pos - Pos(0, 1), Pos(-1, 0), tiles, Vector.empty[Pos])
-							val (rightPos, rightTiles) = trySide(pos - Pos(0, 1), Pos(1, 0), tiles, Vector.empty[Pos])
+							val (leftPos, leftTiles)   = trySide(pos - Pos(0, 1), Pos(-1, 0), Vector.empty[Pos])
+							val (rightPos, rightTiles) = trySide(pos - Pos(0, 1), Pos(1, 0), Vector.empty[Pos])
+
+							val newTiles = leftTiles ++ rightTiles
 
 							(leftPos, rightPos) match
 								case (Some(lp), Some(rp)) =>
-									moveWater(tail.enqueueAll(List(lp, rp)), tiles ++ (leftTiles ++ rightTiles).map(_ ->TileType.Flow), maxY)
+									moveWater(tail.enqueueAll(List(lp, rp)), tiles ++ newTiles.map(_ ->TileType.Flow), maxY)
 								case (Some(lp), None) =>
-									moveWater(tail.enqueue(lp), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Flow), maxY)
+									moveWater(tail.enqueue(lp), tiles ++ newTiles.map(_ -> TileType.Flow), maxY)
 								case (None, Some(rp)) =>
-									moveWater(tail.enqueue(rp), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Flow), maxY)
+									moveWater(tail.enqueue(rp), tiles ++ newTiles.map(_ -> TileType.Flow), maxY)
 								case (None, None) =>
-									moveWater(tail.enqueue(pos - Pos(0, 2)), tiles ++ (leftTiles ++ rightTiles).map(_ -> TileType.Still), maxY)
+									moveWater(tail.enqueue(pos - Pos(0, 2)), tiles ++ newTiles.map(_ -> TileType.Still), maxY)
 
 	lazy val pt1 =
 		val Box(min, max) =
