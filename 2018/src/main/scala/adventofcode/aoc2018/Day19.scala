@@ -27,11 +27,11 @@ object Day19 extends AdventOfCode:
 				case Some(instruction) => execute(instruction).run(instructions)
 				case None              => this
 
-		def execute(instruction: Instruction): Device =
+		def execute(instr: Instruction): Device =
 			import Registers.*
 
 			val newRegisters =
-				registers.run(instruction.opcode, instruction.a, instruction.b, instruction.c)
+				registers.run(instr.opcode, instr.a, instr.b, instr.c)
 
 			copy(registers = newRegisters.updated(ip, newRegisters(ip) + 1))
 
@@ -73,28 +73,20 @@ object Day19 extends AdventOfCode:
 		import utilities.Cycle
 
 		val f: Device => Device =
-			d =>
-				instructions.lift(d.registers(d.ip)) match
-					case Some(instruction) => d.execute(instruction)
-					case None => sys.error("finished processing, cycle not found!")
+			d => d.execute(instructions(d.registers(d.ip)))
 
 		val g: Device => Int =
 			d => d.registers(d.ip)
 
-		val cycle = Cycle.find(f, device)(g)
+		val cycle =
+			Cycle.find(f, device.copy(registers = device.registers.updated(0, 1)))(g)
 
-		val start = 10551330
+		val divisors =
+			(1 to cycle.head.registers(3))
+				.filter(i => cycle.head.registers(3) % i == 0)
 
-		val sumOfDivisors =
-			for
-				i <- (1 to start).iterator
+		divisors.sum
 
-				if start % i == 0
-			yield
-				i
-
-		sumOfDivisors.sum
-	
 	answer(1)(pt1)
 
 	answer(2)(pt2)
