@@ -9,6 +9,7 @@ object Day18 extends AdventOfCode:
 	given Mode = Mode.Prod
 
 	import Acres.*
+	import AcreType.*
 
 	val landscape: Acres =
 		val result =
@@ -16,30 +17,31 @@ object Day18 extends AdventOfCode:
 				(l, y) <- input.zipWithIndex
 				(c, x) <- l.zipWithIndex
 			yield
-				Pos(x, y) -> Acres.fromChar(c)
+				Pos(x, y) -> fromChar(c)
 
-		Acres.fromMap(result.toMap)
+		Acres.unit(result.toMap)
+
+	enum AcreType:
+		case Open
+		case Wooded
+		case Lumberyard
+
+	object AcreType:
+		def fromChar(c: Char): AcreType =
+			c match
+				case '.' => Open
+				case '|' => Wooded
+				case '#' => Lumberyard
 
 	opaque type Acres =
 		Map[Pos, AcreType]
 
 	object Acres:
-		enum AcreType:
-			case Open
-			case Wooded
-			case Lumberyard
-
-		def unit: Acres =
+		def empty: Acres =
 			Map.empty[Pos, AcreType]
 
-		def fromMap(m: Map[Pos, AcreType]): Acres =
+		def unit(m: Map[Pos, AcreType]): Acres =
 			m
-
-		def fromChar(c: Char): AcreType =
-			c match
-				case '.' => AcreType.Open
-				case '|' => AcreType.Wooded
-				case '#' => AcreType.Lumberyard
 
 		extension (self: Acres)
 			def changeLandscape(minutes: Int): Acres =
@@ -57,13 +59,13 @@ object Day18 extends AdventOfCode:
 									val adj    = (p.adjacentHrVr(boundingBox) ++ p.adjacentDgn(boundingBox)).map(acres)
 
 									a match
-										case AcreType.Open if adj.count(_ == AcreType.Wooded) >= 3 =>
-											acc.updated(p, AcreType.Wooded)
-										case AcreType.Wooded if adj.count(_ == AcreType.Lumberyard) >= 3 =>
-											acc.updated(p, AcreType.Lumberyard)
-										case AcreType.Lumberyard if adj.count(_ == AcreType.Lumberyard) >= 1 && adj.count(_ == AcreType.Wooded) >= 1 =>
-											acc.updated(p, AcreType.Lumberyard)
-										case AcreType.Lumberyard => acc.updated(p, AcreType.Open)
+										case Open if adj.count(_ == Wooded) >= 3 =>
+											acc.updated(p, Wooded)
+										case Wooded if adj.count(_ == Lumberyard) >= 3 =>
+											acc.updated(p, Lumberyard)
+										case Lumberyard if adj.count(_ == Lumberyard) >= 1 && adj.count(_ == Wooded) >= 1 =>
+											acc.updated(p, Lumberyard)
+										case Lumberyard => acc.updated(p, Open)
 										case _ => acc
 
 						loop(newAcres, mins - 1)
@@ -72,8 +74,8 @@ object Day18 extends AdventOfCode:
 
 	lazy val pt1 =
 		val acres: Acres    = landscape.changeLandscape(10)
-		val wooded: Int     = acres.count((_, a) => a == AcreType.Wooded)
-		val lumberyard: Int = acres.count((_, a) => a == AcreType.Lumberyard)
+		val wooded: Int     = acres.count((_, a) => a == Wooded)
+		val lumberyard: Int = acres.count((_, a) => a == Lumberyard)
 
 		wooded * lumberyard
 
@@ -84,7 +86,7 @@ object Day18 extends AdventOfCode:
 			a => a.changeLandscape(1)
 
 		val g: Acres => Int =
-			a => a.count((_, a) => a == AcreType.Wooded) * a.count((_, a) => a == AcreType.Lumberyard)
+			a => a.count((_, a) => a == Wooded) * a.count((_, a) => a == Lumberyard)
 
 		val cycle: Cycle[Acres] =
 			Cycle.find(f, landscape)(g)
