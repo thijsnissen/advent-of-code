@@ -70,23 +70,53 @@ object Day19 extends AdventOfCode:
 			.registers(0)
 
 	lazy val pt2 =
-		import utilities.Cycle
-
-		val f: Device => Device =
-			d => d.execute(instructions(d.registers(d.ip)))
-
-		val g: Device => Int =
-			d => d.registers(d.ip)
-
-		val cycle =
-			Cycle.find(f, device.copy(registers = device.registers.updated(0, 1)))(g)
-
 		val divisors =
-			(1 to cycle.head.registers(3))
-				.filter(i => cycle.head.registers(3) % i == 0)
+			(1 to 10551330)
+				.filter(i => 10551330 % i == 0)
 
 		divisors.sum
 
 	answer(1)(pt1)
 
 	answer(2)(pt2)
+
+// the algorithm stores the sum of all numers r5 that
+// make up r3 when multiplied by a whole numer in r0.
+// it starts with r5 = 1 and then multiplies by 1 ...
+// r3 until r5 * r1 >= r3. It then raises r5 by 1 and
+// starts again multiplying. So to complete the algorihm
+// makes 10551330 * 10551330 = 111.330.564.768.900 loops.
+// r0 contains the sum of the dividers of r3.
+//
+//17-35: r3 = (2 * 2 * 19 * 11) + (4 * 22 + 6) = 930
+//17-35: r2 = (27 * 28 + 29) * (30 * 14 * 32)  = 10550400
+//17-35: r3 = r2 + r3 = 10551330
+//
+//    0: goto 17
+//    1: r5 = 1
+//
+//    2: r1 = 1
+//    3: r2 = r5 * r1
+//  4-8: r2 == r3 ? r0 += r5 : r1++
+// 9-12: r1 > r3 ? r5++ : goto 3
+//13-16: r5 > r3 ? halt : goto 2
+//
+//   17: r3 += 2
+//   18: r3 *= r3
+//   19: r3 *= 19
+//   20: r3 *= 11
+//   21: r2 += 4
+//   22: r2 *= 22
+//   23: r2 += 6
+//   24: r3 += r2
+//   25: goto 26 + r0
+//   26: goto 1
+//   27: r2  = 27
+//   28: r2 *= 28
+//   29: r2 += 29
+//   30: r2 *= 30
+//   31: r2 *= 14
+//   32: r2 *= 32
+//   33: r3 += r2
+//   34: r0  = 0
+//   35: goto 1
