@@ -92,8 +92,8 @@ object Day16 extends AdventOfCode:
 			opcodes.sortBy((_, codes) => codes.length) match
 				case (name, code) :: t if code.length == 1 =>
 					orderedOpcodes(t.map((n, c) => (n, c.filterNot(_ == code.head))), (code.head, name) :: acc)
-				case h :: t => sys.error("Cannot order opcodes for the given input")
 				case Nil => acc.sortBy((code, _) => code).map((_, name) => name)
+				case _   => sys.error("Cannot order opcodes for the given input")
 
 		extension (self: Device)
 			def run(opcode: String, a: Int, b: Int, c: Int): Device =
