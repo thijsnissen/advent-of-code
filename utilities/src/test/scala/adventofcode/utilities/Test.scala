@@ -107,6 +107,8 @@ class Test extends AnyFunSuite:
 		assertResult(List(Pos(1, 1), Pos(3, 1)))(pos2 adjacentDgn Box(Pos(0, 0), Pos(4, 2)))
 		assertResult(List(Pos(1, 2), Pos(2, 1)))(pos2 adjacentHrVrFromSeq list)
 		assertResult(List(Pos(1, 1)))(pos2 adjacentDgnFromSeq list)
+		assertResult(List(Pos(3, 2), Pos(1, 2), Pos(2, 3)))(pos2 adjacentHrVrFromFun(p => p.y > 1))
+		assertResult(List(Pos(1, 3), Pos(3, 3)))(pos2 adjacentDgnFromFun(p => p.y > 1))
 		assertResult(Pos(0, 0))(Pos.unit)
 		assertResult("""
 									 |  0 1 2
