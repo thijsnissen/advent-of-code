@@ -16,7 +16,7 @@ object Day19 extends AdventOfCode:
 	val device: Device =
 		input.next match
 			case s"#ip $ip" =>
-				Device(ip.toInt, Registers.unit(Map(0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0, 4 -> 0, 5 -> 0)))
+				Device(ip.toInt, Registers.empty)
 
 	case class Instruction(opcode: String, a: Int, b: Int, c: Int)
 
@@ -40,9 +40,12 @@ object Day19 extends AdventOfCode:
 
 	object Registers:
 		def unit(m: Map[Int, Int]): Registers =
-			assert(m.size == 6, "The device has four registers (numbered 0 through 5)")
+			assert(m.keys == Set(0, 1, 2, 3, 4, 5), "The device has six registers (numbered 0 through 5)")
 
 			m.withDefaultValue(0)
+
+		def empty: Registers =
+			Map(0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0, 4 -> 0, 5 -> 0).withDefaultValue(0)
 
 		extension (self: Registers)
 			def run(opcode: String, a: Int, b: Int, c: Int): Registers =
