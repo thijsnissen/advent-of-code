@@ -46,7 +46,8 @@ object Day16 extends AdventOfCode:
 
 	case class Instruction(opcode: Int, a: Int, b: Int, c: Int)
 
-	opaque type Device = Map[Int, Int]
+	opaque type Device =
+		Map[Int, Int]
 
 	object Device:
 		val unorderedOpcodes: List[String] =
@@ -58,9 +59,12 @@ object Day16 extends AdventOfCode:
 			)
 
 		def unit(m: Map[Int, Int]): Device =
-			assert(m.size ==  4, "The device has four registers (numbered 0 through 3)")
+			assert(m.keys ==  Set(0, 1, 2, 3), "The device has four registers (numbered 0 through 3)")
 
 			m.withDefaultValue(0)
+
+		def empty: Device =
+			Map(0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0).withDefaultValue(0)
 
 		def analyzeSamplesBySample: List[List[String]] =
 			samples.foldLeft(List.empty[List[String]]):
@@ -92,8 +96,8 @@ object Day16 extends AdventOfCode:
 			opcodes.sortBy((_, codes) => codes.length) match
 				case (name, code) :: t if code.length == 1 =>
 					orderedOpcodes(t.map((n, c) => (n, c.filterNot(_ == code.head))), (code.head, name) :: acc)
-				case h :: t => sys.error("Cannot order opcodes for the given input")
 				case Nil => acc.sortBy((code, _) => code).map((_, name) => name)
+				case _   => sys.error("Cannot order opcodes for the given input")
 
 		extension (self: Device)
 			def run(opcode: String, a: Int, b: Int, c: Int): Device =
@@ -126,7 +130,7 @@ object Day16 extends AdventOfCode:
 			orderedOpcodes(analyzeSamplesByOpcode, List.empty[(Int, String)])
 
 		val result =
-			instructions.foldLeft(unit(Map(0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0))):
+			instructions.foldLeft(empty):
 				(device, inst) => device.run(opcodes(inst.opcode), inst.a, inst.b, inst.c)
 
 		result(0)

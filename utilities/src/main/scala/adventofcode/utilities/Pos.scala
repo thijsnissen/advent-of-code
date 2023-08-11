@@ -40,6 +40,12 @@ case class Pos(x: Int, y: Int):
 	def adjacentDgnFromSeq(s: Seq[Pos]): List[Pos] =
 		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(s.contains)
 
+	def adjacentHrVrFromFun(f: Pos => Boolean): List[Pos] =
+		List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1)).filter(f)
+
+	def adjacentDgnFromFun(f: Pos => Boolean): List[Pos] =
+		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(f)
+
 object Pos:
 	def unit: Pos =
 		Pos(0, 0)
