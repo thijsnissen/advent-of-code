@@ -180,9 +180,8 @@ class Test extends AnyFunSuite:
 
 	test("Day20"):
 		if Day20.given_Mode == Day20.Mode.Test then
-			assertResult(???)(Day20.pt1) // [0ms]
-			assertResult(???)(Day20.pt2) // [0ms]
+			assertResult(23)(Day20.pt1) // [4ms]
 
 		if Day20.given_Mode == Day20.Mode.Prod then
-			assertResult(???)(Day20.pt1) // [154ms]
-			assertResult(???)(Day20.pt2) // [24ms]
+			assertResult(4247)(Day20.pt1) // [62ms]
+			assertResult(8356)(Day20.pt2) // [40ms]

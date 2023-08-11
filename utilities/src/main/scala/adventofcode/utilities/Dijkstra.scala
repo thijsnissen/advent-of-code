@@ -11,6 +11,12 @@ object Dijkstra:
 			else
 				ordInt.compare(x._2, y._2)
 
+	@annotation.tailrec
+	def getPath[A](k: A, tree: Map[A, A], acc: List[A]): List[A] =
+		tree.get(k) match
+			case Some(v) => getPath(v, tree, k :: acc)
+			case None => k :: acc
+
 	extension[A] (self: WeightedGraph[A])
 		def dijkstraShortestPath(source: A)(using Ordering[A]): (Map[A, Int], Map[A, A]) =
 			@annotation.tailrec
@@ -48,13 +54,7 @@ object Dijkstra:
 		def shortestPathTo(source: A)(target: A => Boolean)(using Ordering[A]): Option[(List[A], Int)] =
 			val (edges, tree) = self.dijkstraShortestPath(source)
 
-			@annotation.tailrec
-			def loop(k: A, acc: List[A]): List[A] =
-				tree.get(k) match
-					case Some(v) => loop(v, k :: acc)
-					case None => k :: acc
-
-			edges.toVector.sorted.find((k, _) => target(k)) match
-				case Some(t, _) => Some(loop(t, List.empty[A]), edges.getOrElse(t, 0))
+			edges.toVector.sorted.find((t, _) => target(t)) match
+				case Some(t, i) => Some(getPath(t, tree, List.empty[A]), i)
 				case None if target(source) => Some((List(source), 0))
 				case None => None
