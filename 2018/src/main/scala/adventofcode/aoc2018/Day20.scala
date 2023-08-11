@@ -5,7 +5,7 @@ import utilities.AdventOfCode
 import utilities.Pos
 
 object Day20 extends AdventOfCode:
-	given Mode = Mode.Test
+	given Mode = Mode.Prod
 
 	val regex: String =
 		input.mkString
@@ -96,11 +96,14 @@ object Day20 extends AdventOfCode:
 			case None =>
 				acc
 
+	def parse(r: String): Vector[Instructions] =
+		Instructions.instructions.run(r) match
+			case Right(value) => value.get
+			case Left(e) => sys.error(e.asString)
+
 	lazy val pt1 =
 		val result =
-			Instructions.instructions.run(regex) match
-				case Right(value) => instructionsToMap(value.get, Pos.unit, 0, Vector.empty[(Pos, Int)])
-				case Left(e)      => sys.error(e.asString)
+			instructionsToMap(parse(regex), Pos.unit, 0, Vector.empty[(Pos, Int)])
 
 		val (_, maxDistance) = result.maxBy((_, d) => d)
 
@@ -108,9 +111,7 @@ object Day20 extends AdventOfCode:
 
 	lazy val pt2 =
 		val result =
-			Instructions.instructions.run(regex) match
-				case Right(value) => instructionsToMap(value.get, Pos.unit, 0, Vector.empty[(Pos, Int)])
-				case Left(e)      => sys.error(e.asString)
+			instructionsToMap(parse(regex), Pos.unit, 0, Vector.empty[(Pos, Int)])
 
 		result
 			.distinctBy((p, _) => p)
