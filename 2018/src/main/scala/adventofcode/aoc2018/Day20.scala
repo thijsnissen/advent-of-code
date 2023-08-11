@@ -99,7 +99,7 @@ object Day20 extends AdventOfCode:
 	def parse(r: String): Vector[Instructions] =
 		Instructions.instructions.run(r) match
 			case Right(value) => value.get
-			case Left(e) => sys.error(e.asString)
+			case Left(e)      => sys.error(e.asString)
 
 	lazy val pt1 =
 		val result =
