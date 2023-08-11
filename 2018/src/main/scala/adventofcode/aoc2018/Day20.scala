@@ -105,7 +105,10 @@ object Day20 extends AdventOfCode:
 		val result =
 			instructionsToMap(parse(regex), Pos.unit, 0, Vector.empty[(Pos, Int)])
 
-		val (_, maxDistance) = result.maxBy((_, d) => d)
+		val (_, maxDistance) =
+			result
+				.groupMapReduce((p, _) => p)((_, i) => i)((a, b) => a min b)
+				.maxBy((_, d) => d)
 
 		maxDistance
 
@@ -114,7 +117,7 @@ object Day20 extends AdventOfCode:
 			instructionsToMap(parse(regex), Pos.unit, 0, Vector.empty[(Pos, Int)])
 
 		result
-			.distinctBy((p, _) => p)
+			.groupMapReduce((p, _) => p)((_, i) => i)((a, b) => a min b)
 			.count((_, i) => i >= 1000)
 
 	answer(1)(pt1)
