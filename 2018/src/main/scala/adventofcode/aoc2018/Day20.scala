@@ -71,30 +71,34 @@ object Day20 extends AdventOfCode:
 				val (p, d) = a.last
 				a :+ (offset(p, c), d + 1)
 
-	def instructionsToMap(instr: Vector[Instructions], currPos: Pos, currDist: Int, acc: Vector[(Pos, Int)]): Vector[(Pos, Int)] =
-		instr.headOption match
-			case Some(Rooms(get)) =>
-				val rooms =
-					offsetRooms(get, currPos, currDist)
+	def instructionsToMap(instrutctions: Vector[Instructions]): Map[Pos, Int] =
+		def loop(instr: Vector[Instructions], currPos: Pos, currDist: Int, acc: Vector[(Pos, Int)]): Vector[(Pos, Int)] =
+			instr.headOption match
+				case Some(Rooms(get)) =>
+					val rooms =
+						offsetRooms(get, currPos, currDist)
 
-				val (maxPos, maxDist) =
-					rooms.maxBy((_, d) => d)
+					val (maxPos, maxDist) =
+						rooms.maxBy((_, d) => d)
 
-				instructionsToMap(instr.tail, maxPos, maxDist, acc ++ rooms.tail)
-			case Some(RoomsDetour(get)) =>
-				val rooms =
-					offsetRooms(get.take(get.length / 2), currPos, currDist)
+					loop(instr.tail, maxPos, maxDist, acc ++ rooms.tail)
+				case Some(RoomsDetour(get)) =>
+					val rooms =
+						offsetRooms(get.take(get.length / 2), currPos, currDist)
 
-				instructionsToMap(instr.tail, currPos, currDist, acc ++ rooms.tail)
-			case Some(Branch(get)) =>
-				instructionsToMap(instr.tail ++ get, currPos, currDist, acc)
-			case Some(Leaf(get)) =>
-				val leaf =
-					instructionsToMap(get, currPos, currDist, Vector.empty[(Pos, Int)])
+					loop(instr.tail, currPos, currDist, acc ++ rooms.tail)
+				case Some(Branch(get)) =>
+					loop(instr.tail ++ get, currPos, currDist, acc)
+				case Some(Leaf(get)) =>
+					val leaf =
+						loop(get, currPos, currDist, Vector.empty[(Pos, Int)])
 
-				instructionsToMap(instr.tail, currPos, currDist, acc ++ leaf)
-			case None =>
-				acc
+					loop(instr.tail, currPos, currDist, acc ++ leaf)
+				case None =>
+					acc
+
+		loop(instrutctions, Pos.unit, 0, Vector.empty[(Pos, Int)])
+			.groupMapReduce((p, _) => p)((_, i) => i)((a, b) => a min b)
 
 	def parse(r: String): Vector[Instructions] =
 		Instructions.instructions.run(r) match
@@ -103,22 +107,18 @@ object Day20 extends AdventOfCode:
 
 	lazy val pt1 =
 		val result =
-			instructionsToMap(parse(regex), Pos.unit, 0, Vector.empty[(Pos, Int)])
+			instructionsToMap(parse(regex))
 
 		val (_, maxDistance) =
-			result
-				.groupMapReduce((p, _) => p)((_, i) => i)((a, b) => a min b)
-				.maxBy((_, d) => d)
+			result.maxBy((_, d) => d)
 
 		maxDistance
 
 	lazy val pt2 =
 		val result =
-			instructionsToMap(parse(regex), Pos.unit, 0, Vector.empty[(Pos, Int)])
+			instructionsToMap(parse(regex))
 
-		result
-			.groupMapReduce((p, _) => p)((_, i) => i)((a, b) => a min b)
-			.count((_, i) => i >= 1000)
+		result.count((_, i) => i >= 1000)
 
 	answer(1)(pt1)
 
