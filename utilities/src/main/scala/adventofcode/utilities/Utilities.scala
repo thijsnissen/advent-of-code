@@ -51,3 +51,8 @@ object Utilities:
 	extension [A: Integral](a: A)
 		@annotation.targetName("wholeNumberModulo")
 		def +%(n: A): A = (a % n + n) % n
+
+	extension [A](i: Iterable[A])
+		def sumBy[B](f: A => B)(using n: Numeric[B]): B =
+			i.foldLeft(n.zero):
+				(acc, elem) => n.plus(acc, f(elem))
