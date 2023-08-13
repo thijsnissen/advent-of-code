@@ -67,10 +67,14 @@ object Day19 extends AdventOfCode:
 					case "eqri" => self.updated(c, if self(a) == b then 1 else 0)
 					case "eqrr" => self.updated(c, if self(a) == self(b) then 1 else 0)
 
+			def get(n: Int): Int =
+				self(n)
+
 	lazy val pt1 =
 		device
 			.run(instructions)
-			.registers(0)
+			.registers
+			.get(0)
 
 	lazy val pt2 =
 		val divisors =
