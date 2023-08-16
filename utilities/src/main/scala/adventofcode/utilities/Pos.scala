@@ -28,6 +28,11 @@ case class Pos(x: Int, y: Int):
 		math.abs(math.max(x, that.x) - math.min(x, that.x)) +
 			math.abs(math.max(y, that.y) - math.min(y, that.y))
 
+	def euclidean(that: Pos): Double =
+		math.sqrt:
+			math.pow(math.abs(math.max(x, that.x) - math.min(x, that.x)), 2) +
+				math.pow(math.abs(math.max(y, that.y) - math.min(y, that.y)), 2)
+
 	def adjacentHrVr(b: Box): List[Pos] =
 		List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1)).filter(b.contains)
 
