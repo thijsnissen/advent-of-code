@@ -65,7 +65,7 @@ object Day20 extends AdventOfCode:
 			case 'E' => p + Pos(1, 0)
 			case 'W' => p + Pos(-1, 0)
 
-	// We turn each direction/character into a Pos(x, y) and a corresponding
+	// Turn each direction/character into a Pos(x, y) and a corresponding
 	// total travel distance so far.
 	def offsetRooms(rooms: Vector[Char], pos: Pos, dist: Int): Vector[(Pos, Int)] =
 		rooms.foldLeft(Vector((pos, dist))):
