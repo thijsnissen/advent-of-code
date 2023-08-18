@@ -90,7 +90,7 @@ object Day20 extends AdventOfCode:
 					loop(instr.tail, maxPos, maxDist, acc ++ rooms.tail)
 
 				// A sequence of rooms that lead to a dead end and are then travelled again
-				// backwards (SSEE WWNN). Because of that we only have the index half of the
+				// backwards (SSEE WWNN). Because of that we only have to index half of the
 				// route. Since a RoomsDetour leads back to the point where it started we
 				// continue to the next instruction (instr.tail) with the currPos and
 				// currDist unchanged.
@@ -100,18 +100,19 @@ object Day20 extends AdventOfCode:
 
 					loop(instr.tail, currPos, currDist, acc ++ rooms.tail)
 
-				// A Branch consists of multiple leafs. All we need to do is add them to
-				// the queue for further processing from the currPos and currDist.
+				// A Branch consists of multiple leafs. It is basically being able to turn
+				// left and right on an intersection. Each direction consists of a set of
+				// instructions (Leaf) that have to be explored separately from the currPos
+				// and currDist. All we need to do is add them to the queue for further
+				// processing from the currPos and currDist.
 				case Some(Branch(get)) =>
 					loop(instr.tail ++ get, currPos, currDist, acc)
 
-				// A leaf is series of instructions that need to be analyzed separately
-				// from the currPos and currDist. It is basically being able to turn left
-				// and right on an intersection. Each direction has to be explored separately
-				// from the currPos and currDist. Once a leaf (i.e. pick a direction) is
-				// fully explored, it's result is added to the accumulator and we continue
-				// to the next instruction (instr.tail) from the point of the intersection
-				// (currPos and currDist).
+				// A leaf is a wrapper around a series of instructions that occured from
+				// a branch (basically being able to turn left and right on an intersection).
+				// Once a leaf (i.e. pick a direction) is fully explored, it's result is
+				// added to the accumulator and we continue to the next instruction
+				// (instr.tail) from the point of the intersection (currPos and currDist).
 				case Some(Leaf(get)) =>
 					val leaf =
 						loop(get, currPos, currDist, Vector.empty[(Pos, Int)])
