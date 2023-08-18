@@ -93,7 +93,3 @@ object Pos:
 						c.toString
 
 		result.mkString("\n", "", "")
-
-	given posReadingOrder: Ordering[Pos] =
-		Ordering.fromLessThan:
-			(a, b) => a.y < b.y || (a.y == b.y && a.x < b.x)

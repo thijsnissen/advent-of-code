@@ -188,11 +188,11 @@ class Test extends AnyFunSuite:
 			6,
 			List(
 				Pos(x = 1, y = 1),
-				Pos(x = 2, y = 1),
-				Pos(x = 2, y = 2),
-				Pos(x = 3, y = 2),
-				Pos(x = 3, y = 3),
-				Pos(x = 4, y = 3),
+				Pos(x = 1, y = 2),
+				Pos(x = 1, y = 3),
+				Pos(x = 1, y = 4),
+				Pos(x = 2, y = 4),
+				Pos(x = 3, y = 4),
 				Pos(x = 4, y = 4)
 			)
 		)
@@ -212,7 +212,7 @@ class Test extends AnyFunSuite:
 				(b, a, 1)
 
 		val aStarTestH: (Pos, Int) => Double =
-			(v, _) => Pos(9, 1).euclidean(v)
+			(v, _) => math.sqrt(math.pow(9 - v.x, 2) + math.pow(v.y - 1, 2))
 
 		val aStarTest = WeightedGraph.fromTupleList(aStarTestGraph.toList)
 

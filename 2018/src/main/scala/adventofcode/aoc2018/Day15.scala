@@ -8,7 +8,7 @@ import utilities.Pos
 object Day15 extends AdventOfCode:
 	given Mode = Mode.Prod
 
-	import BattleState.posReadingOrder
+	import utilities.Orderings.posReadingOrder
 
 	val map: Vector[Pos] =
 		val result =
@@ -164,10 +164,6 @@ object Day15 extends AdventOfCode:
 				pos + Pos(0, 1),
 				pos + Pos(0, -1)
 			).filter(map.contains)
-
-		given posReadingOrder: Ordering[Pos] =
-			Ordering.fromLessThan:
-				(a, b) => a.y < b.y || (a.y == b.y && a.x < b.x)
 
 	lazy val pt1 =
 		val result =
