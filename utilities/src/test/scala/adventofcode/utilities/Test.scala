@@ -157,7 +157,7 @@ class Test extends AnyFunSuite:
 		val res = (Map('z' -> 0, 'x' -> 1, 'w' -> 3, 'y' -> 4), Map('y' -> 'w', 'x' -> 'z', 'w' -> 'x'))
 
 		assertResult(res)(WeightedGraph.fromTupleList(weightedGraph).shortestPathTree('z'))
-		assertResult((Map.empty[Char, Int], Map.empty[Char, Char]))(WeightedGraph.fromTupleList(weightedGraph).shortestPathTree('a'))
+		assertResult((Map('a' -> 0), Map.empty[Char, Char]))(WeightedGraph.fromTupleList(weightedGraph).shortestPathTree('a'))
 
 		def tree(depth: Int): WeightedGraph[List[Boolean]] =
 			WeightedGraph.unit:
@@ -168,6 +168,7 @@ class Test extends AnyFunSuite:
 		//val testTree = tree(15).shortestPathTree(List(true))
 
 		import AStar.*
+		import Orderings.posReadingOrder
 
 		val aStarStart    = Pos(0, 0)
 		val aStarTarget   = Pos(4, 4)
@@ -188,11 +189,11 @@ class Test extends AnyFunSuite:
 			6,
 			List(
 				Pos(x = 1, y = 1),
-				Pos(x = 1, y = 2),
-				Pos(x = 1, y = 3),
-				Pos(x = 1, y = 4),
-				Pos(x = 2, y = 4),
-				Pos(x = 3, y = 4),
+				Pos(x = 2, y = 1),
+				Pos(x = 2, y = 2),
+				Pos(x = 3, y = 2),
+				Pos(x = 3, y = 3),
+				Pos(x = 4, y = 3),
 				Pos(x = 4, y = 4)
 			)
 		)
@@ -231,3 +232,38 @@ class Test extends AnyFunSuite:
 		//		Pos.asString(aStarTestSeq.filterNot(dijkstraRes.contains))
 
 		assertResult(aStarDist)(dijkstraEdges(Pos(9, 1)))
+
+	test("Grid"):
+		import utilities.Grid
+		import utilities.Grid.*
+
+		val grid1: Grid[Int] =
+			Grid.unit(Vector(Vector(1, 2, 3), Vector(4, 5, 6), Vector(7, 8, 9)))
+
+		val grid2: Grid[Int] =
+			Grid.unit(Vector(Vector(1, 2, 3), Vector(4, 5, 6), Vector(7, 10, 9)))
+
+		val grid3: Grid[Int] =
+			Grid.unit(Vector(Vector(2, 3, 4), Vector(5, 6, 7), Vector(8, 9, 10)))
+
+		val grid4: Vector[Int] =
+			Vector(1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+		val grid5: Grid[Int] =
+			Grid.unit(Vector(Vector(1, 4, 7), Vector(2, 5, 8), Vector(3, 6, 9)))
+
+		assertResult(true)(grid1.isInstanceOf[Grid[Int]])
+		assertResult(true)(Grid.empty[Int].isInstanceOf[Grid[Int]])
+		assertResult(8)(grid1(1)(2))
+		assertResult(8)(grid1.get(1, 2))
+		assertResult(grid2)(grid1(1, 2)(10))
+		assertResult(grid2)(grid1.set(1, 2)(10))
+		assertResult(Vector(4, 5, 6))(grid1.getRow(1))
+		assertResult(Vector(2, 5, 8))(grid1.getCol(1))
+		assertResult(grid3)(grid1.map(_ + 1))
+		assertResult(4)(grid1.count(_ % 2 == 0))
+		assertResult(true)(grid2.exists(_ > 9))
+		assertResult(true)(grid2.contains(10))
+		assertResult((3, 3))(grid1.size)
+		assertResult(grid4)(grid1.iterator.toVector)
+		assertResult(grid5)(grid1.transpose)

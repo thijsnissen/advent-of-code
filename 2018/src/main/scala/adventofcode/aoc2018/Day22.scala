@@ -42,7 +42,7 @@ object Day22 extends AdventOfCode:
 			copy(tool = (regionType.tools - tool).head)
 
 	object State:
-		given (using ord: Ordering[Pos]): Ordering[State] =
+		given stateOrdering(using ord: Ordering[Pos]): Ordering[State] =
 			Ordering.comparatorToOrdering:
 				(a, b) => ord.compare(a.pos, b.pos)
 
@@ -101,6 +101,9 @@ object Day22 extends AdventOfCode:
 	lazy val pt2 =
 		import utilities.WeightedGraph
 		import utilities.AStar.*
+
+		import State.stateOrdering
+		import utilities.Orderings.posReadingOrder
 
 		val regions: Regions =
 			Regions
