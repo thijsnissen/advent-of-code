@@ -23,7 +23,7 @@ object Day22 extends AdventOfCode:
 			.next
 
 	val mouthOfCave =
-		Pos.unit
+		Pos.zero
 
 	enum Tool:
 		case Torch, ClimbingGear, Neither

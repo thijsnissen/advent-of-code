@@ -24,6 +24,9 @@ case class Pos(x: Int, y: Int):
 		Pos(math.max(x, that.x) - math.min(x, that.x),
 			math.max(y, that.y) - math.min(y, that.y))
 
+	def sign(that: Pos): Pos =
+		Pos((x - that.x).sign, (y - that.y).sign)
+
 	def manhattan(that: Pos): Long =
 		math.abs(math.max(x, that.x) - math.min(x, that.x)) +
 			math.abs(math.max(y, that.y) - math.min(y, that.y))
@@ -52,7 +55,7 @@ case class Pos(x: Int, y: Int):
 		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(f)
 
 object Pos:
-	def unit: Pos =
+	def zero: Pos =
 		Pos(0, 0)
 
 	def asString(seq: Seq[Pos], found: Char = '.', notFound: Char = '#'): String =
