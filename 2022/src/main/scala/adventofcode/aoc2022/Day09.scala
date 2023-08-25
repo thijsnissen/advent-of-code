@@ -48,16 +48,16 @@ object Day09 extends AdventOfCode:
 	lazy val pt1 =
 		val result: Vector[Rope] =
 			instructions
-				.foldLeft(Vector(Rope.init(2))):
-					(acc, instr) => acc.head.move(instr) +: acc
+				.scanLeft(Rope.init(2)):
+					(rope, instr) => rope.move(instr)
 
 		uniqueTailPositions(result)
 
 	lazy val pt2 =
 		val result: Vector[Rope] =
 			instructions
-				.foldLeft(Vector(Rope.init(10))):
-					(acc, instr) => acc.head.move(instr) +: acc
+				.scanLeft(Rope.init(10)):
+					(rope, instr) => rope.move(instr)
 
 		uniqueTailPositions(result)
 

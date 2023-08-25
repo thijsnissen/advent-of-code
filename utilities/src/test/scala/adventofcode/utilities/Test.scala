@@ -252,6 +252,13 @@ class Test extends AnyFunSuite:
 		val grid5: Grid[Int] =
 			Grid.unit(Vector(Vector(1, 4, 7), Vector(2, 5, 8), Vector(3, 6, 9)))
 
+		val grid1AsString: String =
+			"""
+				|1 2 3
+				|4 5 6
+				|7 8 9
+				|""".stripMargin
+
 		assertResult(true)(grid1.isInstanceOf[Grid[Int]])
 		assertResult(true)(Grid.empty[Int].isInstanceOf[Grid[Int]])
 		assertResult(8)(grid1(1)(2))
@@ -267,3 +274,4 @@ class Test extends AnyFunSuite:
 		assertResult((3, 3))(grid1.size)
 		assertResult(grid4)(grid1.iterator.toVector)
 		assertResult(grid5)(grid1.transpose)
+		assertResult(grid1AsString)(grid1.asString)

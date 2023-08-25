@@ -57,3 +57,6 @@ object Grid:
 
 		def transpose: Grid[A] =
 			self.transpose
+
+		def asString: String =
+			self.map(_.mkString(" ")).mkString("\n", "\n", "\n")
