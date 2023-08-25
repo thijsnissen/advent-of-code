@@ -127,7 +127,7 @@ object Day20 extends AdventOfCode:
 		// apparently happens not only in the roomsDetour (because there we account
 		// for it) but also in the main route. With groupMapReduce we pick the shortest
 		// distance for every Pos and remove the rest.
-		loop(instructions, Pos.unit, 0, Vector.empty[(Pos, Int)])
+		loop(instructions, Pos.zero, 0, Vector.empty[(Pos, Int)])
 			.groupMapReduce((p, _) => p)((_, i) => i)((a, b) => a min b)
 
 	def parse(r: String): Vector[Instructions] =
