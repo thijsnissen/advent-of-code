@@ -3,6 +3,7 @@ package aoc2018
 
 import utilities.AdventOfCode
 import utilities.Pos
+import utilities.Orderings.posReadingOrder
 
 object Day13 extends AdventOfCode:
 	given Mode = Mode.Prod
@@ -75,10 +76,6 @@ object Day13 extends AdventOfCode:
 				case '\\' => turnBackward
 				case '+'  => intersection
 				case _    => this
-
-	given Ordering[Pos] =
-		Ordering.fromLessThan:
-			(a, b) => a.y < b.y || (a.y == b.y && a.x < b.x)
 
 	def findCollisionPos(carts: Vector[Cart], cart: Cart): Option[Pos] =
 		carts.find(_.loc == cart.loc).map(_.loc)

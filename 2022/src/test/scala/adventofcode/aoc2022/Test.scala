@@ -66,3 +66,46 @@ class Test extends AnyFunSuite:
 		if Day07.given_Mode == Day07.Mode.Prod then
 			assertResult(1501149)(Day07.pt1) // [5ms]
 			assertResult(10096985)(Day07.pt2) // [8ms]
+
+	test("Day08"):
+		if Day08.given_Mode == Day08.Mode.Test then
+			assertResult(21)(Day08.pt1) // [1ms]
+			assertResult(8)(Day08.pt2) // [0ms]
+
+		if Day08.given_Mode == Day08.Mode.Prod then
+			assertResult(1829)(Day08.pt1) // [57ms]
+			assertResult(291840)(Day08.pt2) // [53ms]
+
+	test("Day09"):
+		if Day09.given_Mode == Day09.Mode.Test then
+			assertResult(13)(Day09.pt1) // [1ms]
+			assertResult(1)(Day09.pt2) // [0ms]
+
+		if Day09.given_Mode == Day09.Mode.Prod then
+			assertResult(5981)(Day09.pt1) // [10ms]
+			assertResult(2352)(Day09.pt2) // [13ms]
+
+	test("Day10"):
+		if Day10.given_Mode == Day10.Mode.Test then
+			assertResult(13140)(Day10.pt1) // [1ms]
+			assertResult(
+				"""
+					|■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . . ■ ■ . .
+					|■ ■ ■ . . . ■ ■ ■ . . . ■ ■ ■ . . . ■ ■ ■ . . . ■ ■ ■ . . . ■ ■ ■ . . . ■ ■ ■ .
+					|■ ■ ■ ■ . . . . ■ ■ ■ ■ . . . . ■ ■ ■ ■ . . . . ■ ■ ■ ■ . . . . ■ ■ ■ ■ . . . .
+					|■ ■ ■ ■ ■ . . . . . ■ ■ ■ ■ ■ . . . . . ■ ■ ■ ■ ■ . . . . . ■ ■ ■ ■ ■ . . . . .
+					|■ ■ ■ ■ ■ ■ . . . . . . ■ ■ ■ ■ ■ ■ . . . . . . ■ ■ ■ ■ ■ ■ . . . . . . ■ ■ ■ ■
+					|■ ■ ■ ■ ■ ■ ■ . . . . . . . ■ ■ ■ ■ ■ ■ ■ . . . . . . . ■ ■ ■ ■ ■ ■ ■ . . . . .
+					|""".stripMargin)(Day10.pt2) // [0ms]
+
+		if Day10.given_Mode == Day10.Mode.Prod then
+			assertResult(14340)(Day10.pt1) // [1ms]
+			assertResult(
+				"""
+					|■ ■ ■ . . . ■ ■ . . ■ ■ ■ . . . . ■ ■ . . ■ ■ . . ■ ■ ■ . . ■ . . ■ . ■ ■ ■ . .
+					|■ . . ■ . ■ . . ■ . ■ . . ■ . . . . ■ . ■ . . ■ . ■ . . ■ . ■ . . ■ . ■ . . ■ .
+					|■ . . ■ . ■ . . ■ . ■ . . ■ . . . . ■ . ■ . . . . ■ ■ ■ . . ■ ■ ■ ■ . ■ . . ■ .
+					|■ ■ ■ . . ■ ■ ■ ■ . ■ ■ ■ . . . . . ■ . ■ . . . . ■ . . ■ . ■ . . ■ . ■ ■ ■ . .
+					|■ . . . . ■ . . ■ . ■ . . . . ■ . . ■ . ■ . . ■ . ■ . . ■ . ■ . . ■ . ■ . . . .
+					|■ . . . . ■ . . ■ . ■ . . . . . ■ ■ . . . ■ ■ . . ■ ■ ■ . . ■ . . ■ . ■ . . . .
+					|""".stripMargin)(Day10.pt2) // [0ms]

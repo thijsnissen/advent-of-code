@@ -24,9 +24,17 @@ case class Pos(x: Int, y: Int):
 		Pos(math.max(x, that.x) - math.min(x, that.x),
 			math.max(y, that.y) - math.min(y, that.y))
 
+	def sign(that: Pos): Pos =
+		Pos((x - that.x).sign, (y - that.y).sign)
+
 	def manhattan(that: Pos): Long =
 		math.abs(math.max(x, that.x) - math.min(x, that.x)) +
 			math.abs(math.max(y, that.y) - math.min(y, that.y))
+
+	def euclidean(that: Pos): Double =
+		math.sqrt:
+			math.pow(math.abs(math.max(x, that.x) - math.min(x, that.x)), 2) +
+				math.pow(math.abs(math.max(y, that.y) - math.min(y, that.y)), 2)
 
 	def adjacentHrVr(b: Box): List[Pos] =
 		List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1)).filter(b.contains)
@@ -47,7 +55,7 @@ case class Pos(x: Int, y: Int):
 		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(f)
 
 object Pos:
-	def unit: Pos =
+	def zero: Pos =
 		Pos(0, 0)
 
 	def asString(seq: Seq[Pos], found: Char = '.', notFound: Char = '#'): String =
@@ -88,7 +96,3 @@ object Pos:
 						c.toString
 
 		result.mkString("\n", "", "")
-
-	given posReadingOrder: Ordering[Pos] =
-		Ordering.fromLessThan:
-			(a, b) => a.y < b.y || (a.y == b.y && a.x < b.x)

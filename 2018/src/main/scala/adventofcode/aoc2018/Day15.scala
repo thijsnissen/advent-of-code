@@ -8,7 +8,7 @@ import utilities.Pos
 object Day15 extends AdventOfCode:
 	given Mode = Mode.Prod
 
-	import BattleState.posReadingOrder
+	import utilities.Orderings.posReadingOrder
 
 	val map: Vector[Pos] =
 		val result =
@@ -46,13 +46,13 @@ object Day15 extends AdventOfCode:
 
 		def findShortestPath(map: Vector[Pos], targets: Vector[Pos]): Option[List[Pos]] =
 			import scala.collection.immutable.SortedSet
-			import utilities.GraphTraversal.findPathBreadthFirst
+			import utilities.GraphTraversal.breadthFirstSearchPathTo
 
 			val bfs: Graph[Pos] =
 				Graph.unit:
 					s => SortedSet.empty[Pos] ++ BattleState.adjacentSquares(s, map)
 
-			bfs.findPathBreadthFirst(loc)(targets.contains)
+			bfs.breadthFirstSearchPathTo(loc)(targets.contains)
 
 		def attack(that: CombatUnit): CombatUnit =
 			that.copy(hitPoints = that.hitPoints - attackPower)
@@ -164,10 +164,6 @@ object Day15 extends AdventOfCode:
 				pos + Pos(0, 1),
 				pos + Pos(0, -1)
 			).filter(map.contains)
-
-		given posReadingOrder: Ordering[Pos] =
-			Ordering.fromLessThan:
-				(a, b) => a.y < b.y || (a.y == b.y && a.x < b.x)
 
 	lazy val pt1 =
 		val result =
