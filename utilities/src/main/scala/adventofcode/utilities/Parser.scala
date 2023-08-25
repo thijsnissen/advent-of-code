@@ -7,6 +7,13 @@ opaque type Parser[+A] =
 object Parser:
 	opaque type Error = String
 
+	extension (self: Error)
+		def asString: String =
+			self
+
+		def fromString(s: String): Error =
+			s
+
 	def succeed[A](a: A): Parser[A] =
 		(s: String) => Right(a, s)
 
