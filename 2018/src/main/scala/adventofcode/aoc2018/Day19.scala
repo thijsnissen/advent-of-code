@@ -55,9 +55,9 @@ object Day19 extends AdventOfCode:
 					case "mulr" => self.updated(c, self(a) * self(b))
 					case "muli" => self.updated(c, self(a) * b)
 					case "banr" => self.updated(c, self(a) & self(b))
-					case "bani" => self.updated(c, self(a) | self(b))
-					case "borr" => self.updated(c, self(a) | b)
-					case "bori" => self.updated(c, self(a) & b)
+					case "borr" => self.updated(c, self(a) | self(b))
+					case "bori" => self.updated(c, self(a) | b)
+					case "bani" => self.updated(c, self(a) & b)
 					case "setr" => self.updated(c, self(a))
 					case "seti" => self.updated(c, a)
 					case "gtir" => self.updated(c, if a > self(b) then 1 else 0)
@@ -67,10 +67,16 @@ object Day19 extends AdventOfCode:
 					case "eqri" => self.updated(c, if self(a) == b then 1 else 0)
 					case "eqrr" => self.updated(c, if self(a) == self(b) then 1 else 0)
 
+			def getRegister(n: Int): Int =
+				self(n)
+
+	import Registers.*
+
 	lazy val pt1 =
 		device
 			.run(instructions)
-			.registers(0)
+			.registers
+			.getRegister(0)
 
 	lazy val pt2 =
 		val divisors =
