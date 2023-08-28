@@ -12,7 +12,7 @@ object Day18 extends AdventOfCode:
 	import AcreType.*
 
 	val landscape: Acres =
-		val result =
+		val result: Iterator[(Pos, AcreType)] =
 			for
 				(l, y) <- input.zipWithIndex
 				(c, x) <- l.zipWithIndex
@@ -45,18 +45,18 @@ object Day18 extends AdventOfCode:
 
 		extension (self: Acres)
 			def changeLandscape(minutes: Int): Acres =
-				val boundingBox = Box.bounding(self.keys)
+				val boundingBox: Box = Box.bounding(self.keys)
 
 				@annotation.tailrec
 				def loop(acres: Acres, mins: Int): Acres =
 					if mins <= 0 then
 						acres
 					else
-						val newAcres =
+						val newAcres: Acres =
 							acres.foldLeft(acres):
 								(acc, acre) =>
-									val (p, a) = acre
-									val adj    = (p.adjacentHrVr(boundingBox) ++ p.adjacentDgn(boundingBox)).map(acres)
+									val (p: Pos, a: AcreType) = acre
+									val adj: Vector[AcreType] = p.allOffsets.toVector.collect(acres)
 
 									a match
 										case Open if adj.count(_ == Wooded) >= 3 =>

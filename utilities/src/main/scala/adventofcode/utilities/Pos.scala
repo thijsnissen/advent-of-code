@@ -36,23 +36,23 @@ case class Pos(x: Int, y: Int):
 			math.pow(math.abs(math.max(x, that.x) - math.min(x, that.x)), 2) +
 				math.pow(math.abs(math.max(y, that.y) - math.min(y, that.y)), 2)
 
-	def adjacentHrVr(b: Box): List[Pos] =
-		List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1)).filter(b.contains)
+	def axisOffsets: Set[Pos] =
+		Set(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))
 
-	def adjacentDgn(b: Box): List[Pos] =
-		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(b.contains)
+	def diagonalOffsets: Set[Pos] =
+		Set(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1))
 
-	def adjacentHrVrFromSeq(s: Seq[Pos]): List[Pos] =
-		List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1)).filter(s.contains)
+	def allOffsets: Set[Pos] =
+		axisOffsets ++ diagonalOffsets
 
-	def adjacentDgnFromSeq(s: Seq[Pos]): List[Pos] =
-		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(s.contains)
+	def axisOffsetsFn(f: Pos => Boolean): Set[Pos] =
+		axisOffsets.filter(f)
 
-	def adjacentHrVrFromFun(f: Pos => Boolean): List[Pos] =
-		List(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1)).filter(f)
+	def diagonalOffsetsFn(f: Pos => Boolean): Set[Pos] =
+		diagonalOffsets.filter(f)
 
-	def adjacentDgnFromFun(f: Pos => Boolean): List[Pos] =
-		List(Pos(x - 1, y + 1), Pos(x + 1, y + 1), Pos(x - 1, y - 1), Pos(x + 1, y - 1)).filter(f)
+	def allOffsetsFn(f: Pos => Boolean): Set[Pos] =
+		allOffsets.filter(f)
 
 object Pos:
 	def zero: Pos =

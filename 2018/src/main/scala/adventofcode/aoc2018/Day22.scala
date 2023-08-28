@@ -54,7 +54,7 @@ object Day22 extends AdventOfCode:
 			val next =
 				state
 					.pos
-					.adjacentHrVrFromFun(p => regions.contains(p) && regions(p).tools.contains(state.tool))
+					.axisOffsetsFn(p => regions.contains(p) && regions(p).tools.contains(state.tool))
 					.map(p => State(p, regions(p), state.tool) -> 1)
 					.toMap
 
