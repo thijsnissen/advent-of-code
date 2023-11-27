@@ -1,34 +1,39 @@
 package adventofcode
 package utilities
 
-trait AdventOfCode extends App:
-	enum Mode(val file: String):
-		case Test extends Mode("test")
-		case Prod extends Mode("input")
+object AdventOfCode:
+  export Env.Prod
+  export Env.Test
 
-	val day: String =
-		this
-			.getClass
-			.getName
-			.init
-			.toLowerCase
-			.replace('.', '/')
+  enum Env(val file: String):
+    case Test extends Env("test")
+    case Prod extends Env("input")
 
-	import scala.io.Source
+  trait AdventOfCode(val env: Env) extends App:
+    val day: String =
+      this
+        .getClass
+        .getName
+        .init
+        .toLowerCase
+        .replace('.', '/')
 
-	def input(using mode: Mode): Iterator[String] =
-		Source
-			.fromResource(s"$day-${mode.file}.txt")
-			.getLines
+    import scala.io.*
+    import scala.util.Using
 
-	def answer[A](part: Int)(a: => A)(using mode: Mode): Unit =
-		val startTime: Long =
-			System.currentTimeMillis
+    lazy val input: String =
+      Using.resource(Source.fromResource(s"$day-${env.file}.txt")):
+        (i: BufferedSource) => i.mkString
 
-		val modes: List[String] = List(
-			s"${Console.YELLOW} ${Mode.fromOrdinal(mode.ordinal)} ${Console.RESET}",
-			s"${Console.GREEN} ${Mode.fromOrdinal(mode.ordinal)} ${Console.RESET}"
-		)
+    def answer[A](part: Int)(a: => A): Unit =
+      val startTime: Long =
+        System.currentTimeMillis
 
-		println(s"${modes(mode.ordinal)}The answer to $day part $part is: " +
-			s"${Console.BLUE}$a${Console.RESET} [${System.currentTimeMillis - startTime}ms]")
+      val envs: List[String] = List(
+        s"${Console.YELLOW} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}",
+        s"${Console.GREEN} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}"
+      )
+
+      println:
+        s"${envs(env.ordinal)}The answer to $day part $part is: " +
+          s"${Console.BLUE}${a.toString}${Console.RESET} [${System.currentTimeMillis - startTime}ms]"

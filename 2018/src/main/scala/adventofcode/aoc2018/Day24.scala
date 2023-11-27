@@ -1,20 +1,18 @@
 package adventofcode
 package aoc2018
 
-import utilities.AdventOfCode
+import utilities.AdventOfCode.*
 
-object Day24 extends AdventOfCode:
-	given Mode = Mode.Test
+object Day24 extends AdventOfCode(Prod):
+  val myInput =
+    input
 
-	val myInput =
-		input
+  lazy val pt1 =
+    ???
 
-	lazy val pt1 =
-		???
+  lazy val pt2 =
+    ???
 
-	lazy val pt2 =
-		???
+  answer(1)(pt1)
 
-	answer(1)(pt1)
-
-	answer(2)(pt2)
+  answer(2)(pt2)

@@ -1,67 +1,65 @@
 package adventofcode
 package aoc2018
 
-import utilities.AdventOfCode
+import utilities.AdventOfCode.*
 
-object Day21 extends AdventOfCode:
-	// No test input available today
-	given Mode = Mode.Prod
+// No test input available today
+object Day21 extends AdventOfCode(Prod):
+  import scala.util.control.Breaks.*
 
-	import scala.util.control.Breaks.*
+  def reverseEngineeringInput(registers: Vector[Int]): Vector[Int] =
+    @annotation.nowarn("msg=unset local variable")
+    var Vector(r0, r1, r2, r3, r4, r5) = registers
 
-	def reverseEngineeringInput(registers: Vector[Int]): Vector[Int] =
-		var Vector(r0, r1, r2, r3, r4, r5) = registers
+    breakable:
+      r3 = r1 | 65536
+      r1 = 6780005
 
-		breakable:
-			r3 = r1 | 65536
-			r1 = 6780005
+      while true do
+        r2 = r3 & 255
+        r1 += r2
+        r1 = r1 & 16777215
+        r1 *= 65899
+        r1 = r1 & 16777215
 
-			while true do
-				r2  = r3 & 255
-				r1 += r2
-				r1  = r1 & 16777215
-				r1 *= 65899
-				r1  = r1 & 16777215
+        if 256 > r3 then
+          // changed == to != to halt first time
+          if r1 != r0 then
+            break
+          else
+            r3 = r1 | 65536
+            r1 = 6780005
+        else
+          r2 = 0
+          r5 = r2 + 1
+          r5 *= 256
 
-				if 256 > r3 then
-					// changed == to != to halt first time
-					if r1 != r0 then
-						break
-					else
-						r3 = r1 | 65536
-						r1 = 6780005
-				else
-					r2  = 0
-					r5  = r2 + 1
-					r5 *= 256
+          while r5 <= r3 do
+            r2 += 1
+            r5 = r2 + 1
+            r5 *= 256
 
-					while r5 <= r3 do
-						r2 += 1
-						r5  = r2 + 1
-						r5 *= 256
+          r3 = r2
 
-					r3 = r2
+    Vector(r0, r1, r2, r3, r4, r5)
 
-		Vector(r0, r1, r2, r3, r4, r5)
+  lazy val pt1: Int =
+    val registers: Vector[Int] =
+      Iterator
+        .iterate(Vector.fill(6)(0))(reverseEngineeringInput)
+        .drop(1)
+        .next
 
-	lazy val pt1 =
-		val registers: Vector[Int] =
-			Iterator
-				.iterate(Vector.fill(6)(0))(reverseEngineeringInput)
-				.drop(1)
-				.next
+    registers(1)
 
-		registers(1)
+  lazy val pt2: Int =
+    utilities.Cycle
+      .find(reverseEngineeringInput, Vector.fill(6)(0))(r => r(1))
+      .last(1)
 
-	lazy val pt2 =
-		utilities.Cycle
-			.find(reverseEngineeringInput, Vector.fill(6)(0))(r => r(1))
-			.last(1)
+  answer(1)(pt1)
 
-	answer(1)(pt1)
-
-	answer(2)(pt2)
-
+  answer(2)(pt2)
 
 //#ip 4
 //00: r1  = 123
