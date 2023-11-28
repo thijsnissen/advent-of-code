@@ -58,7 +58,7 @@ object Day16 extends AdventOfCode(Prod):
     Map[Int, Int]
 
   object Device:
-    val unorderedOpcodes: List[String] =
+    lazy val unorderedOpcodes: List[String] =
       List(
         "addr",
         "addi",

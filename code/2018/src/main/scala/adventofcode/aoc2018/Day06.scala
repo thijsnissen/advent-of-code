@@ -16,8 +16,8 @@ object Day06 extends AdventOfCode(Prod):
     def distanceTo(tx: Int, ty: Int): Int =
       math.abs(x - tx) + math.abs(y - ty)
 
-  val maxX: Int = myInput.map(_.x).max + 1
-  val maxY: Int = myInput.map(_.y).max + 1
+  lazy val maxX: Int = myInput.map(_.x).max + 1
+  lazy val maxY: Int = myInput.map(_.y).max + 1
 
   lazy val grid1: Vector[Vector[Int]] =
     (0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):
@@ -43,7 +43,7 @@ object Day06 extends AdventOfCode(Prod):
       .maxBy(_._2)
       ._2
 
-  val maxDistance = 10000 // 32 10000
+  lazy val maxDistance = 10000 // 32 10000
 
   lazy val grid2: Vector[Vector[Int]] =
     (0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):

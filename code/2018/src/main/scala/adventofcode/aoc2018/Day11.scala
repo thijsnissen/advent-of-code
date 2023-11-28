@@ -80,7 +80,7 @@ object Day11 extends AdventOfCode(Prod):
 
   import Grid.*
 
-  val window = Window(1, 300, 1, 300)
+  lazy val window = Window(1, 300, 1, 300)
 
   lazy val pt1: String =
     val r1 =

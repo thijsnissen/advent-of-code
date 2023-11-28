@@ -13,7 +13,7 @@ object Day07 extends AdventOfCode(Prod):
     files: Map[String, Int],
     currDir: List[String]
   ):
-    val totalDiskSpace: Int =
+    lazy val totalDiskSpace: Int =
       70000000
 
     def totalUsedSpace: Int =

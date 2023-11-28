@@ -22,7 +22,7 @@ object Day22 extends AdventOfCode(Prod):
         case s"target: $x,$y" => Pos(x.toInt, y.toInt)
       .next
 
-  val mouthOfCave =
+  lazy val mouthOfCave =
     Pos.zero
 
   enum Tool:

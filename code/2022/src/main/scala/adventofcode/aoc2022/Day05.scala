@@ -28,7 +28,7 @@ object Day05 extends AdventOfCode(Prod):
         .updated(to, stack(from).take(count) ++ stack(to))
         .updated(from, stack(from).drop(count))
 
-  val startingStack: Stacks =
+  lazy val startingStack: Stacks =
     startingInput
       .filter(_.contains('['))
       .flatMap(_.grouped(4).map(_.charAt(1)).zipWithIndex)
@@ -38,7 +38,7 @@ object Day05 extends AdventOfCode(Prod):
         case (acc, (crate, index)) =>
           acc + (index + 1 -> (crate :: acc(index + 1)))
 
-  val instructions: Vector[Instruction] =
+  lazy val instructions: Vector[Instruction] =
     startingInput
       .filter(_.startsWith("move"))
       .collect:

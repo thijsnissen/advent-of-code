@@ -18,7 +18,7 @@ object Day17 extends AdventOfCode(Prod):
         .map((_, TileType.Clay))
         .toMap
 
-  val springOfWater: Pos =
+  lazy val springOfWater: Pos =
     Pos(500, 0)
 
   opaque type Tiles = Map[Pos, TileType]

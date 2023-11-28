@@ -11,6 +11,7 @@ lazy val root =
     .settings(aliases)
     .aggregate(
       aoc2018,
+      aoc2021,
       aoc2022,
       aoc2023,
       utilities
@@ -25,6 +26,13 @@ lazy val utilities =
 lazy val aoc2018 =
   project
     .in(file("code/2018"))
+    .dependsOn(utilities)
+    .settings(libraryDependencies ++= Dependencies.common)
+    .settings(commonSettings ++ commonImports)
+
+lazy val aoc2021 =
+  project
+    .in(file("code/2021"))
     .dependsOn(utilities)
     .settings(libraryDependencies ++= Dependencies.common)
     .settings(commonSettings ++ commonImports)

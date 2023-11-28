@@ -6,8 +6,8 @@ import utilities.Orderings.posReadingOrder
 import utilities.Pos
 
 object Day13 extends AdventOfCode(Prod):
-  val cartPieces  = Set('^', 'v', '<', '>')
-  val trackPieces = Set('|', '-', '\\', '/', '+')
+  lazy val cartPieces  = Set('^', 'v', '<', '>')
+  lazy val trackPieces = Set('|', '-', '\\', '/', '+')
 
   val tracks: Map[Pos, Char] =
     def cartToTrack(c: Char): Char =
