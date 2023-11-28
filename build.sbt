@@ -7,7 +7,7 @@ lazy val root =
     .in(file("."))
     .settings(name := "advent-of-code")
     .settings(description := "My solutions to the Advent of Code puzzles")
-    .settings(commonSettings)
+    .settings(commonSettings ++ commonImports)
     .settings(aliases)
     .aggregate(
       aoc2018,
@@ -20,28 +20,28 @@ lazy val utilities =
   project
     .in(file("code/utilities"))
     .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings)
+    .settings(commonSettings ++ commonImports)
 
 lazy val aoc2018 =
   project
     .in(file("code/2018"))
     .dependsOn(utilities)
     .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings)
+    .settings(commonSettings ++ commonImports)
 
 lazy val aoc2022 =
   project
     .in(file("code/2022"))
     .dependsOn(utilities)
     .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings)
+    .settings(commonSettings ++ commonImports)
 
 lazy val aoc2023 =
   project
     .in(file("code/2023"))
     .dependsOn(utilities)
     .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings)
+    .settings(commonSettings ++ commonImports)
 
 lazy val commonSettings = Seq(
   scalacOptions ++= Seq(
@@ -61,6 +61,17 @@ lazy val commonSettings = Seq(
   Compile / run / fork         := true,
   Compile / run / connectInput := true,
   Compile / run / javaOptions += "-Xmx4G"
+)
+
+lazy val commonImports = Seq(
+  scalacOptions +=
+    Seq(
+      "java.lang",
+      "scala",
+      "scala.Predef",
+      "scala.annotation",
+      "scala.util.chaining"
+    ).mkString("-Yimports:", ",", "")
 )
 
 lazy val aliases = {
