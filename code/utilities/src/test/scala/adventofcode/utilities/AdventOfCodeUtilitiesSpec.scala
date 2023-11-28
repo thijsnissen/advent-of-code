@@ -593,7 +593,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       WeightedGraph.fromTupleList(weightedGraph).shortestPathTree('a')
     )
 
-    //def tree(depth: Int): WeightedGraph[List[Boolean]] =
+    // def tree(depth: Int): WeightedGraph[List[Boolean]] =
     //  WeightedGraph.unit:
     //    case x if x.size < depth  => Map((true :: x) -> 1, (false :: x) -> 2)
     //    case x if x.size == depth => Map(Nil -> 1)
@@ -663,11 +663,11 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
 
     val (dijkstraEdges, dijkstraTree) = aStarTest.shortestPathTree(Pos(1, 1))
 
-    //val dijkstraRes = utilities.GraphTraversal.treeToPath(
+    // val dijkstraRes = utilities.GraphTraversal.treeToPath(
     //  Pos(9, 1),
     //  dijkstraTree,
     //  List.empty[Pos]
-    //)
+    // )
 
     // println:
     //	s"AStar: $aStarDist" +
