@@ -28,10 +28,11 @@ object Day03 extends AdventOfCode(Prod):
       if bits.length == 1 then
         bits.head
       else
+        val transposedBits: Vector[Bits] =
+          bits.transpose
+
         filterByCriterium(
-          bits.filter(
-            (b: Bits) => b(pos) == criterium(bits.transpose.apply(pos))
-          ),
+          bits.filter(_.apply(pos) == criterium(transposedBits.apply(pos))),
           criterium,
           pos + 1,
         )
