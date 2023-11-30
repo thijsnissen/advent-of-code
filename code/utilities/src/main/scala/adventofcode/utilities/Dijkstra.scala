@@ -10,7 +10,7 @@ object Dijkstra:
       def loop(
         toVisit: Map[A, Int],
         visited: Map[A, Int],
-        tree: Map[A, A]
+        tree: Map[A, A],
       ): (Map[A, Int], Map[A, A]) =
         if toVisit.isEmpty then
           (visited, tree)
@@ -34,7 +34,7 @@ object Dijkstra:
           loop(
             toVisit.removed(vertex) ++ neighborsToVisit,
             visited + (vertex -> edge),
-            tree ++ neighborsTree
+            tree ++ neighborsTree,
           )
 
       loop(Map(source -> 0), Map.empty[A, Int], Map.empty[A, A])

@@ -52,7 +52,8 @@ object Day18 extends AdventOfCode(Prod):
             val newAcres: Acres =
               acres.foldLeft(acres): (acc, acre) =>
                 val (p: Pos, a: AcreType) = acre
-                val adj: Vector[AcreType] = p.allOffsets.toVector.collect(acres)
+                val adj: Vector[AcreType] =
+                  p.allOffsets.toVector.collect(acres)
 
                 a match
                   case Open if adj.count(_ == Wooded) >= 3 =>
@@ -85,7 +86,8 @@ object Day18 extends AdventOfCode(Prod):
       a => a.changeLandscape(1)
 
     val g: Acres => Int =
-      a => a.count((_, a) => a == Wooded) * a.count((_, a) => a == Lumberyard)
+      a =>
+        a.count((_, a) => a == Wooded) * a.count((_, a) => a == Lumberyard)
 
     val cycle: Cycle[Acres] =
       Cycle.find(f, landscape)(g)

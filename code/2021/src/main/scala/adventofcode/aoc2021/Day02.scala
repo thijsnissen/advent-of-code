@@ -16,8 +16,8 @@ object Day02 extends AdventOfCode(Prod):
 
   lazy val pt1: Int =
     val Pos(hpos, depth) =
-      course.foldLeft(Pos.zero):
-        (acc, pos) => acc + pos
+      course.foldLeft(Pos.zero): (acc, pos) =>
+        acc + pos
 
     hpos * depth
 

@@ -60,7 +60,7 @@ object Day20 extends AdventOfCode(Prod):
   def offsetRooms(
     rooms: Vector[Char],
     pos: Pos,
-    dist: Int
+    dist: Int,
   ): Vector[(Pos, Int)] =
     rooms.foldLeft(Vector((pos, dist))): (a, c) =>
       val (p, d) = a.last
@@ -72,7 +72,7 @@ object Day20 extends AdventOfCode(Prod):
       instr: Vector[Instructions],
       currPos: Pos,
       currDist: Int,
-      acc: Vector[(Pos, Int)]
+      acc: Vector[(Pos, Int)],
     ): Vector[(Pos, Int)] =
       instr.headOption match
         // Once we encounter a seqence of rooms, the deepest level of the Instructions

@@ -5,16 +5,18 @@ ThisBuild / scalaVersion := Version.scala
 lazy val root =
   project
     .in(file("."))
-    .settings(name := "advent-of-code")
-    .settings(description := "My solutions to the Advent of Code puzzles")
-    .settings(commonSettings ++ commonImports)
-    .settings(aliases)
+    .settings(
+      name           := "Advent of Code",
+      normalizedName := "advent-of-code",
+      description    := "My solutions to the Advent of Code puzzles",
+    )
+    .settings(commonSettings ++ commonImports ++ aliases)
     .aggregate(
       aoc2018,
       aoc2021,
       aoc2022,
       aoc2023,
-      utilities
+      utilities,
     )
 
 lazy val utilities =
@@ -64,11 +66,11 @@ lazy val commonSettings = Seq(
     "-Wunused:imports",
     "-Wunused:locals",
     "-print-lines",
-    "-explain"
+    "-explain",
   ),
   Compile / run / fork         := true,
   Compile / run / connectInput := true,
-  Compile / run / javaOptions += "-Xmx4G"
+  Compile / run / javaOptions += "-Xmx4G",
 )
 
 lazy val commonImports = Seq(
@@ -78,12 +80,11 @@ lazy val commonImports = Seq(
       "scala",
       "scala.Predef",
       "scala.annotation",
-      "scala.util.chaining"
+      "scala.util.chaining",
     ).mkString("-Yimports:", ",", "")
 )
 
-lazy val aliases = {
+lazy val aliases =
   addCommandAlias("format", "scalafmtAll;scalafmtSbt")
-}
 
 ThisBuild / watchBeforeCommand := Watch.clearScreen

@@ -19,8 +19,9 @@ object JSON:
     (string("true") | string("false")).map(b => JBool(b.toBoolean))
 
   val jnumber: Parser[JNumber] =
-    regex("[-+]?([0-9]*\\.)?[0-9]+([eE][-+]?[0-9]+)?".r).map(n =>
-      JNumber(n.toDouble)
+    regex("[-+]?([0-9]*\\.)?[0-9]+([eE][-+]?[0-9]+)?".r).map(
+      n =>
+        JNumber(n.toDouble)
     )
 
   val jstring: Parser[JString] =
@@ -63,6 +64,7 @@ object JSON:
         case JBool(boolean)  => boolean.toString
         case JArray(elements) =>
           elements.map(_.asString).mkString("[", ",", "]")
-        case JObject(fields) => fields.map((key, value) =>
-            s"\"$key\":${value.asString}"
+        case JObject(fields) => fields.map(
+            (key, value) =>
+              s"\"$key\":${value.asString}"
           ).mkString("{", ",", "}")

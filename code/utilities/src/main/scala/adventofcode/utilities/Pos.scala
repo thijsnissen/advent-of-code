@@ -23,7 +23,7 @@ case class Pos(x: Int, y: Int):
   def delta(that: Pos): Pos =
     Pos(
       math.max(x, that.x) - math.min(x, that.x),
-      math.max(y, that.y) - math.min(y, that.y)
+      math.max(y, that.y) - math.min(y, that.y),
     )
 
   def sign(that: Pos): Pos =
@@ -46,7 +46,7 @@ case class Pos(x: Int, y: Int):
       Pos(x - 1, y + 1),
       Pos(x + 1, y + 1),
       Pos(x - 1, y - 1),
-      Pos(x + 1, y - 1)
+      Pos(x + 1, y - 1),
     )
 
   def allOffsets: Set[Pos] =

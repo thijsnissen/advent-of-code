@@ -16,7 +16,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos(1, 0),
       Pos(2, -2),
       Pos(2, -1),
-      Pos(2, 0)
+      Pos(2, 0),
     )
 
     assertResult(Pos(2, 2))(box1.delta)
@@ -52,7 +52,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos3D(x = 2, y = 1, z = 0),
       Pos3D(x = 2, y = 1, z = 1),
       Pos3D(x = 2, y = 1, z = 2),
-      Pos3D(x = 2, y = 1, z = 3)
+      Pos3D(x = 2, y = 1, z = 3),
     )
 
     assertResult(Pos3D(2, 0, 5))(box1.delta)
@@ -106,7 +106,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos4D(x = 0, y = 1, z = 1, w = 1),
       Pos4D(x = 1, y = 1, z = 3, w = 1),
       Pos4D(x = 0, y = 1, z = 2, w = 0),
-      Pos4D(x = 0, y = 1, z = 0, w = 0)
+      Pos4D(x = 0, y = 1, z = 0, w = 0),
     )
 
     assertResult(Pos4D(2, 0, 5, 1))(box1.delta)
@@ -134,7 +134,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos(2, 1),
       Pos(0, 2),
       Pos(1, 2),
-      Pos(2, 2)
+      Pos(2, 2),
     )
 
     assertResult(Pos(2, 2))(pos1 + pos2)
@@ -166,21 +166,22 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos(1, -1),
       Pos(3, -1),
       Pos(1, -3),
-      Pos(3, -3)
+      Pos(3, -3),
     ))(pos2.allOffsets)
 
     assertResult(Set(Pos(3, -2), Pos(2, -1), Pos(2, -3)))(pos2.axisOffsetsFn(
       p => p.x > 1
     ))
-    assertResult(Set(Pos(3, -1), Pos(3, -3)))(pos2.diagonalOffsetsFn(p =>
-      p.x > 1
+    assertResult(Set(Pos(3, -1), Pos(3, -3)))(pos2.diagonalOffsetsFn(
+      p =>
+        p.x > 1
     ))
     assertResult(Set(
       Pos(3, -2),
       Pos(2, -1),
       Pos(2, -3),
       Pos(3, -1),
-      Pos(3, -3)
+      Pos(3, -3),
     ))(pos2.allOffsetsFn(p => p.x > 1))
 
     assertResult(Pos(0, 0))(Pos.zero)
@@ -214,7 +215,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos3D(x = 3, y = -2, z = 2),
       Pos3D(x = 2, y = -3, z = 2),
       Pos3D(x = 2, y = -2, z = 3),
-      Pos3D(x = 1, y = -2, z = 2)
+      Pos3D(x = 1, y = -2, z = 2),
     )
 
     val diagonalOffsets = Set(
@@ -237,7 +238,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos3D(x = 2, y = -3, z = 3),
       Pos3D(x = 2, y = -1, z = 1),
       Pos3D(x = 3, y = -1, z = 3),
-      Pos3D(x = 1, y = -2, z = 3)
+      Pos3D(x = 1, y = -2, z = 3),
     )
 
     val axisOffsetsFn = Set(
@@ -245,7 +246,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos3D(x = 2, y = -1, z = 2),
       Pos3D(x = 3, y = -2, z = 2),
       Pos3D(x = 2, y = -3, z = 2),
-      Pos3D(x = 2, y = -2, z = 3)
+      Pos3D(x = 2, y = -2, z = 3),
     )
 
     val diagonalOffsetsFn = Set(
@@ -260,7 +261,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos3D(x = 3, y = -3, z = 3),
       Pos3D(x = 2, y = -3, z = 3),
       Pos3D(x = 2, y = -1, z = 1),
-      Pos3D(x = 3, y = -1, z = 3)
+      Pos3D(x = 3, y = -1, z = 3),
     )
 
     assertResult(axisOffsets)(pos2.axisOffsets)
@@ -269,8 +270,9 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
 
     assertResult(axisOffsetsFn)(pos2.axisOffsetsFn(p => p.x > 1))
     assertResult(diagonalOffsetsFn)(pos2.diagonalOffsetsFn(p => p.x > 1))
-    assertResult(axisOffsetsFn ++ diagonalOffsetsFn)(pos2.allOffsetsFn(p =>
-      p.x > 1
+    assertResult(axisOffsetsFn ++ diagonalOffsetsFn)(pos2.allOffsetsFn(
+      p =>
+        p.x > 1
     ))
 
     assertResult(Pos3D(0, 0, 0))(Pos3D.zero)
@@ -297,7 +299,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos4D(x = 1, y = -2, z = 2, w = -2),
       Pos4D(x = 2, y = -3, z = 2, w = -2),
       Pos4D(x = 2, y = -2, z = 1, w = -2),
-      Pos4D(x = 2, y = -2, z = 3, w = -2)
+      Pos4D(x = 2, y = -2, z = 3, w = -2),
     )
 
     val diagonalOffsets = Set(
@@ -372,7 +374,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos4D(x = 1, y = -1, z = 1, w = -3),
       Pos4D(x = 1, y = -1, z = 2, w = -1),
       Pos4D(x = 2, y = -3, z = 2, w = -3),
-      Pos4D(x = 3, y = -2, z = 3, w = -3)
+      Pos4D(x = 3, y = -2, z = 3, w = -3),
     )
 
     val axisOffsetsFn = Set(
@@ -382,7 +384,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos4D(x = 3, y = -2, z = 2, w = -2),
       Pos4D(x = 2, y = -3, z = 2, w = -2),
       Pos4D(x = 2, y = -2, z = 1, w = -2),
-      Pos4D(x = 2, y = -2, z = 3, w = -2)
+      Pos4D(x = 2, y = -2, z = 3, w = -2),
     )
 
     val diagonalOffsetsFn = Set(
@@ -431,7 +433,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       Pos4D(x = 3, y = -1, z = 3, w = -2),
       Pos4D(x = 2, y = -2, z = 1, w = -1),
       Pos4D(x = 2, y = -3, z = 2, w = -3),
-      Pos4D(x = 3, y = -2, z = 3, w = -3)
+      Pos4D(x = 3, y = -2, z = 3, w = -3),
     )
 
     assertResult(axisOffsets)(pos2.axisOffsets)
@@ -440,8 +442,9 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
 
     assertResult(axisOffsetsFn)(pos2.axisOffsetsFn(p => p.x > 1))
     assertResult(diagonalOffsetsFn)(pos2.diagonalOffsetsFn(p => p.x > 1))
-    assertResult(axisOffsetsFn ++ diagonalOffsetsFn)(pos2.allOffsetsFn(p =>
-      p.x > 1
+    assertResult(axisOffsetsFn ++ diagonalOffsetsFn)(pos2.allOffsetsFn(
+      p =>
+        p.x > 1
     ))
 
     assertResult(Pos4D(0, 0, 0, 0))(Pos4D.zero)
@@ -519,7 +522,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       (8, 5),
       (5, 1),
       (9, 2),
-      (8, 3)
+      (8, 3),
     )
 
     val graph =
@@ -535,7 +538,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       (3, 2),
       (6, 5),
       (8, 5),
-      (10, 9)
+      (10, 9),
     ))(graph.breadthFirstSearch(1)(_ == 10).getOrElse("not found"))
     assertResult(Vector(
       (1, 1),
@@ -547,7 +550,7 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       (7, 6),
       (8, 5),
       (9, 1),
-      (10, 9)
+      (10, 9),
     ))(graph.depthFirstSearch(1)(_ == 10).getOrElse("not found"))
     assertResult("not found")(
       graph.breadthFirstSearch(1)(_ == 11).getOrElse("not found")
@@ -576,13 +579,13 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
       ('z', 'y', 10),
       ('z', 'x', 1),
       ('x', 'w', 2),
-      ('w', 'y', 1)
+      ('w', 'y', 1),
     )
 
     val res =
       (
         Map('z' -> 0, 'x'   -> 1, 'w'   -> 3, 'y' -> 4),
-        Map('y' -> 'w', 'x' -> 'z', 'w' -> 'x')
+        Map('y' -> 'w', 'x' -> 'z', 'w' -> 'x'),
       )
 
     assertResult(res)(
@@ -627,17 +630,17 @@ class AdventOfCodeUtilitiesSpec extends AnyFunSuite:
         Pos(x = 3, y = 2),
         Pos(x = 3, y = 3),
         Pos(x = 4, y = 3),
-        Pos(x = 4, y = 4)
-      )
+        Pos(x = 4, y = 4),
+      ),
     )
 
     assertResult(Some(aStarResult))(aStar.shortestPathTo(
       aStarSource,
-      _ == aStarTarget
+      _ == aStarTarget,
     )(heuristic))
     assertResult(Some(0, List(aStarSource)))(aStar.shortestPathTo(
       aStarSource,
-      _ == aStarSource
+      _ == aStarSource,
     )(heuristic))
     assertResult(None)(
       aStar.shortestPathTo(aStarSource, _ == Pos(5, 5))(heuristic)

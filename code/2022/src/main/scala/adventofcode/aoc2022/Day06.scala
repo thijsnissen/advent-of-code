@@ -8,7 +8,7 @@ object Day06 extends AdventOfCode(Prod):
   def findMarkerLocation(
     dataStreamBuffer: String,
     size: Int,
-    acc: String = ""
+    acc: String = "",
   ): Int =
     if s"${dataStreamBuffer.head}${acc.take(size - 1)}".distinct.length == size
     then
@@ -17,7 +17,7 @@ object Day06 extends AdventOfCode(Prod):
       findMarkerLocation(
         dataStreamBuffer.tail,
         size,
-        s"${dataStreamBuffer.head}$acc"
+        s"${dataStreamBuffer.head}$acc",
       )
 
   lazy val pt1: Int =

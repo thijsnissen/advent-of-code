@@ -17,7 +17,7 @@ object Day11 extends AdventOfCode(Prod):
     items: Vector[Int],
     op: Int => Int,
     test: Int => Int,
-    counter: Int = 0
+    counter: Int = 0,
   ):
     def addItem(item: Int): Monkey =
       copy(items = items :+ item)
@@ -84,7 +84,7 @@ object Day11 extends AdventOfCode(Prod):
         parseOp(ss(2)),
         getTest.curried(parseTest(ss(3)))(parseIfTrue(ss(4)))(
           parseIfFalse(ss(5))
-        )
+        ),
       )
 
     def getOperation(op: (String, String)): Int => Int =

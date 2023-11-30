@@ -11,7 +11,7 @@ object Day07 extends AdventOfCode(Prod):
   case class FileSystem(
     dirs: Set[String],
     files: Map[String, Int],
-    currDir: List[String]
+    currDir: List[String],
   ):
     lazy val totalDiskSpace: Int =
       70000000

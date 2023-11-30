@@ -41,7 +41,7 @@ object Day19 extends AdventOfCode(Prod):
     def unit(m: Map[Int, Int]): Registers =
       assert(
         m.keys == Set(0, 1, 2, 3, 4, 5),
-        "The device has six registers (numbered 0 through 5)"
+        "The device has six registers (numbered 0 through 5)",
       )
 
       m.withDefaultValue(0)

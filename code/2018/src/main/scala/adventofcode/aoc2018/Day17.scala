@@ -57,7 +57,7 @@ object Day17 extends AdventOfCode(Prod):
       def trySide(
         pos: Pos,
         vector: Pos,
-        modified: Vector[Pos]
+        modified: Vector[Pos],
       ): (Option[Pos], Vector[Pos]) =
         tiles(pos + Pos(0, 1)) match
           case TileType.Sand | TileType.Flow =>
@@ -78,7 +78,7 @@ object Day17 extends AdventOfCode(Prod):
                 case Some(p) => moveWater(
                     tail.enqueue(p),
                     tiles + (pos -> TileType.Flow),
-                    maxY
+                    maxY,
                   )
                 case None => moveWater(tail, tiles, maxY)
             case TileType.Clay | TileType.Still =>
@@ -94,25 +94,25 @@ object Day17 extends AdventOfCode(Prod):
                   moveWater(
                     tail.enqueueAll(List(lp, rp)),
                     tiles ++ newTiles.map(_ -> TileType.Flow),
-                    maxY
+                    maxY,
                   )
                 case (Some(lp), None) =>
                   moveWater(
                     tail.enqueue(lp),
                     tiles ++ newTiles.map(_ -> TileType.Flow),
-                    maxY
+                    maxY,
                   )
                 case (None, Some(rp)) =>
                   moveWater(
                     tail.enqueue(rp),
                     tiles ++ newTiles.map(_ -> TileType.Flow),
-                    maxY
+                    maxY,
                   )
                 case (None, None) =>
                   moveWater(
                     tail.enqueue(pos - Pos(0, 2)),
                     tiles ++ newTiles.map(_ -> TileType.Still),
-                    maxY
+                    maxY,
                   )
 
   lazy val pt1: Int =
@@ -158,8 +158,9 @@ object Day17 extends AdventOfCode(Prod):
     val print2 =
       print
         .zipWithIndex
-        .map((c, i) =>
-          if (i + 1) % delta == 0 then c.toString + "\n" else c.toString
+        .map(
+          (c, i) =>
+            if (i + 1) % delta == 0 then c.toString + "\n" else c.toString
         )
 
     println(print2.mkString("\n", "", "\n"))

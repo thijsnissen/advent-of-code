@@ -26,12 +26,12 @@ object Day08 extends AdventOfCode(Prod):
       input: Vector[Long],
       childCount: Long,
       metaCount: Long,
-      children: Vector[Node] = Vector.empty[Node]
+      children: Vector[Node] = Vector.empty[Node],
     ): (Node, Vector[Long]) =
       if childCount == 0 then
         (
           Node(children, input.take(metaCount.toInt)),
-          input.drop(metaCount.toInt)
+          input.drop(metaCount.toInt),
         )
       else
         val (child, restOfInput) =

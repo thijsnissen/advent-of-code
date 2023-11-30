@@ -15,7 +15,7 @@ object GraphTraversal:
     as: SortedSet[A],
     toVisit: Vector[(A, A)],
     visited: Vector[(A, A)],
-    from: A
+    from: A,
   ): Vector[(A, A)] =
     as
       .view
@@ -33,7 +33,7 @@ object GraphTraversal:
         loop(
           Vector.empty[(A, A)] ++ self.run(source).toVector.map(_ -> source),
           Vector(source -> source),
-          false
+          false,
         )(target)
 
     def breadthFirstSearchPathTo(source: A)(target: A => Boolean)
@@ -54,14 +54,14 @@ object GraphTraversal:
         loop(
           Vector.empty[(A, A)] ++ self.run(source).toVector.map(_ -> source),
           Vector(source -> source),
-          true
+          true,
         )(target)
 
     @annotation.tailrec
     private def loop(
       toVisit: Vector[(A, A)],
       visited: Vector[(A, A)],
-      lifo: Boolean
+      lifo: Boolean,
     )(target: A => Boolean): Option[Vector[(A, A)]] =
       toVisit match
         case (visit, from) +: _ if target(visit) =>
@@ -70,13 +70,13 @@ object GraphTraversal:
           loop(
             updateToVisit(self.run(visit), toVisit, visited, visit) ++ tail,
             (visit, from) +: visited,
-            lifo
+            lifo,
           )(target)
         case (visit, from) +: tail =>
           loop(
             tail ++ updateToVisit(self.run(visit), toVisit, visited, visit),
             (visit, from) +: visited,
-            lifo
+            lifo,
           )(target)
         case _ =>
           None

@@ -30,8 +30,9 @@ object Day06 extends AdventOfCode(Prod):
             state
 
   lazy val infiniteAreas: Set[Int] =
-    (grid1.head ++ grid1.last ++ grid1.flatMap(x =>
-      Vector(x.head, x.last)
+    (grid1.head ++ grid1.last ++ grid1.flatMap(
+      x =>
+        Vector(x.head, x.last)
     )).toSet
 
   lazy val LargestNonInfiniteArea: Int =

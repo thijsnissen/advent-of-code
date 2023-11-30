@@ -4,7 +4,7 @@ package utilities
 object Orderings:
   given tupleADouble[A](using
     ordA: Ordering[A],
-    ordDouble: Ordering[Double]
+    ordDouble: Ordering[Double],
   ): Ordering[(A, Double)] with
     override def compare(a: (A, Double), b: (A, Double)): Int =
       val (aA, aDouble) = a
@@ -17,7 +17,7 @@ object Orderings:
 
   given tupleAInt[A](using
     ordA: Ordering[A],
-    ordInt: Ordering[Int]
+    ordInt: Ordering[Int],
   ): Ordering[(A, Int)] with
     override def compare(a: (A, Int), b: (A, Int)): Int =
       val (aA, aInt) = a

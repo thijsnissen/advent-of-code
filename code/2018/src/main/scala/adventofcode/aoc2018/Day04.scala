@@ -25,7 +25,9 @@ object Day04 extends AdventOfCode(Prod):
 
   def guardIdIsMostAsleep: Long =
     myInput
-      .groupMapReduce { case Guard(id, _, _) => id }(g => g.sleepTime)(_ + _)
+      .groupMapReduce {
+        case Guard(id, _, _) => id
+      }(g => g.sleepTime)(_ + _)
       .maxBy(_._2)._1
 
   def minuteIsMostAsleep: Int =
