@@ -30,4 +30,4 @@ class AdventOfCode2021Spec extends AnyFunSuite:
 
     if Day03.env == Prod then
       assertResult(3901196)(Day03.pt1) // [10ms]
-      assertResult(4412188)(Day03.pt2) // [161ms]
+      assertResult(4412188)(Day03.pt2) // [52ms]
