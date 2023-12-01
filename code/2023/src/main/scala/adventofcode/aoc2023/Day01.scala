@@ -9,39 +9,53 @@ object Day01 extends AdventOfCode(Prod):
       .linesIterator
       .toVector
 
-  val digits: Map[String, String] =
+  val digits: Map[String, Int] =
     Map(
-      "one"   -> "o1e",
-      "two"   -> "t2o",
-      "three" -> "t3e",
-      "four"  -> "f4r",
-      "five"  -> "f5e",
-      "six"   -> "s6x",
-      "seven" -> "s7n",
-      "eight" -> "e8t",
-      "nine"  -> "n9e",
+      "one"   -> 1,
+      "two"   -> 2,
+      "three" -> 3,
+      "four"  -> 4,
+      "five"  -> 5,
+      "six"   -> 6,
+      "seven" -> 7,
+      "eight" -> 8,
+      "nine"  -> 9,
     )
 
   @tailrec
   def firstValidDigit(line: String): Int =
     if line.head.isDigit then line.head.asDigit else firstValidDigit(line.tail)
 
-  def normalize(line: String): String =
-    digits.foldLeft(line):
-      case (line, (from, to)) => line.replaceAll(from, to)
-
-  def calibrationValue(line: String): Int =
+  def calibrationValueFromDigits(line: String): Int =
     s"${firstValidDigit(line)}${firstValidDigit(line.reverse)}".toInt
+
+  def calibrationValueFromDigitsLetters(line: String): Int =
+    s"${startsWith(line)}${endsWith(line)}".toInt
+
+  @tailrec
+  def startsWith(line: String): Int =
+    if line.head.isDigit then line.head.asDigit
+    else
+      digits.find((a, _) => line.startsWith(a)) match
+        case Some(_, b) => b
+        case None       => startsWith(line.tail)
+
+  @tailrec
+  def endsWith(line: String): Int =
+    if line.last.isDigit then line.last.asDigit
+    else
+      digits.find((a, _) => line.endsWith(a)) match
+        case Some(_, b) => b
+        case None       => endsWith(line.init)
 
   lazy val pt1: Int =
     calibrationDocument
-      .map(calibrationValue)
+      .map(calibrationValueFromDigits)
       .sum
 
   lazy val pt2: Int =
     calibrationDocument
-      .map(normalize)
-      .map(calibrationValue)
+      .map(calibrationValueFromDigitsLetters)
       .sum
 
   answer(1)(pt1)
