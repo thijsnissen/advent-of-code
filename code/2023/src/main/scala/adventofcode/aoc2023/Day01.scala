@@ -9,7 +9,7 @@ object Day01 extends AdventOfCode(Prod):
       .linesIterator
       .toVector
 
-  val lettersToDigits: Map[String, Int] =
+  val lettersToDigit: Map[String, Int] =
     Map(
       "one"   -> 1,
       "two"   -> 2,
@@ -36,7 +36,7 @@ object Day01 extends AdventOfCode(Prod):
   def startsWith(line: String): Int =
     if line.head.isDigit then line.head.asDigit
     else
-      lettersToDigits.find((letters, _) => line.startsWith(letters)) match
+      lettersToDigit.find((letters, _) => line.startsWith(letters)) match
         case Some(_, digit) => digit
         case None           => startsWith(line.tail)
 
@@ -44,7 +44,7 @@ object Day01 extends AdventOfCode(Prod):
   def endsWith(line: String): Int =
     if line.last.isDigit then line.last.asDigit
     else
-      lettersToDigits.find((letters, _) => line.endsWith(letters)) match
+      lettersToDigit.find((letters, _) => line.endsWith(letters)) match
         case Some(_, digit) => digit
         case None           => endsWith(line.init)
 
