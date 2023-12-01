@@ -36,17 +36,17 @@ object Day01 extends AdventOfCode(Prod):
   def startsWith(line: String): Int =
     if line.head.isDigit then line.head.asDigit
     else
-      digits.find((a, _) => line.startsWith(a)) match
-        case Some(_, b) => b
-        case None       => startsWith(line.tail)
+      digits.find((letters, _) => line.startsWith(letters)) match
+        case Some(_, digit) => digit
+        case None           => startsWith(line.tail)
 
   @tailrec
   def endsWith(line: String): Int =
     if line.last.isDigit then line.last.asDigit
     else
-      digits.find((a, _) => line.endsWith(a)) match
-        case Some(_, b) => b
-        case None       => endsWith(line.init)
+      digits.find((letters, _) => line.endsWith(letters)) match
+        case Some(_, digit) => digit
+        case None           => endsWith(line.init)
 
   lazy val pt1: Int =
     calibrationDocument
