@@ -28,7 +28,7 @@ object Day01 extends AdventOfCode(Prod):
 
   def normalize(line: String): String =
     digits.foldLeft(line):
-      case (acc, (a, b)) => acc.replaceAll(a, b)
+      case (line, (from, to)) => line.replaceAll(from, to)
 
   def calibrationValue(line: String): Int =
     s"${firstValidDigit(line)}${firstValidDigit(line.reverse)}".toInt
