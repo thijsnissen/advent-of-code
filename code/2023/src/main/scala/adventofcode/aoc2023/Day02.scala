@@ -18,7 +18,7 @@ object Day02 extends AdventOfCode(Prod):
         case Cube.Green(count) => count <= green
         case Cube.Blue(count)  => count <= blue
 
-    def powerOfMinimumSetOfCubes: Int =
+    def powerOfMinSetOfCubes: Int =
       reveals
         .groupMapReduce(_.ordinal)(_.getCount)(_ max _)
         .values
@@ -65,7 +65,7 @@ object Day02 extends AdventOfCode(Prod):
 
   lazy val pt2: Int =
     games
-      .map(_.powerOfMinimumSetOfCubes)
+      .map(_.powerOfMinSetOfCubes)
       .sum
 
   answer(1)(pt1)
