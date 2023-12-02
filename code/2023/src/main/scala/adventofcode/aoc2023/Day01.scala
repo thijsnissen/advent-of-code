@@ -9,7 +9,7 @@ object Day01 extends AdventOfCode(Prod):
       .linesIterator
       .toVector
 
-  val lettersToDigit: Map[String, Int] =
+  lazy val lettersToDigit: Map[String, Int] =
     Map(
       "one"   -> 1,
       "two"   -> 2,
