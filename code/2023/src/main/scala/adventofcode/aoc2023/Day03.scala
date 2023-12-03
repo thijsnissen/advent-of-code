@@ -25,9 +25,9 @@ object Day03 extends AdventOfCode(Prod):
           else Vector.empty[(Pos, Int)] +: acc
       .filter(_.nonEmpty)
       .map: (v: Vector[(Pos, Int)]) =>
-        val (pos: Vector[Pos], int: Vector[Int]) = v.unzip
+        val (numbers: Vector[Pos], number: Vector[Int]) = v.unzip
 
-        (Box.bounding(pos), int.mkString.toInt)
+        (Box.bounding(numbers), number.mkString.toInt)
 
   def partNumbers(engineSchematic: SortedMap[Pos, Char]): Vector[Int] =
     filterNumbers(engineSchematic)
