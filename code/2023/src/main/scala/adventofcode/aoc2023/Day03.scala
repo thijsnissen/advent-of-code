@@ -9,32 +9,32 @@ import utilities.Pos
 
 object Day03 extends AdventOfCode(Prod):
   val engineSchematic: SortedMap[Pos, Char] =
-    val schema =
+    val visual: Iterator[(Pos, Char)] =
       for
-        (l: String, y: Int) <- input.linesIterator.zipWithIndex
-        (s: Char, x: Int)   <- l.zipWithIndex
-      yield Pos(x, y) -> s
+        (line: String, y: Int) <- input.linesIterator.zipWithIndex
+        (symbol: Char, x: Int) <- line.zipWithIndex
+      yield Pos(x, y) -> symbol
 
-    SortedMap.empty[Pos, Char].withDefaultValue('.') ++ schema.toMap
+    SortedMap.empty[Pos, Char].withDefaultValue('.') ++ visual.toMap
 
   def filterNumbers(engineSchematic: SortedMap[Pos, Char]): Vector[(Box, Int)] =
     engineSchematic
       .foldLeft(Vector(Vector.empty[(Pos, Int)])):
-        case (acc, (p: Pos, s: Char)) =>
-          if s.isDigit then acc.updated(0, acc(0) :+ (p, s.asDigit))
+        case (acc, (pos: Pos, symbol: Char)) =>
+          if symbol.isDigit then acc.updated(0, acc(0) :+ (pos, symbol.asDigit))
           else Vector.empty[(Pos, Int)] +: acc
       .filter(_.nonEmpty)
-      .map: (v: Vector[(Pos, Int)]) =>
-        val (numbers: Vector[Pos], number: Vector[Int]) = v.unzip
+      .map: (found: Vector[(Pos, Int)]) =>
+        val (numbers: Vector[Pos], number: Vector[Int]) = found.unzip
 
         (Box.bounding(numbers), number.mkString.toInt)
 
   def partNumbers(engineSchematic: SortedMap[Pos, Char]): Vector[Int] =
     filterNumbers(engineSchematic)
-      .map: (box: Box, number: Int) =>
+      .map: (numbers: Box, number: Int) =>
         val symbols: Set[Pos] =
-          box.allOffsetsFn: (p: Pos) =>
-            !engineSchematic(p).isDigit && engineSchematic(p) != '.'
+          numbers.allOffsetsFn: (pos: Pos) =>
+            !engineSchematic(pos).isDigit && engineSchematic(pos) != '.'
 
         if symbols.nonEmpty then number else 0
 
@@ -42,13 +42,15 @@ object Day03 extends AdventOfCode(Prod):
     val numbers: Vector[(Box, Int)] = filterNumbers(engineSchematic)
 
     engineSchematic
-      .filter((_, s: Char) => s == '*')
+      .filter((_, symbol: Char) => symbol == '*')
       .keys
       .map: (gear: Pos) =>
-        val adj: Vector[(Box, Int)] =
-          numbers.filter((box: Box, _) => box.allOffsets.contains(gear))
+        val adjNumbers: Vector[(Box, Int)] =
+          numbers.filter((numbers: Box, _) => numbers.allOffsets.contains(gear))
 
-        if adj.size == 2 then adj.map((_, number: Int) => number).product else 0
+        if adjNumbers.size == 2 then
+          adjNumbers.map((_, number: Int) => number).product
+        else 0
       .toVector
 
   lazy val pt1: Int =
