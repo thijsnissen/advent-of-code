@@ -57,7 +57,11 @@ object Day05 extends AdventOfCode(Prod):
             .toVector
 
     def map(range: Set[Range], mapping: Set[Mapping]): Set[Range] =
-      ???
+      mapping
+        .flatMap: (mapping: Mapping) =>
+          Some(range) // apply mapping to Set[Range] -> return new Set[Range]
+        .headOption
+        .getOrElse(range)
 
     extension (ranges: Vector[Set[Range]])
       def mapAll(mappings: Vector[Set[Mapping]]): Vector[Set[Range]] =
