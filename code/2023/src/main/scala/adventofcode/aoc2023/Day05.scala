@@ -4,7 +4,7 @@ package aoc2023
 import scala.collection.immutable.NumericRange
 import utilities.AdventOfCode.*
 
-object Day05 extends AdventOfCode(Prod):
+object Day05 extends AdventOfCode(Test):
   val mappings: Vector[Set[Mapping]] =
     input
       .dropWhile(_ != '\n')
@@ -43,7 +43,7 @@ object Day05 extends AdventOfCode(Prod):
             seeds.map(map(_, mapping))
 
   object Range:
-    def fromString(ranges: String): Vector[Set[Range]] =
+    def fromString(ranges: String): Vector[Range] =
       ranges match
         case s"seeds: $ranges" =>
           ranges
@@ -53,39 +53,30 @@ object Day05 extends AdventOfCode(Prod):
               val from   = range(0).toLong
               val length = range(1).toLong
 
-              Set(from until from + length)
+              from until from + length
             .toVector
 
-    def map(range: Set[Range], mapping: Set[Mapping]): Set[Range] =
+    def map(range: Range, mapping: Set[Mapping]): Set[Range] =
       mapping.flatMap:
         case Mapping(destination, source, length) =>
-          val mappingRange: Range = source until source + length
-
-          val mappedRange: Set[Range] =
-            range
-              .flatMap(_.split(mappingRange))
-              .map: (r: Range) =>
-                if r != mappingRange then r
-                else
-                  val length: Long = destination - source
-
-                  r.min + length until r.max + length
-
-          mappedRange.merge
+          range.split(source until source + length).map: (r: Range) =>
+            if r.min >= source && r.max <= source + length then
+              r.min + destination - source until r.max + destination - source
+            else r
 
     extension (self: Range)
       def split(that: Range): Set[Range] =
-        ??? // return self in parts that do and don't overlap
+        val overlap = (self.min max that.min) until (self.max min that.max)
+        val above   = overlap.max until self.max
+        val below   = self.min until overlap.min
 
-    extension (range: Set[Range])
-      def merge: Set[Range] =
-        ??? // merge ranges back together if possile so we can compare with the mappingRange again in the next round
+        Set(overlap, above, below).filter(_.nonEmpty)
 
-    extension (ranges: Vector[Set[Range]])
-      def mapAll(mappings: Vector[Set[Mapping]]): Vector[Set[Range]] =
+    extension (ranges: Vector[Range])
+      def mapAll(mappings: Vector[Set[Mapping]]): Vector[Range] =
         mappings.foldLeft(ranges):
-          (ranges: Vector[Set[Range]], mapping: Set[Mapping]) =>
-            ranges.map(map(_, mapping))
+          (ranges: Vector[Range], mapping: Set[Mapping]) =>
+            ranges.flatMap(map(_, mapping))
 
   object Mapping:
     def fromString(mapping: String): Set[Mapping] =
@@ -110,13 +101,12 @@ object Day05 extends AdventOfCode(Prod):
   lazy val pt2: Long =
     import Range.*
 
-    val ranges: Vector[Set[Range]] =
+    val ranges: Vector[Range] =
       Range.fromString(input.takeWhile(_ != '\n').trim)
 
     ranges
       .mapAll(mappings)
-      .flatten
-      .minBy(_.min)
+      .map(_.min)
       .min
 
   answer(1)(pt1)
