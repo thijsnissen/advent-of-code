@@ -35,7 +35,7 @@ case class Pos4D(x: Int, y: Int, z: Int, w: Int):
       Pos4D(x, y, z - 1, w),
       Pos4D(x, y, z + 1, w),
       Pos4D(x, y, z, w - 1),
-      Pos4D(x, y, z, w + 1),
+      Pos4D(x, y, z, w + 1)
     )
 
   def diagonalOffsets: Set[Pos4D] =

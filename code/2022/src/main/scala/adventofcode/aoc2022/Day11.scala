@@ -19,7 +19,7 @@ object Day11 extends AdventOfCode(Test):
     test: Int => Boolean,
     ifTrue: Int,
     ifFalse: Int,
-    counter: Int,
+    counter: Int
   ):
     def takeTurn(monkeys: Vector[Monkey]): Vector[Monkey] =
       items
@@ -27,10 +27,26 @@ object Day11 extends AdventOfCode(Test):
           val inspectedItem: Int = operation(item) / 3
 
           if test(inspectedItem) then
-            monkeys.updated(ifTrue, monkeys(ifTrue).copy(items = monkeys(ifTrue).items :+ inspectedItem))
+            monkeys.updated(
+              ifTrue,
+              monkeys(ifTrue).copy(items =
+                monkeys(ifTrue).items :+ inspectedItem
+              )
+            )
           else
-            monkeys.updated(ifFalse, monkeys(ifFalse).copy(items = monkeys(ifFalse).items :+ inspectedItem))
-        .updated(id, monkeys(id).copy(items = Vector.empty[Int], counter = counter + items.length))
+            monkeys.updated(
+              ifFalse,
+              monkeys(ifFalse).copy(items =
+                monkeys(ifFalse).items :+ inspectedItem
+              )
+            )
+        .updated(
+          id,
+          monkeys(id).copy(
+            items = Vector.empty[Int],
+            counter = counter + items.length
+          )
+        )
 
   object Monkey:
     def fromInput(monkey: Seq[String]): Monkey =
@@ -47,7 +63,7 @@ object Day11 extends AdventOfCode(Test):
               s"Operation: $operation",
               s"Test: divisible by $test",
               s"If true: throw to monkey $ifTrue",
-              s"If false: throw to monkey $ifFalse",
+              s"If false: throw to monkey $ifFalse"
             ) =>
           Monkey(
             id.toInt,
@@ -56,7 +72,7 @@ object Day11 extends AdventOfCode(Test):
             (i: Int) => i % test.toInt == 0,
             ifTrue.toInt,
             ifFalse.toInt,
-            0,
+            0
           )
 
     def playRound(monkeys: Vector[Monkey]): Vector[Monkey] =

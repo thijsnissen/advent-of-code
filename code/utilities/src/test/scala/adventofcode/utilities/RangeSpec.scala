@@ -2,15 +2,14 @@ package adventofcode
 package utilities
 
 import org.scalatest.funsuite.AnyFunSuite
-
 import utilities.Range.*
 
 class RangeSpec extends AnyFunSuite:
   test("Range"):
-    val rangeTo = 1 to 10
-    val rangeUntil = 1 until 10
-    val range     = Range(3, 6)
-    val vectorTo = Vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    val rangeTo     = 1 to 10
+    val rangeUntil  = 1 until 10
+    val range       = Range(3, 6)
+    val vectorTo    = Vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     val vectorUntil = Vector(1, 2, 3, 4, 5, 6, 7, 8, 9)
 
     assertResult(rangeTo.toVector)(vectorTo)

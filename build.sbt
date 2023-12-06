@@ -8,7 +8,7 @@ lazy val root =
     .settings(
       name           := "Advent of Code",
       normalizedName := "advent-of-code",
-      description    := "My solutions to the Advent of Code puzzles",
+      description    := "My solutions to the Advent of Code puzzles"
     )
     .settings(commonSettings ++ commonImports ++ aliases)
     .aggregate(
@@ -16,7 +16,7 @@ lazy val root =
       aoc2021,
       aoc2022,
       aoc2023,
-      utilities,
+      utilities
     )
 
 lazy val utilities =
@@ -66,11 +66,11 @@ lazy val commonSettings = Seq(
     "-Wunused:imports",
     "-Wunused:locals",
     "-print-lines",
-    "-explain",
+    "-explain"
   ),
   Compile / run / fork         := true,
   Compile / run / connectInput := true,
-  Compile / run / javaOptions += "-Xmx4G",
+  Compile / run / javaOptions += "-Xmx4G"
 )
 
 lazy val commonImports = Seq(
@@ -80,7 +80,7 @@ lazy val commonImports = Seq(
       "scala",
       "scala.Predef",
       "scala.annotation",
-      "scala.util.chaining",
+      "scala.util.chaining"
     ).mkString("-Yimports:", ",", "")
 )
 

@@ -14,7 +14,7 @@ object Day09 extends AdventOfCode(Prod):
     players: Map[Int, Long],
     player: Int,
     game: Vector[Long],
-    lastMarble: Long,
+    lastMarble: Long
   ):
     def play(multiplier: Int = 1): Game =
       (1L to lastMarble * multiplier).foldLeft(this):
@@ -24,7 +24,7 @@ object Day09 extends AdventOfCode(Prod):
           g.copy(
             players = g.players.updatedWith(g.player)(_.map(_ + m + score)),
             player = g.nextPlayer,
-            game = board,
+            game = board
           )
         case (g, m) =>
           g.copy(player = g.nextPlayer, game = g.addMarble(m))
@@ -52,7 +52,7 @@ object Day09 extends AdventOfCode(Prod):
             (1 to players.toInt).map((_, 0L)).toMap,
             player = 1,
             Vector[Long](0),
-            lastMarble.toLong,
+            lastMarble.toLong
           )
 
   lazy val pt1: Long =

@@ -23,7 +23,7 @@ class GraphSpec extends AnyFunSuite:
       (8, 5),
       (5, 1),
       (9, 2),
-      (8, 3),
+      (8, 3)
     )
 
     val graph =
@@ -39,7 +39,7 @@ class GraphSpec extends AnyFunSuite:
       (3, 2),
       (6, 5),
       (8, 5),
-      (10, 9),
+      (10, 9)
     ))(graph.breadthFirstSearch(1)(_ == 10).getOrElse("not found"))
     assertResult(Vector(
       (1, 1),
@@ -51,7 +51,7 @@ class GraphSpec extends AnyFunSuite:
       (7, 6),
       (8, 5),
       (9, 1),
-      (10, 9),
+      (10, 9)
     ))(graph.depthFirstSearch(1)(_ == 10).getOrElse("not found"))
     assertResult("not found")(
       graph.breadthFirstSearch(1)(_ == 11).getOrElse("not found")
@@ -80,13 +80,13 @@ class GraphSpec extends AnyFunSuite:
       ('z', 'y', 10),
       ('z', 'x', 1),
       ('x', 'w', 2),
-      ('w', 'y', 1),
+      ('w', 'y', 1)
     )
 
     val res =
       (
         Map('z' -> 0, 'x'   -> 1, 'w'   -> 3, 'y' -> 4),
-        Map('y' -> 'w', 'x' -> 'z', 'w' -> 'x'),
+        Map('y' -> 'w', 'x' -> 'z', 'w' -> 'x')
       )
 
     assertResult(res)(
@@ -131,17 +131,17 @@ class GraphSpec extends AnyFunSuite:
         Pos(x = 3, y = 2),
         Pos(x = 3, y = 3),
         Pos(x = 4, y = 3),
-        Pos(x = 4, y = 4),
-      ),
+        Pos(x = 4, y = 4)
+      )
     )
 
     assertResult(Some(aStarResult))(aStar.shortestPathTo(
       aStarSource,
-      _ == aStarTarget,
+      _ == aStarTarget
     )(heuristic))
     assertResult(Some(0, List(aStarSource)))(aStar.shortestPathTo(
       aStarSource,
-      _ == aStarSource,
+      _ == aStarSource
     )(heuristic))
     assertResult(None)(
       aStar.shortestPathTo(aStarSource, _ == Pos(5, 5))(heuristic)

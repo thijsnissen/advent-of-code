@@ -94,7 +94,7 @@ object Day13 extends AdventOfCode(Prod):
 
   def findLastRemainingCartPos(
     carts: Vector[Cart],
-    tracks: Map[Pos, Char],
+    tracks: Map[Pos, Char]
   )(using Ordering[Pos]): Pos =
     @annotation.tailrec
     def tick(toMove: Vector[Cart], moved: Vector[Cart]): Pos =
@@ -110,7 +110,7 @@ object Day13 extends AdventOfCode(Prod):
           case Some(pos) if remainingCarts.forall(_.loc == pos) => pos
           case Some(pos) => tick(
               toMove.tail.filterNot(_.loc == pos),
-              moved.filterNot(_.loc == pos),
+              moved.filterNot(_.loc == pos)
             )
           case None =>
             tick(toMove.tail, moved :+ movedCart.turn(tracks(movedCart.loc)))

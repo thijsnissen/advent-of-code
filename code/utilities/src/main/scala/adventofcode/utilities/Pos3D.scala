@@ -32,7 +32,7 @@ case class Pos3D(x: Int, y: Int, z: Int):
       Pos3D(x, y + 1, z),
       Pos3D(x, y - 1, z),
       Pos3D(x, y, z - 1),
-      Pos3D(x, y, z + 1),
+      Pos3D(x, y, z + 1)
     )
 
   def diagonalOffsets: Set[Pos3D] =

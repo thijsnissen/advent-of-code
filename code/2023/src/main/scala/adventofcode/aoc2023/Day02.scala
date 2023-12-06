@@ -33,7 +33,7 @@ object Day02 extends AdventOfCode(Prod):
             revealsPattern
               .findAllIn(games)
               .toVector
-              .map(Cube.fromString),
+              .map(Cube.fromString)
           )
 
     lazy val revealsPattern: Regex = """(\d+ \w+)+""".r

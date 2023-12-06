@@ -31,7 +31,7 @@ object AdventOfCode:
 
       val envs: List[String] = List(
         s"${Console.YELLOW} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}",
-        s"${Console.GREEN} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}",
+        s"${Console.GREEN} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}"
       )
 
       println:

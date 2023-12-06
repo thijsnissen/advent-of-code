@@ -42,14 +42,14 @@ object Day16 extends AdventOfCode(Prod):
               0 -> b0.toInt,
               1 -> b1.toInt,
               2 -> b2.toInt,
-              3 -> b3.toInt,
+              3 -> b3.toInt
             )),
             Device.unit(Map(
               0 -> a0.toInt,
               1 -> a1.toInt,
               2 -> a2.toInt,
-              3 -> a3.toInt,
-            )),
+              3 -> a3.toInt
+            ))
           )
 
   case class Instruction(opcode: Int, a: Int, b: Int, c: Int)
@@ -75,13 +75,13 @@ object Day16 extends AdventOfCode(Prod):
         "gtrr",
         "eqir",
         "eqri",
-        "eqrr",
+        "eqrr"
       )
 
     def unit(m: Map[Int, Int]): Device =
       assert(
         m.keys == Set(0, 1, 2, 3),
-        "The device has four registers (numbered 0 through 3)",
+        "The device has four registers (numbered 0 through 3)"
       )
 
       m.withDefaultValue(0)
@@ -96,7 +96,7 @@ object Day16 extends AdventOfCode(Prod):
               opcode,
               sample.inst.a,
               sample.inst.b,
-              sample.inst.c,
+              sample.inst.c
             ) == sample.after
           then
             opcode
@@ -113,7 +113,7 @@ object Day16 extends AdventOfCode(Prod):
                 opcode,
                 sample.inst.a,
                 sample.inst.b,
-                sample.inst.c,
+                sample.inst.c
               ) == sample.after
             then
               sample.opCode
@@ -125,13 +125,13 @@ object Day16 extends AdventOfCode(Prod):
     @annotation.tailrec
     def orderedOpcodes(
       opcodes: List[(String, List[Int])],
-      acc: List[(Int, String)],
+      acc: List[(Int, String)]
     ): List[String] =
       opcodes.sortBy((_, codes) => codes.length) match
         case (name, code) :: t if code.length == 1 =>
           orderedOpcodes(
             t.map((n, c) => (n, c.filterNot(_ == code.head))),
-            (code.head, name) :: acc,
+            (code.head, name) :: acc
           )
         case Nil => acc.sortBy((code, _) => code).map((_, name) => name)
         case _   => sys.error("Cannot order opcodes for the given input")

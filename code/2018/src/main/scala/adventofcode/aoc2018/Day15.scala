@@ -37,14 +37,14 @@ object Day15 extends AdventOfCode(Prod):
     loc: Pos,
     unitType: UnitType,
     hitPoints: Int,
-    attackPower: Int,
+    attackPower: Int
   ):
     def isAlive: Boolean =
       hitPoints > 0
 
     def findShortestPath(
       map: Vector[Pos],
-      targets: Vector[Pos],
+      targets: Vector[Pos]
     ): Option[List[Pos]] =
       import scala.collection.immutable.SortedSet
       import utilities.GraphTraversal.breadthFirstSearchPathTo
@@ -62,7 +62,7 @@ object Day15 extends AdventOfCode(Prod):
     map: Vector[Pos],
     openUnits: Vector[CombatUnit],
     closedUnits: Vector[CombatUnit],
-    rounds: Int,
+    rounds: Int
   ):
     def allUnits: Vector[CombatUnit] =
       openUnits ++ closedUnits
@@ -72,13 +72,13 @@ object Day15 extends AdventOfCode(Prod):
 
     def targetUnits(
       activeUnit: CombatUnit,
-      nonActiveUnits: Vector[CombatUnit],
+      nonActiveUnits: Vector[CombatUnit]
     ): Vector[CombatUnit] =
       nonActiveUnits.filterNot(_.unitType == activeUnit.unitType)
 
     def openSquaresInRangeOfTargets(
       activeUnit: CombatUnit,
-      nonActiveUnits: Vector[CombatUnit],
+      nonActiveUnits: Vector[CombatUnit]
     ): Vector[Pos] =
       targetUnits(activeUnit, nonActiveUnits)
         .flatMap(u => BattleState.adjacentSquares(u.loc, map))
@@ -104,7 +104,7 @@ object Day15 extends AdventOfCode(Prod):
 
     def canAttack(
       activeUnit: CombatUnit,
-      nonActiveUnits: Vector[CombatUnit],
+      nonActiveUnits: Vector[CombatUnit]
     ): Boolean =
       openSquaresInRangeOfTargets(activeUnit, nonActiveUnits).contains(
         activeUnit.loc
@@ -112,12 +112,12 @@ object Day15 extends AdventOfCode(Prod):
 
     def doAttack(
       activeUnit: CombatUnit,
-      nonActiveUnits: Vector[CombatUnit],
+      nonActiveUnits: Vector[CombatUnit]
     ): BattleState =
       val unitToAttack =
         BattleState.adjacentSquares(
           activeUnit.loc,
-          targetUnits(activeUnit, nonActiveUnits).map(_.loc),
+          targetUnits(activeUnit, nonActiveUnits).map(_.loc)
         )
           .map(u => findUnit(u).get)
           .sortBy(_.loc)
@@ -128,13 +128,13 @@ object Day15 extends AdventOfCode(Prod):
       val newBattleState =
         copy(
           openUnits = openUnits.tail,
-          closedUnits = activeUnit +: closedUnits,
+          closedUnits = activeUnit +: closedUnits
         )
           .updateUnit(attackedUnit.loc, attackedUnit)
 
       newBattleState.copy(
         openUnits = newBattleState.openUnits.filter(_.isAlive),
-        closedUnits = newBattleState.closedUnits.filter(_.isAlive),
+        closedUnits = newBattleState.closedUnits.filter(_.isAlive)
       )
 
     def nextRound: BattleState =
@@ -145,7 +145,7 @@ object Day15 extends AdventOfCode(Prod):
 
     def nextRoundSaveElves(
       initialElfCount: Int,
-      elfAttackPower: Int,
+      elfAttackPower: Int
     ): BattleState =
       if elfCount != initialElfCount then
         val newBattleState =
@@ -163,7 +163,7 @@ object Day15 extends AdventOfCode(Prod):
         copy(
           openUnits = closedUnits.sortBy(_.loc),
           closedUnits = Vector.empty[CombatUnit],
-          rounds = rounds + 1,
+          rounds = rounds + 1
         )
       else
         val activeUnit     = openUnits.head
@@ -174,7 +174,7 @@ object Day15 extends AdventOfCode(Prod):
         else
           activeUnit.findShortestPath(
             map.filterNot(p => nonActiveUnits.exists(_.loc == p)),
-            openSquaresInRangeOfTargets(activeUnit, nonActiveUnits),
+            openSquaresInRangeOfTargets(activeUnit, nonActiveUnits)
           ) match
             case Some(l) =>
               val movedUnit = activeUnit.copy(loc = l(1))
@@ -184,12 +184,12 @@ object Day15 extends AdventOfCode(Prod):
               else
                 copy(
                   openUnits = openUnits.tail,
-                  closedUnits = movedUnit +: closedUnits,
+                  closedUnits = movedUnit +: closedUnits
                 )
             case None =>
               copy(
                 openUnits = openUnits.tail,
-                closedUnits = activeUnit +: closedUnits,
+                closedUnits = activeUnit +: closedUnits
               )
 
   object BattleState:
@@ -201,7 +201,7 @@ object Day15 extends AdventOfCode(Prod):
         pos + Pos(1, 0),
         pos + Pos(-1, 0),
         pos + Pos(0, 1),
-        pos + Pos(0, -1),
+        pos + Pos(0, -1)
       ).filter(map.contains)
 
   lazy val pt1: Int =
@@ -230,12 +230,12 @@ object Day15 extends AdventOfCode(Prod):
     units: Vector[CombatUnit],
     map: Vector[Pos],
     rounds: Int,
-    size: Int,
+    size: Int
   ): Unit =
     val box1 = units.foldLeft(Vector.fill(size, size)('#')): (acc, u) =>
       acc.updated(
         u.loc.y,
-        acc(u.loc.y).updated(u.loc.x, u.unitType.toString.charAt(0)),
+        acc(u.loc.y).updated(u.loc.x, u.unitType.toString.charAt(0))
       )
     val box2 = map.filterNot(p => units.exists(_.loc == p)).foldLeft(box1):
       (acc, loc) => acc.updated(loc.y, acc(loc.y).updated(loc.x, '.'))

@@ -19,7 +19,7 @@ object Day01 extends AdventOfCode(Prod):
       "six"   -> 6,
       "seven" -> 7,
       "eight" -> 8,
-      "nine"  -> 9,
+      "nine"  -> 9
     )
 
   @tailrec

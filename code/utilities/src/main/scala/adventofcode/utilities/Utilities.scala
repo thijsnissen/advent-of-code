@@ -7,7 +7,7 @@ object Utilities:
 
   def exponentialSearch[A, B](f: A => B, min: A)(x: B)(using
     int: Integral[A],
-    ord: Ordering[B],
+    ord: Ordering[B]
   ): (A, A) =
     @annotation.tailrec
     def loop(lower: A, upper: A): (A, A) =
@@ -23,7 +23,7 @@ object Utilities:
 
   def binarySearch[A, B](f: A => B, min: A, max: A)(x: B)(using
     int: Integral[A],
-    ord: Ordering[B],
+    ord: Ordering[B]
   ): A =
     @annotation.tailrec
     def loop(lower: A, upper: A): A =
@@ -41,7 +41,7 @@ object Utilities:
 
   def exponentialBinarySearch[A, B](f: A => B, min: A)(x: B)(using
     Integral[A],
-    Ordering[B],
+    Ordering[B]
   ): A =
     val (lower, upper) =
       exponentialSearch(f, min)(x)

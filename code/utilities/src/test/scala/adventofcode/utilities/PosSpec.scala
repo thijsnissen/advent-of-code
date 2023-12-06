@@ -16,7 +16,7 @@ class PosSpec extends AnyFunSuite:
       Pos(2, 1),
       Pos(0, 2),
       Pos(1, 2),
-      Pos(2, 2),
+      Pos(2, 2)
     )
 
     assertResult(Pos(2, 2))(pos1 + pos2)
@@ -48,7 +48,7 @@ class PosSpec extends AnyFunSuite:
       Pos(1, -1),
       Pos(3, -1),
       Pos(1, -3),
-      Pos(3, -3),
+      Pos(3, -3)
     ))(pos2.allOffsets)
 
     assertResult(Set(Pos(3, -2), Pos(2, -1), Pos(2, -3)))(pos2.axisOffsetsFn(
@@ -63,7 +63,7 @@ class PosSpec extends AnyFunSuite:
       Pos(2, -1),
       Pos(2, -3),
       Pos(3, -1),
-      Pos(3, -3),
+      Pos(3, -3)
     ))(pos2.allOffsetsFn(p => p.x > 1))
 
     assertResult(Pos(0, 0))(Pos.zero)
@@ -97,7 +97,7 @@ class PosSpec extends AnyFunSuite:
       Pos3D(x = 3, y = -2, z = 2),
       Pos3D(x = 2, y = -3, z = 2),
       Pos3D(x = 2, y = -2, z = 3),
-      Pos3D(x = 1, y = -2, z = 2),
+      Pos3D(x = 1, y = -2, z = 2)
     )
 
     val diagonalOffsets = Set(
@@ -120,7 +120,7 @@ class PosSpec extends AnyFunSuite:
       Pos3D(x = 2, y = -3, z = 3),
       Pos3D(x = 2, y = -1, z = 1),
       Pos3D(x = 3, y = -1, z = 3),
-      Pos3D(x = 1, y = -2, z = 3),
+      Pos3D(x = 1, y = -2, z = 3)
     )
 
     val axisOffsetsFn = Set(
@@ -128,7 +128,7 @@ class PosSpec extends AnyFunSuite:
       Pos3D(x = 2, y = -1, z = 2),
       Pos3D(x = 3, y = -2, z = 2),
       Pos3D(x = 2, y = -3, z = 2),
-      Pos3D(x = 2, y = -2, z = 3),
+      Pos3D(x = 2, y = -2, z = 3)
     )
 
     val diagonalOffsetsFn = Set(
@@ -143,7 +143,7 @@ class PosSpec extends AnyFunSuite:
       Pos3D(x = 3, y = -3, z = 3),
       Pos3D(x = 2, y = -3, z = 3),
       Pos3D(x = 2, y = -1, z = 1),
-      Pos3D(x = 3, y = -1, z = 3),
+      Pos3D(x = 3, y = -1, z = 3)
     )
 
     assertResult(axisOffsets)(pos2.axisOffsets)
@@ -181,7 +181,7 @@ class PosSpec extends AnyFunSuite:
       Pos4D(x = 1, y = -2, z = 2, w = -2),
       Pos4D(x = 2, y = -3, z = 2, w = -2),
       Pos4D(x = 2, y = -2, z = 1, w = -2),
-      Pos4D(x = 2, y = -2, z = 3, w = -2),
+      Pos4D(x = 2, y = -2, z = 3, w = -2)
     )
 
     val diagonalOffsets = Set(
@@ -256,7 +256,7 @@ class PosSpec extends AnyFunSuite:
       Pos4D(x = 1, y = -1, z = 1, w = -3),
       Pos4D(x = 1, y = -1, z = 2, w = -1),
       Pos4D(x = 2, y = -3, z = 2, w = -3),
-      Pos4D(x = 3, y = -2, z = 3, w = -3),
+      Pos4D(x = 3, y = -2, z = 3, w = -3)
     )
 
     val axisOffsetsFn = Set(
@@ -266,7 +266,7 @@ class PosSpec extends AnyFunSuite:
       Pos4D(x = 3, y = -2, z = 2, w = -2),
       Pos4D(x = 2, y = -3, z = 2, w = -2),
       Pos4D(x = 2, y = -2, z = 1, w = -2),
-      Pos4D(x = 2, y = -2, z = 3, w = -2),
+      Pos4D(x = 2, y = -2, z = 3, w = -2)
     )
 
     val diagonalOffsetsFn = Set(
@@ -315,7 +315,7 @@ class PosSpec extends AnyFunSuite:
       Pos4D(x = 3, y = -1, z = 3, w = -2),
       Pos4D(x = 2, y = -2, z = 1, w = -1),
       Pos4D(x = 2, y = -3, z = 2, w = -3),
-      Pos4D(x = 3, y = -2, z = 3, w = -3),
+      Pos4D(x = 3, y = -2, z = 3, w = -3)
     )
 
     assertResult(axisOffsets)(pos2.axisOffsets)

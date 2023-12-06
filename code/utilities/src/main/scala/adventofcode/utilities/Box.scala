@@ -40,7 +40,7 @@ case class Box(min: Pos, max: Pos):
       Pos(max.x + 1, max.y + 1),
       Pos(min.x - 1, min.y - 1),
       Pos(max.x + 1, min.y - 1),
-      Pos(min.x - 1, max.y + 1),
+      Pos(min.x - 1, max.y + 1)
     )
 
   def allOffsets: Set[Pos] =

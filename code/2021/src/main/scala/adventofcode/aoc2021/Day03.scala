@@ -23,7 +23,7 @@ object Day03 extends AdventOfCode(Prod):
     def filterByCriterium(
       bits: Vector[Bits],
       criterium: Bits => Int,
-      pos: Int = 0,
+      pos: Int = 0
     ): Bits =
       if bits.length == 1 then
         bits.head
@@ -34,7 +34,7 @@ object Day03 extends AdventOfCode(Prod):
         filterByCriterium(
           bits.filter(_.apply(pos) == criterium(transposedBits.apply(pos))),
           criterium,
-          pos + 1,
+          pos + 1
         )
 
     extension (b: Bits)

@@ -52,7 +52,7 @@ object Day11 extends AdventOfCode(Prod):
     def largestTotalPowerForSquare(
       grid: Grid[Int],
       window: Window,
-      squareSize: Int,
+      squareSize: Int
     ): Result =
       val result =
         for
@@ -65,7 +65,7 @@ object Day11 extends AdventOfCode(Prod):
           grid(Cell(x, y)) -
             grid(Cell(x, y - squareSize)) -
             grid(Cell(x - squareSize, y)) +
-            grid(Cell(x - squareSize, y - squareSize)),
+            grid(Cell(x - squareSize, y - squareSize))
         )
 
       result.maxBy(_.totalPower)

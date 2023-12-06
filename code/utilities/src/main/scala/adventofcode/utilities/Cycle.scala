@@ -10,7 +10,7 @@ object Cycle:
       tortoise: A,
       hare: A,
       cycleLength: Int,
-      power: Int,
+      power: Int
     ): Int =
       if g(tortoise) == g(hare) then
         cycleLength
@@ -24,7 +24,7 @@ object Cycle:
       tortoise: A,
       hare: A,
       prevHare: A,
-      stemLength: Int,
+      stemLength: Int
     ): (Int, A, A) =
       if g(tortoise) == g(hare) then
         (stemLength, tortoise, prevHare)

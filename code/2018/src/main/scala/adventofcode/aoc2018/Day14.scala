@@ -23,7 +23,7 @@ object Day14 extends AdventOfCode(Prod):
   @annotation.tailrec
   def loop(
     scoreboard: Vector[Int],
-    elves: Vector[Int],
+    elves: Vector[Int]
   )(f: Vector[Int] => Boolean): Vector[Int] =
     if f(scoreboard) then
       scoreboard

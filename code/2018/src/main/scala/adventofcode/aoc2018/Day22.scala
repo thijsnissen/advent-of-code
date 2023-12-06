@@ -50,7 +50,7 @@ object Day22 extends AdventOfCode(Prod):
     mouthOfCave: Pos,
     target: Pos,
     depth: Int,
-    regions: Map[Pos, RegionType],
+    regions: Map[Pos, RegionType]
   ):
     def riskLevel: Int =
       regions.map((_, rt) => rt.ordinal).sum
@@ -73,7 +73,7 @@ object Day22 extends AdventOfCode(Prod):
       mouthOfCave: Pos,
       target: Pos,
       depth: Int,
-      multiplier: Int,
+      multiplier: Int
     ): Regions =
       val init: Regions =
         Regions(mouthOfCave, target, depth, Map.empty[Pos, RegionType])
@@ -90,7 +90,7 @@ object Day22 extends AdventOfCode(Prod):
     def getErosionLevels(
       pos: Pos,
       regions: Regions,
-      acc: Map[Pos, Int],
+      acc: Map[Pos, Int]
     ): Map[Pos, Int] =
       def erosionLevel(geologicIndex: Int): Int =
         (geologicIndex + regions.depth) % 20183

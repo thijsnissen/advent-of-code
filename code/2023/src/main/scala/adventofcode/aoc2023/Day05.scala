@@ -80,9 +80,9 @@ object Day05 extends AdventOfCode(Prod):
   import Ranges.*
 
   lazy val pt1: Long =
-      Seeds
-        .fromString(input.takeWhile(_ != '\n').trim)
-        .lowestLocationNumber
+    Seeds
+      .fromString(input.takeWhile(_ != '\n').trim)
+      .lowestLocationNumber
 
   lazy val pt2: Long =
     Ranges

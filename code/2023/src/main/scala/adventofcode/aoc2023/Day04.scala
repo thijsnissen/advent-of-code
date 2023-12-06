@@ -24,14 +24,14 @@ object Day04 extends AdventOfCode(Prod):
         case s"Card $id: ${winning} | ${values}" => Scratchcard(
             id.trim.toInt,
             winning.grouped(3).map(_.trim.toInt).toVector,
-            values.grouped(3).map(_.trim.toInt).toVector,
+            values.grouped(3).map(_.trim.toInt).toVector
           )
 
     @tailrec
     def processAll(
       scratchcards: Vector[Scratchcard],
       lookup: Map[Int, Vector[Scratchcard]],
-      acc: Int,
+      acc: Int
     ): Int =
       if scratchcards.isEmpty then acc
       else

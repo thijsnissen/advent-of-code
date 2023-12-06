@@ -16,7 +16,7 @@ class BoxSpec extends AnyFunSuite:
       Pos(1, 0),
       Pos(2, -2),
       Pos(2, -1),
-      Pos(2, 0),
+      Pos(2, 0)
     )
 
     assertResult(Pos(2, 2))(box1.delta)
@@ -43,7 +43,7 @@ class BoxSpec extends AnyFunSuite:
       Pos(2, -3),
       Pos(3, -1),
       Pos(1, 1),
-      Pos(-1, 0),
+      Pos(-1, 0)
     )
     val box1DiagonalOffsets: Set[Pos] =
       Set(Pos(3, 1), Pos(-1, -3), Pos(3, -3), Pos(-1, 1))
@@ -84,7 +84,7 @@ class BoxSpec extends AnyFunSuite:
       Pos3D(x = 2, y = 1, z = 0),
       Pos3D(x = 2, y = 1, z = 1),
       Pos3D(x = 2, y = 1, z = 2),
-      Pos3D(x = 2, y = 1, z = 3),
+      Pos3D(x = 2, y = 1, z = 3)
     )
 
     assertResult(Pos3D(2, 0, 5))(box1.delta)
@@ -138,7 +138,7 @@ class BoxSpec extends AnyFunSuite:
       Pos4D(x = 0, y = 1, z = 1, w = 1),
       Pos4D(x = 1, y = 1, z = 3, w = 1),
       Pos4D(x = 0, y = 1, z = 2, w = 0),
-      Pos4D(x = 0, y = 1, z = 0, w = 0),
+      Pos4D(x = 0, y = 1, z = 0, w = 0)
     )
 
     assertResult(Pos4D(2, 0, 5, 1))(box1.delta)
