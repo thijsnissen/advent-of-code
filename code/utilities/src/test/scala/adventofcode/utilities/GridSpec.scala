@@ -3,7 +3,7 @@ package utilities
 
 import org.scalatest.funsuite.AnyFunSuite
 
-class Gridspec extends AnyFunSuite:
+class GridSpec extends AnyFunSuite:
   test("Grid"):
     import utilities.Grid
     import utilities.Grid.*

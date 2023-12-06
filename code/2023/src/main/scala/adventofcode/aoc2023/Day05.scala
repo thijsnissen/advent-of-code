@@ -1,10 +1,11 @@
 package adventofcode
 package aoc2023
 
-import scala.collection.immutable.NumericRange
 import utilities.AdventOfCode.*
+import utilities.Range
+import utilities.Range.*
 
-object Day05 extends AdventOfCode(Test):
+object Day05 extends AdventOfCode(Prod):
   val mappings: Vector[Set[Mapping]] =
     input
       .dropWhile(_ != '\n')
@@ -13,70 +14,12 @@ object Day05 extends AdventOfCode(Test):
       .map(Mapping.fromString)
       .toVector
 
-  type Range = NumericRange[Long]
-  type Seed  = Long
+  case class Mapping(destination: Long, source: Long, length: Long):
+    lazy val sourceRange: Range = source until source + length - 1
 
-  case class Mapping(destination: Long, source: Long, length: Long)
-
-  object Seed:
-    def fromString(seeds: String): Vector[Long] =
-      seeds match
-        case s"seeds: $seeds" =>
-          seeds
-            .split(" ")
-            .map(_.toLong)
-            .toVector
-
-    def map(seed: Seed, mapping: Set[Mapping]): Seed =
-      mapping
-        .flatMap:
-          case Mapping(destination, source, length) =>
-            Option.when((source until source + length).contains(seed)):
-              seed + (destination - source)
-        .headOption
-        .getOrElse(seed)
-
-    extension (seeds: Vector[Seed])
-      def mapAll(mappings: Vector[Set[Mapping]]): Vector[Seed] =
-        mappings.foldLeft(seeds):
-          (seeds: Vector[Seed], mapping: Set[Mapping]) =>
-            seeds.map(map(_, mapping))
-
-  object Range:
-    def fromString(ranges: String): Vector[Range] =
-      ranges match
-        case s"seeds: $ranges" =>
-          ranges
-            .split(" ")
-            .grouped(2)
-            .map: (range: Array[String]) =>
-              val from   = range(0).toLong
-              val length = range(1).toLong
-
-              from until from + length
-            .toVector
-
-    def map(range: Range, mapping: Set[Mapping]): Set[Range] =
-      mapping.flatMap:
-        case Mapping(destination, source, length) =>
-          range.split(source until source + length).map: (r: Range) =>
-            if r.min >= source && r.max <= source + length then
-              r.min + destination - source until r.max + destination - source
-            else r
-
-    extension (self: Range)
-      def split(that: Range): Set[Range] =
-        val overlap = (self.min max that.min) until (self.max min that.max)
-        val above   = overlap.max until self.max
-        val below   = self.min until overlap.min
-
-        Set(overlap, above, below).filter(_.nonEmpty)
-
-    extension (ranges: Vector[Range])
-      def mapAll(mappings: Vector[Set[Mapping]]): Vector[Range] =
-        mappings.foldLeft(ranges):
-          (ranges: Vector[Range], mapping: Set[Mapping]) =>
-            ranges.flatMap(map(_, mapping))
+    def map(range: Range): Option[Range] =
+      range.intersect(sourceRange).map: (overlap: Range) =>
+        overlap.min + (destination - source) to overlap.max + (destination - source)
 
   object Mapping:
     def fromString(mapping: String): Set[Mapping] =
@@ -88,25 +31,60 @@ object Day05 extends AdventOfCode(Test):
             acc + Mapping(destination.toLong, source.toLong, length.toLong)
           case (acc, _) => acc
 
+  object Seeds:
+    def fromString(seeds: String): Set[Range] =
+      seeds match
+        case s"seeds: $seeds" =>
+          seeds
+            .split(" ")
+            .map((seed: String) => seed.toLong to seed.toLong + 1)
+            .toSet
+
+  object Ranges:
+    def fromString(ranges: String): Set[Range] =
+      ranges match
+        case s"seeds: $ranges" =>
+          ranges
+            .split(" ")
+            .grouped(2)
+            .map: (range: Array[String]) =>
+              val from   = range(0).toLong
+              val length = range(1).toLong
+
+              from until from + length
+            .toSet
+
+    def map(range: Range, mappings: Set[Mapping]): Set[Range] =
+      val mapped: Set[Range] =
+        mappings.flatMap((mapping: Mapping) => mapping.map(range))
+
+      val unmapped: Set[Range] =
+        mappings.foldLeft(Set(range)): (acc: Set[Range], mapping: Mapping) =>
+          acc.flatMap((range: Range) => range.diff(mapping.sourceRange))
+
+      mapped ++ unmapped
+
+    extension (ranges: Set[Range])
+      def mapAll(mappings: Vector[Set[Mapping]]): Set[Range] =
+        mappings.foldLeft(ranges):
+          (ranges: Set[Range], mapping: Set[Mapping]) =>
+            ranges.flatMap(map(_, mapping))
+
   import Mapping.*
+  import Ranges.*
 
   lazy val pt1: Long =
-    import Seed.*
-
-    val seeds: Vector[Seed] =
-      Seed.fromString(input.takeWhile(_ != '\n').trim)
-
-    seeds.mapAll(mappings).min
+      Seeds
+        .fromString(input.takeWhile(_ != '\n').trim)
+        .mapAll(mappings)
+        .minBy(_.min)
+        .min
 
   lazy val pt2: Long =
-    import Range.*
-
-    val ranges: Vector[Range] =
-      Range.fromString(input.takeWhile(_ != '\n').trim)
-
-    ranges
+    Ranges
+      .fromString(input.takeWhile(_ != '\n').trim)
       .mapAll(mappings)
-      .map(_.min)
+      .minBy(_.min)
       .min
 
   answer(1)(pt1)
