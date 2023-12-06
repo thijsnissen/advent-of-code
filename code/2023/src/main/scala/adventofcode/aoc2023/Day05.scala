@@ -70,22 +70,24 @@ object Day05 extends AdventOfCode(Prod):
           (ranges: Set[Range], mapping: Set[Mapping]) =>
             ranges.flatMap(map(_, mapping))
 
+      def lowestLocationNumber: Long =
+        ranges
+          .mapAll(mappings)
+          .minBy(_.min)
+          .min
+
   import Mapping.*
   import Ranges.*
 
   lazy val pt1: Long =
       Seeds
         .fromString(input.takeWhile(_ != '\n').trim)
-        .mapAll(mappings)
-        .minBy(_.min)
-        .min
+        .lowestLocationNumber
 
   lazy val pt2: Long =
     Ranges
       .fromString(input.takeWhile(_ != '\n').trim)
-      .mapAll(mappings)
-      .minBy(_.min)
-      .min
+      .lowestLocationNumber
 
   answer(1)(pt1)
 
