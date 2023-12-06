@@ -57,12 +57,29 @@ object Day05 extends AdventOfCode(Prod):
             .toVector
 
     def map(range: Set[Range], mapping: Set[Mapping]): Set[Range] =
-      mapping
-        .flatMap:
-          case Mapping(destination, source, length) =>
-            Some(range) // apply mapping to Set[Range] -> return new Set[Range]
-        .headOption
-        .getOrElse(range)
+      mapping.flatMap:
+        case Mapping(destination, source, length) =>
+          val mappingRange: Range = source until source + length
+
+          val mappedRange: Set[Range] =
+            range
+              .flatMap(_.split(mappingRange))
+              .map: (r: Range) =>
+                if r != mappingRange then r
+                else
+                  val length: Long = destination - source
+
+                  r.min + length until r.max + length
+
+          mappedRange.merge
+
+    extension (self: Range)
+      def split(that: Range): Set[Range] =
+        ??? // return self in parts that do and don't overlap
+
+    extension (range: Set[Range])
+      def merge: Set[Range] =
+        ??? // merge ranges back together if possile so we can compare with the mappingRange again in the next round
 
     extension (ranges: Vector[Set[Range]])
       def mapAll(mappings: Vector[Set[Mapping]]): Vector[Set[Range]] =
