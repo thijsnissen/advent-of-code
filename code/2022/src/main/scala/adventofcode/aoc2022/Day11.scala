@@ -22,24 +22,15 @@ object Day11 extends AdventOfCode(Test):
     counter: Int,
   ):
     def takeTurn(monkeys: Vector[Monkey]): Vector[Monkey] =
-      items.foldLeft(monkeys): (monkeys: Vector[Monkey], item: Int) =>
-        if test(operation(item) / 3) then
-          monkeys.updated(
-            ifTrue,
-            monkeys(ifTrue).copy(items = monkeys(ifTrue).items :+ item),
-          )
-        else
-          monkeys.updated(
-            ifFalse,
-            monkeys(ifFalse).copy(items = monkeys(ifFalse).items :+ item),
-          )
-      .updated(
-        id,
-        monkeys(id).copy(
-          items = Vector.empty[Int],
-          counter = counter + items.length,
-        ),
-      )
+      items
+        .foldLeft(monkeys): (monkeys: Vector[Monkey], item: Int) =>
+          val inspectedItem: Int = operation(item) / 3
+
+          if test(inspectedItem) then
+            monkeys.updated(ifTrue, monkeys(ifTrue).copy(items = monkeys(ifTrue).items :+ inspectedItem))
+          else
+            monkeys.updated(ifFalse, monkeys(ifFalse).copy(items = monkeys(ifFalse).items :+ inspectedItem))
+        .updated(id, monkeys(id).copy(items = Vector.empty[Int], counter = counter + items.length))
 
   object Monkey:
     def fromInput(monkey: Seq[String]): Monkey =
@@ -69,6 +60,7 @@ object Day11 extends AdventOfCode(Test):
           )
 
     def playRound(monkeys: Vector[Monkey]): Vector[Monkey] =
+      // Next monkey should be picked from state.
       monkeys.foldLeft(monkeys): (monkeys: Vector[Monkey], monkey: Monkey) =>
         monkey.takeTurn(monkeys)
 
