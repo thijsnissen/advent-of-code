@@ -16,7 +16,7 @@ object Day05 extends AdventOfCode(Prod):
   type Range = NumericRange[Long]
   type Seed  = Long
 
-  case class Mapping(destination: Long, source: Long, range: Long)
+  case class Mapping(destination: Long, source: Long, length: Long)
 
   object Seed:
     def fromString(seeds: String): Vector[Long] =
@@ -30,8 +30,8 @@ object Day05 extends AdventOfCode(Prod):
     def map(seed: Seed, mapping: Set[Mapping]): Seed =
       mapping
         .flatMap:
-          case Mapping(destination, source, range) =>
-            Option.when((source until source + range).contains(seed)):
+          case Mapping(destination, source, length) =>
+            Option.when((source until source + length).contains(seed)):
               seed + (destination - source)
         .headOption
         .getOrElse(seed)
@@ -58,8 +58,9 @@ object Day05 extends AdventOfCode(Prod):
 
     def map(range: Set[Range], mapping: Set[Mapping]): Set[Range] =
       mapping
-        .flatMap: (mapping: Mapping) =>
-          Some(range) // apply mapping to Set[Range] -> return new Set[Range]
+        .flatMap:
+          case Mapping(destination, source, length) =>
+            Some(range) // apply mapping to Set[Range] -> return new Set[Range]
         .headOption
         .getOrElse(range)
 
@@ -75,8 +76,8 @@ object Day05 extends AdventOfCode(Prod):
         .linesIterator
         .foldLeft(Set.empty[Mapping]):
           case (acc, s"$_ map:") => acc
-          case (acc, s"$destination $source $range") =>
-            acc + Mapping(destination.toLong, source.toLong, range.toLong)
+          case (acc, s"$destination $source $length") =>
+            acc + Mapping(destination.toLong, source.toLong, length.toLong)
           case (acc, _) => acc
 
   import Mapping.*
