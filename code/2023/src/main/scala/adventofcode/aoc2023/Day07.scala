@@ -43,7 +43,7 @@ object Day07 extends AdventOfCode(Prod):
 
       card
 
-    lazy val withJoker: Hand =
+    lazy val withJokers: Hand =
       copy(
         cards = cards.replace('J', 'X'),
         handType = HandType.fromString(cards.replace('J', mostOccurringCard))
@@ -81,10 +81,12 @@ object Day07 extends AdventOfCode(Prod):
         else
           @tailrec
           def loop(cards: IndexedSeq[(Char, Char)]): Int =
-            val (aCard, bCard) = cards.head
+            if cards.isEmpty then 0
+            else
+              val (aCard, bCard) = cards.head
 
-            if aCard == bCard then loop(cards.tail)
-            else int.compare(cardToInt(aCard), cardToInt(bCard))
+              if aCard == bCard then loop(cards.tail)
+              else int.compare(cardToInt(aCard), cardToInt(bCard))
 
           loop(a.cards.zip(b.cards))
 
@@ -92,7 +94,7 @@ object Day07 extends AdventOfCode(Prod):
     hands.winnings
 
   lazy val pt2: Int =
-    hands.map(_.withJoker).winnings
+    hands.map(_.withJokers).winnings
 
   answer(1)(pt1)
 
