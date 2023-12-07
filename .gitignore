@@ -41,3 +41,6 @@ metals.sbt
 .idea_modules
 /.worksheet/
 *.iml
+
+# AoC
+**/resources/adventofcode/**/*-input.txt
