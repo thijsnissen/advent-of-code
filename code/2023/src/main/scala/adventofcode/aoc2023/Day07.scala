@@ -11,8 +11,8 @@ object Day07 extends AdventOfCode(Prod):
       .toVector
 
   enum HandType:
-    case FiveOfAKind, FourOfAKind, FullHouse, ThreeOfAKind, TwoPair, OnePair,
-      HighCard
+    case HighCard, OnePair, TwoPair, ThreeOfAKind, FullHouse, FourOfAKind,
+      FiveOfAKind
 
   object HandType:
     def fromString(s: String): HandType =
@@ -77,7 +77,7 @@ object Day07 extends AdventOfCode(Prod):
     given (using int: Ordering[Int]): Ordering[Hand] with
       override def compare(a: Hand, b: Hand): Int =
         if a.handType.ordinal != b.handType.ordinal then
-          -int.compare(a.handType.ordinal, b.handType.ordinal)
+          int.compare(a.handType.ordinal, b.handType.ordinal)
         else
           @tailrec
           def loop(cards: IndexedSeq[(Char, Char)]): Int =

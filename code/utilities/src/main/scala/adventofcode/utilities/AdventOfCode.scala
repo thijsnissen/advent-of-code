@@ -9,6 +9,11 @@ object AdventOfCode:
     case Test extends Env("test")
     case Prod extends Env("input")
 
+    lazy val get: Env =
+      sys.env.get("ENV") match
+        case None      => this
+        case Some(env) => Env.valueOf(env)
+
   trait AdventOfCode(val env: Env) extends App:
     val day: String =
       this
@@ -22,7 +27,7 @@ object AdventOfCode:
     import scala.util.Using
 
     lazy val input: String =
-      Using.resource(Source.fromResource(s"$day-${env.file}.txt")):
+      Using.resource(Source.fromResource(s"$day-${env.get.file}.txt")):
         (i: BufferedSource) => i.mkString
 
     def answer[A](part: Int)(a: => A): Unit =
@@ -30,10 +35,10 @@ object AdventOfCode:
         System.currentTimeMillis
 
       val envs: List[String] = List(
-        s"${Console.YELLOW} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}",
-        s"${Console.GREEN} ${Env.fromOrdinal(env.ordinal)} ${Console.RESET}"
+        s"${Console.YELLOW} ${Env.fromOrdinal(env.get.ordinal)} ${Console.RESET}",
+        s"${Console.GREEN} ${Env.fromOrdinal(env.get.ordinal)} ${Console.RESET}"
       )
 
       println:
-        s"${envs(env.ordinal)}The answer to $day part $part is: " +
+        s"${envs(env.get.ordinal)}The answer to $day part $part is: " +
           s"${Console.BLUE}${a.toString}${Console.RESET} [${System.currentTimeMillis - startTime}ms]"

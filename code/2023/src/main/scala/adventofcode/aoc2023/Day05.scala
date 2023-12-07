@@ -15,7 +15,7 @@ object Day05 extends AdventOfCode(Prod):
       .toVector
 
   case class Mapping(destination: Long, source: Long, length: Long):
-    lazy val sourceRange: Range = source until source + length - 1
+    lazy val sourceRange: Range = source until source + length
 
     def map(range: Range): Option[Range] =
       range.intersect(sourceRange).map: (overlap: Range) =>
@@ -37,7 +37,7 @@ object Day05 extends AdventOfCode(Prod):
         case s"seeds: $seeds" =>
           seeds
             .split(" ")
-            .map((seed: String) => seed.toLong to seed.toLong + 1)
+            .map((seed: String) => seed.toLong to seed.toLong)
             .toSet
 
   object Ranges:

@@ -20,4 +20,4 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Tests
-        run: sbt "project aoc2023; test"
+        run: ENV=Test sbt "project aoc2023; test"
