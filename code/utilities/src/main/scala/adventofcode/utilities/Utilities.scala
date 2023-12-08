@@ -60,7 +60,7 @@ object Utilities:
     tail ++ init
 
   extension [A: Integral](a: A)
-    @annotation.targetName("wholeNumberModulo")
+    @targetName("wholeNumberModulo")
     def +%(n: A): A = (a % n + n) % n
 
     @tailrec
