@@ -3,6 +3,7 @@ package aoc2023
 
 import scala.util.matching.Regex
 import utilities.AdventOfCode.*
+import utilities.Utilities.sumBy
 
 object Day02 extends AdventOfCode(Prod):
   val games: Vector[Game] =
@@ -60,13 +61,10 @@ object Day02 extends AdventOfCode(Prod):
   lazy val pt1: Int =
     games
       .filter(_.isPossible(red = 12, green = 13, blue = 14))
-      .map(_.id)
-      .sum
+      .sumBy(_.id)
 
   lazy val pt2: Int =
-    games
-      .map(_.powerOfMinSetOfCubes)
-      .sum
+    games.sumBy(_.powerOfMinSetOfCubes)
 
   answer(1)(pt1)
 

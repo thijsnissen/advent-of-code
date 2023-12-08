@@ -2,6 +2,7 @@ package adventofcode
 package aoc2023
 
 import utilities.AdventOfCode.*
+import utilities.Utilities.sumBy
 
 object Day04 extends AdventOfCode(Prod):
   val scratchcards: Vector[Scratchcard] =
@@ -41,9 +42,7 @@ object Day04 extends AdventOfCode(Prod):
         processAll(scratchcards.tail ++ copies, lookup, acc + copies.length)
 
   lazy val pt1: Int =
-    scratchcards
-      .map(_.score)
-      .sum
+    scratchcards.sumBy(_.score)
 
   lazy val pt2: Int =
     val lookup: Map[Int, Vector[Scratchcard]] =

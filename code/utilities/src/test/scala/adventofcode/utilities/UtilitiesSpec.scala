@@ -27,3 +27,7 @@ class UtilitiesSpec extends AnyFunSuite:
     assertResult(3)(3 +% 10)
     assertResult(3)(-7 +% 10)
     assertResult(3)(33 +% 10)
+
+    assertResult(36)(12 lcm 18)
+    assertResult(0)(2 lcm 0)
+    assertResult(42)(-6L lcm 14L)

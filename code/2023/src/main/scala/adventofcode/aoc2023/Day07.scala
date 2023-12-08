@@ -2,6 +2,7 @@ package adventofcode
 package aoc2023
 
 import utilities.AdventOfCode.*
+import utilities.Utilities.sumBy
 
 object Day07 extends AdventOfCode(Prod):
   val hands: Vector[Hand] =
@@ -71,13 +72,12 @@ object Day07 extends AdventOfCode(Prod):
         hands
           .sorted
           .zipWithIndex
-          .map((hand: Hand, rank: Int) => hand.bid * (rank + 1))
-          .sum
+          .sumBy((hand: Hand, rank: Int) => hand.bid * (rank + 1))
 
-    given (using int: Ordering[Int]): Ordering[Hand] with
+    given Ordering[Hand] with
       override def compare(a: Hand, b: Hand): Int =
         if a.handType.ordinal != b.handType.ordinal then
-          int.compare(a.handType.ordinal, b.handType.ordinal)
+          Ordering[Int].compare(a.handType.ordinal, b.handType.ordinal)
         else
           @tailrec
           def loop(cards: IndexedSeq[(Char, Char)]): Int =
@@ -86,7 +86,7 @@ object Day07 extends AdventOfCode(Prod):
               val (aCard, bCard) = cards.head
 
               if aCard == bCard then loop(cards.tail)
-              else int.compare(cardToInt(aCard), cardToInt(bCard))
+              else Ordering[Int].compare(cardToInt(aCard), cardToInt(bCard))
 
           loop(a.cards.zip(b.cards))
 

@@ -1,6 +1,8 @@
 package adventofcode
 package utilities
 
+import scala.math
+
 object Utilities:
   import scala.math.Integral.Implicits.*
   import scala.math.Ordering.Implicits.*
@@ -61,7 +63,14 @@ object Utilities:
     @annotation.targetName("wholeNumberModulo")
     def +%(n: A): A = (a % n + n) % n
 
+    @tailrec
+    def gcd(b: A): A =
+      if b == Integral[A].zero then a.abs else b.gcd(a % b)
+
+    def lcm(b: A): A =
+      (a * b).abs / a.gcd(b)
+
   extension [A](i: Iterable[A])
-    def sumBy[B](f: A => B)(using n: Numeric[B]): B =
-      i.foldLeft(n.zero): (acc, elem) =>
-        n.plus(acc, f(elem))
+    def sumBy[B: Integral](f: A => B): B =
+      i.foldLeft(Integral[B].zero): (acc, elem) =>
+        Integral[B].plus(acc, f(elem))

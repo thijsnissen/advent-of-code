@@ -2,6 +2,7 @@ package adventofcode
 package aoc2023
 
 import utilities.AdventOfCode.*
+import utilities.Utilities.sumBy
 
 object Day01 extends AdventOfCode(Prod):
   val calibrationDocument: Vector[String] =
@@ -49,14 +50,10 @@ object Day01 extends AdventOfCode(Prod):
         case None           => endsWith(line.init)
 
   lazy val pt1: Int =
-    calibrationDocument
-      .map(calibrationValueFromDigits)
-      .sum
+    calibrationDocument.sumBy(calibrationValueFromDigits)
 
   lazy val pt2: Int =
-    calibrationDocument
-      .map(calibrationValueFromDigitsLetters)
-      .sum
+    calibrationDocument.sumBy(calibrationValueFromDigitsLetters)
 
   answer(1)(pt1)
 
