@@ -2,7 +2,7 @@ package adventofcode
 package aoc2023
 
 import utilities.AdventOfCode.*
-import utilities.Utilities.*
+import utilities.Utilities.lcm
 
 object Day08 extends AdventOfCode(Prod):
   val instructions: Vector[Char] =
