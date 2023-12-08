@@ -5,10 +5,10 @@ import utilities.AdventOfCode.*
 import utilities.Utilities.lcm
 
 object Day08 extends AdventOfCode(Prod):
-  val instructions: Vector[Char] =
-    input
-      .takeWhile(_ != '\n')
-      .toVector
+  val instructions: Iterator[Char] =
+    Iterator
+      .continually(input.takeWhile(_ != '\n'))
+      .flatten
 
   val nodes: Map[String, (String, String)] =
     input
@@ -21,26 +21,17 @@ object Day08 extends AdventOfCode(Prod):
   @tailrec
   def loop(
     node: String,
-    instructions: Vector[Char],
+    instructions: Iterator[Char],
     nodes: Map[String, (String, String)],
-    instr: Int = 0,
     acc: Int = 0
   ): Long =
     val next: String =
-      instructions(instr) match
+      instructions.next match
         case 'L' => nodes(node)(0)
         case 'R' => nodes(node)(1)
 
-    if next.endsWith("Z") then
-      acc + 1
-    else
-      loop(
-        next,
-        instructions,
-        nodes,
-        if instr == instructions.length - 1 then 0 else instr + 1,
-        acc + 1
-      )
+    if next.endsWith("Z") then acc + 1
+    else loop(next, instructions, nodes, acc + 1)
 
   lazy val pt1: Long =
     loop(if getEnv == Test then "22A" else "AAA", instructions, nodes)
