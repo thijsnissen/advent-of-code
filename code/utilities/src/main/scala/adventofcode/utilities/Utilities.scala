@@ -74,3 +74,7 @@ object Utilities:
     def sumBy[B: Integral](f: A => B): B =
       i.foldLeft(Integral[B].zero): (acc, elem) =>
         Integral[B].plus(acc, f(elem))
+
+    def productBy[B: Integral](f: A => B): B =
+      i.foldLeft(Integral[B].one): (acc, elem) =>
+        Integral[B].times(acc, f(elem))

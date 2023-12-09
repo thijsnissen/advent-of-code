@@ -79,8 +79,7 @@ object Day07 extends AdventOfCode(Prod):
         if a.handType.ordinal != b.handType.ordinal then
           Ordering[Int].compare(a.handType.ordinal, b.handType.ordinal)
         else
-          @tailrec
-          def loop(cards: IndexedSeq[(Char, Char)]): Int =
+          @tailrec def loop(cards: IndexedSeq[(Char, Char)]): Int =
             if cards.isEmpty then 0
             else
               val (aCard, bCard) = cards.head

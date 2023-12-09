@@ -5,7 +5,7 @@ import utilities.AdventOfCode.*
 import utilities.Utilities.lcm
 
 object Day08 extends AdventOfCode(Prod):
-  val instructions: Iterator[Char] =
+  def instructions: Iterator[Char] =
     Iterator
       .continually(input.takeWhile(_ != '\n'))
       .flatten
@@ -18,8 +18,7 @@ object Day08 extends AdventOfCode(Prod):
         case s"$node = ($left, $right)" => node -> (left, right)
       .toMap
 
-  @tailrec
-  def loop(
+  @tailrec def loop(
     node: String,
     instructions: Iterator[Char],
     nodes: Map[String, (String, String)],

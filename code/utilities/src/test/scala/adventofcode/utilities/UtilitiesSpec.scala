@@ -31,3 +31,6 @@ class UtilitiesSpec extends AnyFunSuite:
     assertResult(36)(12 lcm 18)
     assertResult(0)(2 lcm 0)
     assertResult(42)(-6L lcm 14L)
+
+    assertResult(6)(List(1, 2, 3).sumBy(identity))
+    assertResult(6)(List(1, 2, 3).productBy(identity))

@@ -16,8 +16,7 @@ object Day06 extends AdventOfCode(Prod):
 
   case class Race(time: Long, distance: Long):
     def race: Long =
-      @tailrec
-      def loop(i: Long, acc: Long): Long =
+      @tailrec def loop(i: Long, acc: Long): Long =
         i match
           case 0                              => acc
           case i if i * (time - i) > distance => loop(i - 1, acc + 1)

@@ -23,8 +23,7 @@ object Day01 extends AdventOfCode(Prod):
       "nine"  -> 9
     )
 
-  @tailrec
-  def firstValidDigit(line: String): Int =
+  @tailrec def firstValidDigit(line: String): Int =
     if line.head.isDigit then line.head.asDigit else firstValidDigit(line.tail)
 
   def calibrationValueFromDigits(line: String): Int =
@@ -33,16 +32,14 @@ object Day01 extends AdventOfCode(Prod):
   def calibrationValueFromDigitsLetters(line: String): Int =
     s"${startsWith(line)}${endsWith(line)}".toInt
 
-  @tailrec
-  def startsWith(line: String): Int =
+  @tailrec def startsWith(line: String): Int =
     if line.head.isDigit then line.head.asDigit
     else
       lettersToDigit.find((letters, _) => line.startsWith(letters)) match
         case Some(_, digit) => digit
         case None           => startsWith(line.tail)
 
-  @tailrec
-  def endsWith(line: String): Int =
+  @tailrec def endsWith(line: String): Int =
     if line.last.isDigit then line.last.asDigit
     else
       lettersToDigit.find((letters, _) => line.endsWith(letters)) match

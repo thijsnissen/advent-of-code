@@ -28,8 +28,7 @@ object Day04 extends AdventOfCode(Prod):
             values.grouped(3).map(_.trim.toInt).toVector
           )
 
-    @tailrec
-    def processAll(
+    @tailrec def processAll(
       scratchcards: Vector[Scratchcard],
       lookup: Map[Int, Vector[Scratchcard]],
       acc: Int

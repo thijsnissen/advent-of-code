@@ -2,8 +2,9 @@ package adventofcode
 package aoc2022
 
 import utilities.AdventOfCode.*
+import utilities.Utilities.productBy
 
-object Day11 extends AdventOfCode(Test):
+object Day11 extends AdventOfCode(Prod):
   val monkeys: Vector[Monkey] =
     input
       .linesIterator
@@ -14,17 +15,17 @@ object Day11 extends AdventOfCode(Test):
 
   case class Monkey(
     id: Int,
-    items: Vector[Int],
-    operation: Int => Int,
-    test: Int => Boolean,
+    items: Vector[Long],
+    operation: Long => Long,
+    test: Long => Boolean,
     ifTrue: Int,
     ifFalse: Int,
-    counter: Int
+    counter: Long
   ):
     def takeTurn(monkeys: Vector[Monkey]): Vector[Monkey] =
       items
-        .foldLeft(monkeys): (monkeys: Vector[Monkey], item: Int) =>
-          val inspectedItem: Int = operation(item) / 3
+        .foldLeft(monkeys): (monkeys: Vector[Monkey], item: Long) =>
+          val inspectedItem: Long = operation(item) / 3
 
           if test(inspectedItem) then
             monkeys.updated(
@@ -43,18 +44,18 @@ object Day11 extends AdventOfCode(Test):
         .updated(
           id,
           monkeys(id).copy(
-            items = Vector.empty[Int],
+            items = Vector.empty[Long],
             counter = counter + items.length
           )
         )
 
   object Monkey:
     def fromInput(monkey: Seq[String]): Monkey =
-      def parseOperation(s: String): Int => Int =
+      def parseOperation(s: String): Long => Long =
         s match
-          case s"new = old * old" => (i: Int) => i * i
-          case s"new = old * $x"  => (i: Int) => i * x.toInt
-          case s"new = old + $x"  => (i: Int) => i + x.toInt
+          case s"new = old * old" => (i: Long) => i * i
+          case s"new = old * $x"  => (i: Long) => i * x.toInt
+          case s"new = old + $x"  => (i: Long) => i + x.toInt
 
       monkey.map(_.trim) match
         case Seq(
@@ -67,29 +68,35 @@ object Day11 extends AdventOfCode(Test):
             ) =>
           Monkey(
             id.toInt,
-            items.split(", ").map(_.toInt).toVector,
+            items.split(", ").map(_.toLong).toVector,
             parseOperation(operation),
-            (i: Int) => i % test.toInt == 0,
+            (i: Long) => i % test.toInt == 0,
             ifTrue.toInt,
             ifFalse.toInt,
             0
           )
 
     def playRound(monkeys: Vector[Monkey]): Vector[Monkey] =
-      // Next monkey should be picked from state.
-      monkeys.foldLeft(monkeys): (monkeys: Vector[Monkey], monkey: Monkey) =>
-        monkey.takeTurn(monkeys)
+      monkeys.indices.foldLeft(monkeys): (monkeys: Vector[Monkey], i: Int) =>
+        monkeys(i).takeTurn(monkeys)
 
-  lazy val pt1: Int =
-    Monkey
-      .playRound(monkeys)
-      .map(_.counter)
-      .sorted
+  lazy val pt1: Long =
+    Iterator
+      .iterate(monkeys)(Monkey.playRound)
+      .drop(20)
+      .next
+      .sortBy(_.counter)(Ordering[Long].reverse)
       .take(2)
-      .product
+      .productBy(_.counter)
 
-  lazy val pt2: Int =
-    ???
+  lazy val pt2: Long =
+    Iterator
+      .iterate(monkeys)(Monkey.playRound)
+      .drop(10000)
+      .next
+      .sortBy(_.counter)(Ordering[Long].reverse)
+      .take(2)
+      .productBy(_.counter)
 
   answer(1)(pt1)
 
