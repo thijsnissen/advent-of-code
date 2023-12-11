@@ -23,7 +23,7 @@ object Day11 extends AdventOfCode(Prod):
       .map(offsetPos(_, image, expansion))
       .combinations(2)
       .collect:
-        case Vector(a, b) => a manhattan b
+        case Vector(a: Pos, b: Pos) => a manhattan b
       .toVector
 
   lazy val pt1: Long =
