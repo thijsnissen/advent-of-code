@@ -44,7 +44,7 @@ object Day06 extends AdventOfCode(Prod):
       .maxBy(_._2)
       ._2
 
-  lazy val maxDistance = 10000 // 32 10000
+  lazy val maxDistance = if getEnv == Test then 32 else 10000
 
   lazy val grid2: Vector[Vector[Int]] =
     (0 until maxX).foldLeft(Vector.fill(maxY)(Vector.fill(maxX)(-1))):

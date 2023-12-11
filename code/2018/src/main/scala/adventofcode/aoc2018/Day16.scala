@@ -163,14 +163,16 @@ object Day16 extends AdventOfCode(Prod):
       .count(_.length >= 3)
 
   lazy val pt2: Int =
-    val opcodes: List[String] =
-      orderedOpcodes(analyzeSamplesByOpcode, List.empty[(Int, String)])
+    if getEnv == Test then 0
+    else
+      val opcodes: List[String] =
+        orderedOpcodes(analyzeSamplesByOpcode, List.empty[(Int, String)])
 
-    val result =
-      instructions.foldLeft(empty): (device, inst) =>
-        device.run(opcodes(inst.opcode), inst.a, inst.b, inst.c)
+      val result =
+        instructions.foldLeft(empty): (device, inst) =>
+          device.run(opcodes(inst.opcode), inst.a, inst.b, inst.c)
 
-    result(0)
+      result(0)
 
   answer(1)(pt1)
 

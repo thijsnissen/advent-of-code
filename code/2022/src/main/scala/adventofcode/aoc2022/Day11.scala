@@ -2,6 +2,7 @@ package adventofcode
 package aoc2022
 
 import utilities.AdventOfCode.*
+import utilities.Utilities.lcm
 import utilities.Utilities.productBy
 
 object Day11 extends AdventOfCode(Prod):
@@ -15,8 +16,8 @@ object Day11 extends AdventOfCode(Prod):
 
   case class Monkey(
     items: Vector[Long],
-    operation: String,
-    test: Long => Boolean,
+    operation: Long => Long,
+    test: Int,
     ifTrue: Int,
     ifFalse: Int,
     counter: Long
@@ -35,26 +36,43 @@ object Day11 extends AdventOfCode(Prod):
             ) =>
           Monkey(
             items.split(", ").map(_.toLong).toVector,
-            operation,
-            (i: Long) => i % test.toInt == 0,
+            parseOperation(operation),
+            test.toInt,
             ifTrue.toInt,
             ifFalse.toInt,
             0
           )
 
-    def playRound(monkeys: Vector[Monkey], part: Int): Vector[Monkey] =
-      monkeys.indices.foldLeft(monkeys): (monkeys: Vector[Monkey], id: Int) =>
-        takeTurn(monkeys, id, part)
+    def parseOperation(s: String): Long => Long =
+      s match
+        case s"new = old * old" => (i: Long) => i * i
+        case s"new = old * $x"  => (i: Long) => i * x.toInt
+        case s"new = old + $x"  => (i: Long) => i + x.toInt
 
-    def takeTurn(monkeys: Vector[Monkey], id: Int, part: Int): Vector[Monkey] =
+    def playRound(
+      monkeys: Vector[Monkey],
+      modulo: Long,
+      isPartTwo: Boolean = false
+    ): Vector[Monkey] =
+      monkeys.indices.foldLeft(monkeys): (monkeys: Vector[Monkey], id: Int) =>
+        takeTurn(monkeys, id, modulo, isPartTwo)
+
+    def takeTurn(
+      monkeys: Vector[Monkey],
+      id: Int,
+      modulo: Long,
+      isPartTwo: Boolean
+    ): Vector[Monkey] =
       val monkey: Monkey = monkeys(id)
 
       monkey
         .items
         .foldLeft(monkeys): (monkeys: Vector[Monkey], item: Long) =>
-          val inspectedItem: Long = inspectItem(item, monkey.operation, part)
+          val inspectedItem: Long =
+            if isPartTwo then monkey.operation(item % modulo)
+            else monkey.operation(item % modulo) / 3
 
-          if monkey.test(inspectedItem) then
+          if inspectedItem % monkey.test == 0 then
             monkeys.updated(
               monkey.ifTrue,
               monkeys(monkey.ifTrue).copy(items =
@@ -76,18 +94,6 @@ object Day11 extends AdventOfCode(Prod):
           )
         )
 
-    def inspectItem(item: Long, operation: String, part: Int): Long =
-      // import utilities.Utilities.lcm
-      // pprint.log(List(23, 19, 13, 17).reduce(_ lcm _)) // Test
-      // pprint.log(List(7, 3, 2, 11, 17, 5, 13, 19).reduce(_ lcm _)) // Prod
-      val modulo: Long = if getEnv == Test then 96577 else 9699690
-      val divide: Int  = if part == 1 then 3 else 1
-
-      operation match
-        case s"new = old * old" => ((item % modulo) * item) / divide
-        case s"new = old * $x" => ((item % modulo) * x.toInt) / divide
-        case s"new = old + $x" => ((item % modulo) + x.toInt) / divide
-
     extension (self: Vector[Monkey])
       def monkeyBusiness: Long =
         self
@@ -97,14 +103,16 @@ object Day11 extends AdventOfCode(Prod):
 
   lazy val pt1: Long =
     Iterator
-      .iterate(monkeys)(Monkey.playRound(_, 1))
+      .iterate(monkeys):
+        Monkey.playRound(_, monkeys.map(_.test).reduce(_ lcm _))
       .drop(20)
       .next
       .monkeyBusiness
 
   lazy val pt2: Long =
     Iterator
-      .iterate(monkeys)(Monkey.playRound(_, 2))
+      .iterate(monkeys):
+        Monkey.playRound(_, monkeys.map(_.test).reduce(_ lcm _), true)
       .drop(10000)
       .next
       .monkeyBusiness
