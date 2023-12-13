@@ -16,7 +16,7 @@ object Day11 extends AdventOfCode(Prod):
     val xEmpty: Int = pos.x - image.distinctBy(_.x).count(_.x < pos.x)
     val yEmpty: Int = pos.y - image.distinctBy(_.y).count(_.y < pos.y)
 
-    pos + Pos(xEmpty * expansion, yEmpty * expansion)
+    pos + Pos(xEmpty * (expansion - 1), yEmpty * (expansion - 1))
 
   def shortestPaths(image: Vector[Pos], expansion: Int): Vector[Long] =
     image
@@ -27,13 +27,10 @@ object Day11 extends AdventOfCode(Prod):
       .toVector
 
   lazy val pt1: Long =
-    shortestPaths(image, 1).sum
+    shortestPaths(image, 2).sum
 
   lazy val pt2: Long =
-    if getEnv == Test then
-      shortestPaths(image, 99).sum
-    else
-      shortestPaths(image, 999999).sum
+    shortestPaths(image, 1_000_000).sum
 
   answer(1)(pt1)
 

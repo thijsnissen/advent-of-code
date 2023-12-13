@@ -12,7 +12,8 @@ object Day25 extends AdventOfCode(Test):
         case s"$x,$y,$z,$w" => Pos4D(x.toInt, y.toInt, z.toInt, w.toInt)
       .toVector
 
-  def numberOfConstellations(fixedPointsInSpacetime: Vector[Pos4D]): Map[Pos4D, Set[Pos4D]] =
+  def numberOfConstellations(fixedPointsInSpacetime: Vector[Pos4D])
+    : Map[Pos4D, Set[Pos4D]] =
     ???
 
   lazy val pt1: Int =

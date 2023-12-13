@@ -32,7 +32,7 @@ object Day10 extends AdventOfCode(Test):
           case '7' => Set(pos - Pos(1, 0), pos + Pos(0, 1))
           case 'F' => Set(pos + Pos(1, 0), pos + Pos(0, 1))
 
-        adj.filter((p: Pos) => surface(p) != 'S' && surface(p) != '.')
+        adj.filter((p: Pos) => surface(p) != '.')
 
       def startEnd: (Pos, Pos) =
         val start: Pos =
@@ -48,11 +48,14 @@ object Day10 extends AdventOfCode(Test):
 
         val pos: List[Pos] = List(
           Option.when(north == '|' || north == '7' || north == 'F'):
-            start - Pos(0, 1),
+            start - Pos(0, 1)
+          ,
           Option.when(east == '-' || east == 'J' || east == '7'):
-            start + Pos(1, 0),
+            start + Pos(1, 0)
+          ,
           Option.when(south == '|' || south == 'L' || south == 'J'):
-            start + Pos(0, 1),
+            start + Pos(0, 1)
+          ,
           Option.when(west == '-' || west == 'L' || west == 'F'):
             start - Pos(1, 0)
         ).flatten
@@ -66,16 +69,18 @@ object Day10 extends AdventOfCode(Test):
 
         val graph: Graph[Pos] =
           Graph.unit: (p: Pos) =>
-            SortedSet.empty[Pos] ++ surface.offsets (p)
+            SortedSet.empty[Pos] ++
+              surface.offsets(p).filter((p: Pos) => surface(p) != 'S')
 
-        graph.breadthFirstSearchPathTo (start) (_== end) match
-          case Some (path) => path
-          case None => sys.error (s"No path found from $start to $end.")
+        graph.breadthFirstSearchPathTo(start)(_ == end) match
+          case Some(path) =>
+            self.offsets(start).intersect(self.offsets(end)).head :: path
+          case None => sys.error(s"No path found from $start to $end.")
 
   import Surface.*
 
   lazy val pt1: Int =
-    (surface.findLoop.length + 2) / 2
+    (surface.findLoop.length + 1) / 2
 
   lazy val pt2: Int =
     ???
