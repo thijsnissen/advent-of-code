@@ -39,18 +39,18 @@ object Day13 extends AdventOfCode(Prod):
             .map((l: String, r: String) => l.zip(r).count(_ != _))
             .sum == 1
 
-    def summarize(p: Pattern, fn: Pattern => Option[Int]): Int =
+    def summarize(p: Pattern)(fn: Pattern => Option[Int]): Int =
       fn(p.transpose.map(_.mkString)).getOrElse(0) + 100 * fn(p).getOrElse(0)
 
   import Pattern.*
 
   lazy val pt1: Int =
     patterns.foldLeft(0): (acc: Int, p: Pattern) =>
-      acc + summarize(p, reflectionLine)
+      acc + summarize(p)(reflectionLine)
 
   lazy val pt2: Int =
     patterns.foldLeft(0): (acc: Int, p: Pattern) =>
-      acc + summarize(p, smudgedReflectionLine)
+      acc + summarize(p)(smudgedReflectionLine)
 
   answer(1)(pt1)
 
