@@ -71,9 +71,9 @@ class PosSpec extends AnyFunSuite:
     assertResult(
       """
 				|  0 1 2
-				|0 . . .
-				|1 . # .
-				|2 . . .
+				|0 # # #
+				|1 # . #
+				|2 # # #
 				|""".stripMargin
     )(Pos.asString(list.filterNot(_ == Pos(1, 1))))
 

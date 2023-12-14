@@ -8,6 +8,8 @@ import utilities.Pos
 import utilities.Utilities.sumBy
 
 object Day14 extends AdventOfCode(Prod):
+  import Platform.north
+
   val platform: Platform =
     val positions: Iterator[(Pos, Char)] =
       for
@@ -15,7 +17,7 @@ object Day14 extends AdventOfCode(Prod):
         (c, x) <- l.zipWithIndex
       yield Pos(x, y) -> c
 
-    Platform.fromMap(positions.toMap)(using Platform.north)
+    Platform.fromMap(positions.toMap)
 
   type Platform = SortedMap[Pos, Char]
 
@@ -40,12 +42,13 @@ object Day14 extends AdventOfCode(Prod):
             if moved != p then acc.updated(moved, c).updated(p, '.') else acc
 
       def cycle: Platform =
-        val directions: Set[(Pos, Ordering[Pos])] = Set(
-          Pos(0, -1) -> north,
-          Pos(-1, 0) -> west,
-          Pos(0, 1)  -> south,
-          Pos(1, 0)  -> east
-        )
+        val directions: Set[(Pos, Ordering[Pos])] =
+          Set(
+            Pos(0, -1) -> north,
+            Pos(-1, 0) -> west,
+            Pos(0, 1)  -> south,
+            Pos(1, 0)  -> east
+          )
 
         directions.foldLeft(self):
           case (acc: Platform, (dir: Pos, ord: Ordering[Pos])) =>
@@ -78,7 +81,7 @@ object Day14 extends AdventOfCode(Prod):
   import Platform.*
 
   lazy val pt1: Int =
-    platform.tilt(Pos(0, -1))(using Platform.north).totalLoad
+    platform.tilt(Pos(0, -1)).totalLoad
 
   lazy val pt2: Int =
     val cycle: Cycle[Platform] =

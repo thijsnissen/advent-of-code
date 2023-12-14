@@ -8,7 +8,7 @@ import utilities.GraphTraversal.*
 import utilities.Orderings.posReadingOrder
 import utilities.Pos
 
-object Day10 extends AdventOfCode(Test):
+object Day10 extends AdventOfCode(Prod):
   val surface: Surface =
     val sketch =
       for
