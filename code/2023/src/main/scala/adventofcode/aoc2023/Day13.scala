@@ -16,7 +16,7 @@ object Day13 extends AdventOfCode(Prod):
     def fromInput(s: String): Pattern =
       s.linesIterator.toVector
 
-    def reflectionLine(pattern: Pattern): Option[Int] =
+    def reflectionLine(pattern: Pattern)(reflection: Int => Boolean): Option[Int] =
       (1 until pattern.length)
         .find: (i: Int) =>
           val (l: Pattern, r: Pattern) =
@@ -24,33 +24,26 @@ object Day13 extends AdventOfCode(Prod):
 
           val size: Int = l.length min r.length
 
-          l.reverse.take(size) == r.take(size)
+          reflection:
+            l.reverse.take(size)
+              .zip(r.take(size))
+              .map((l: String, r: String) => l.zip(r).count(_ != _))
+              .sum
 
-    def smudgedReflectionLine(pattern: Pattern): Option[Int] =
-      (1 until pattern.length)
-        .find: (i: Int) =>
-          val (l: Pattern, r: Pattern) =
-            pattern.splitAt(i)
-
-          val size: Int = l.length min r.length
-
-          l.reverse.take(size)
-            .zip(r.take(size))
-            .map((l: String, r: String) => l.zip(r).count(_ != _))
-            .sum == 1
-
-    def summarize(p: Pattern)(fn: Pattern => Option[Int]): Int =
-      fn(p.transpose.map(_.mkString)).getOrElse(0) + 100 * fn(p).getOrElse(0)
+    extension (self: Pattern)
+      def summarize(reflection: Int => Boolean): Int =
+        reflectionLine(self.transpose.map(_.mkString))(reflection).getOrElse(0) +
+          100 * reflectionLine(self)(reflection).getOrElse(0)
 
   import Pattern.*
 
   lazy val pt1: Int =
     patterns.foldLeft(0): (acc: Int, p: Pattern) =>
-      acc + summarize(p)(reflectionLine)
+      acc + p.summarize(_ == 0)
 
   lazy val pt2: Int =
     patterns.foldLeft(0): (acc: Int, p: Pattern) =>
-      acc + summarize(p)(smudgedReflectionLine)
+      acc + p.summarize(_ == 1)
 
   answer(1)(pt1)
 
