@@ -65,7 +65,7 @@ object Pos:
   def zero: Pos =
     Pos(0, 0)
 
-  def asString(seq: Seq[Pos], found: Char = '.', notFound: Char = '#'): String =
+  def asString(seq: Seq[Pos], found: Char = '#', notFound: Char = '.'): String =
     val xMin   = seq.minBy(_.x)
     val xMax   = seq.maxBy(_.x)
     val yMin   = seq.minBy(_.y)
