@@ -16,7 +16,8 @@ object Day13 extends AdventOfCode(Prod):
     def fromInput(s: String): Pattern =
       s.linesIterator.toVector
 
-    def reflectionLine(pattern: Pattern)(reflection: Int => Boolean): Option[Int] =
+    def reflectionLine(pattern: Pattern)(reflection: Int => Boolean)
+      : Option[Int] =
       (1 until pattern.length)
         .find: (i: Int) =>
           val (l: Pattern, r: Pattern) =
@@ -32,7 +33,9 @@ object Day13 extends AdventOfCode(Prod):
 
     extension (self: Pattern)
       def summarize(reflection: Int => Boolean): Int =
-        reflectionLine(self.transpose.map(_.mkString))(reflection).getOrElse(0) +
+        reflectionLine(self.transpose.map(_.mkString))(reflection).getOrElse(
+          0
+        ) +
           100 * reflectionLine(self)(reflection).getOrElse(0)
 
   import Pattern.*

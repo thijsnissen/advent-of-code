@@ -36,10 +36,10 @@ object Day14 extends AdventOfCode(Prod):
             case _                   => p
 
         Platform.fromMap(roundedRocks).foldLeft(self):
-          case (acc: Platform, (p: Pos, c: Char)) =>
+          case (acc: Platform, (p: Pos, _: Char)) =>
             val moved: Pos = loop(acc, p)
 
-            if moved != p then acc.updated(moved, c).updated(p, '.') else acc
+            if moved != p then acc.updated(moved, 'O').updated(p, '.') else acc
 
       def cycle: Platform =
         val directions: Set[(Pos, Ordering[Pos])] =
