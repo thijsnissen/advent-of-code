@@ -88,12 +88,12 @@ class AdventOfCode2023Spec extends AnyFunSuite:
 
   test("Day10"):
     if Day10.getEnv == Test then
-      assertResult(80)(Day10.pt1) // [0ms]
-      assertResult(10)(Day10.pt2) // [0ms]
+      assertResult(80)(Day10.pt1) // [24ms]
+      assertResult(10)(Day10.pt2) // [12ms]
 
     if Day10.getEnv == Prod then
-      assertResult(6773)(Day10.pt1) // [0ms]
-      assertResult(???)(Day10.pt2)  // [0ms]
+      assertResult(6773)(Day10.pt1) // [745ms]
+      assertResult(493)(Day10.pt2)  // [2281ms]
 
   test("Day11"):
     if Day11.getEnv == Test then
