@@ -10,32 +10,48 @@ object Day12 extends AdventOfCode(Test):
       .map(Record.fromString)
       .toVector
 
-  case class Record(springs: String, groups: List[Int]):
-    def arrangements: List[String] =
-      @tailrec def loop(i: Int, g: String, acc: String): String =
-        if i >= springs.length then acc
-        else
-          springs(i) match
-            case '.' | '?' if g.isEmpty => loop(i + 1, g, acc + ".")
-            case '.' | '?' if g.nonEmpty && groups.contains(g.length) =>
-              loop(i + 1, "", acc + g)
-            case '#' | '?' => loop(i + 1, g + "#", acc)
+  case class Record(springs: String, groups: List[Long]):
+    def unfold: Record =
+      Record(
+        List.fill(5)(springs).mkString("?"),
+        List.fill(5)(groups).flatten
+      )
 
-      loop(0, "", "") :: List.empty[String]
+    def matched(s: String): Boolean =
+      s.split('.').filter(_.nonEmpty).map(_.length).toList == groups
+
+    def arrangements: List[String] =
+      @tailrec def loop(todo: List[String], acc: List[String]): List[String] =
+        if todo.isEmpty then
+          acc
+        else if todo.head.length == springs.length then
+          loop(todo.tail, if matched(todo.head) then todo.head :: acc else acc)
+        else
+          springs(todo.head.length) match
+            case '?' => loop(todo.head + '.' :: todo.head + '#' :: todo.tail, acc)
+            case c   => loop(todo.head + c :: todo.tail, acc)
+
+      loop(List(""), List.empty[String])
 
   object Record:
     def fromString(s: String): Record =
       val Array(springs, groups) = s.split(" ")
 
-      Record(springs, groups.split(",").map(_.toInt).toList)
+      Record(springs, groups.split(",").map(_.toLong).toList)
 
-  lazy val pt1: Int =
-    conditionRecords
-      .flatMap(_.arrangements)
-      .tap(x => pprint.log(x))
-      .length
+    extension (self: Vector[Record])
+      def sumArrangements: Long =
+        self
+          .flatMap(_.arrangements)
+          .length
 
-  lazy val pt2: Int =
+  lazy val pt1: Long =
+    conditionRecords.sumArrangements
+
+  lazy val pt2: Long =
+    // conditionRecords
+    //   .map(_.unfold)
+    //   .sumArrangements
     ???
 
   answer(1)(pt1)
