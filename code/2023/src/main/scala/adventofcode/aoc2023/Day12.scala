@@ -47,13 +47,16 @@ object Day12 extends AdventOfCode(Prod):
           .sum
 
   lazy val pt1: Long =
-    conditionRecords.sumArrangements
+    val result = conditionRecords.sumArrangements
+    println(s"CACHE POST PART 1")
+    println(Record.cache.toList.sortBy(_._1._1.reverse).mkString("\n"))
+    result
 
   lazy val pt2: Long =
-    conditionRecords
-      .map(_.unfold)
-      .sumArrangements
+    val result = conditionRecords.map(_.unfold).sumArrangements
+    println(s"CACHE POST PART 2")
+    println(Record.cache.toList.sortBy(_._1._1.reverse).mkString("\n"))
+    result
 
   answer(1)(pt1)
-
   answer(2)(pt2)
