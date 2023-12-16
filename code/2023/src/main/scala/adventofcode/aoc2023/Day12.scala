@@ -3,7 +3,7 @@ package aoc2023
 
 import utilities.AdventOfCode.*
 
-object Day12 extends AdventOfCode(Test):
+object Day12 extends AdventOfCode(Prod):
   val conditionRecords: Vector[Record] =
     input
       .linesIterator
@@ -25,17 +25,18 @@ object Day12 extends AdventOfCode(Test):
 
     val cache = scala.collection.mutable.Map.empty[(String, List[Int]), Long]
 
-    def arrangements(springs: String, groups: List[Int]): Long =
-      cache.getOrElseUpdate((springs: String, groups: List[Int]),
-        if groups.isEmpty then 1
-        else springs.headOption match
-          case Some('.') => arrangements(springs.tail, groups)
-          case Some('?') => arrangements("." + springs.tail, groups) + arrangements("#" + springs.tail, groups)
+    def arrangements(mask: String, lengths: List[Int]): Long =
+      cache.getOrElseUpdate((mask, lengths),
+        if lengths.isEmpty && mask.contains('#') then 0
+        else if lengths.isEmpty then 1
+        else mask.headOption match
+          case Some('.') => arrangements(mask.tail, lengths)
+          case Some('?') => arrangements("." + mask.tail, lengths) + arrangements("#" + mask.tail, lengths)
           case Some('#') =>
-            if springs.length < groups.head then 0
-            else if springs.take(groups.head).contains('.') then 0
-            else if springs.slice(groups.head, groups.head + 1) == "#" then 0
-            else arrangements(springs.drop(groups.head + 1), groups.tail)
+            if mask.length < lengths.head then 0
+            else if mask.take(lengths.head).contains('.') then 0
+            else if mask.slice(lengths.head, lengths.head + 1) == "#" then 0
+            else arrangements(mask.drop(lengths.head + 1), lengths.tail)
           case _ => 0
       )
 
