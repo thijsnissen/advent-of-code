@@ -2,6 +2,7 @@ package adventofcode
 package aoc2023
 
 import utilities.AdventOfCode.*
+import utilities.Cache
 
 object Day12 extends AdventOfCode(Prod):
   val conditionRecords: Vector[Record] =
@@ -17,33 +18,38 @@ object Day12 extends AdventOfCode(Prod):
         List.fill(5)(groups).flatten
       )
 
+    def arrangements: Long =
+      Record.cache(springs, groups)
+
   object Record:
     def fromString(s: String): Record =
       val Array(springs, groups) = s.split(" ")
 
       Record(springs, groups.split(",").map(_.toInt).toList)
 
-    val cache = scala.collection.mutable.Map.empty[(String, List[Int]), Long]
-
-    def arrangements(springs: String, groups: List[Int]): Long =
-      cache.getOrElseUpdate((springs, groups),
-        if groups.isEmpty && springs.contains('#') then 0
-        else if groups.isEmpty then 1
-        else springs.headOption match
-          case Some('.') => arrangements(springs.tail, groups)
-          case Some('?') => arrangements("." + springs.tail, groups) + arrangements("#" + springs.tail, groups)
-          case Some('#') =>
-            if springs.length < groups.head then 0
-            else if springs.take(groups.head).contains('.') then 0
-            else if springs.slice(groups.head, groups.head + 1) == "#" then 0
-            else arrangements(springs.drop(groups.head + 1), groups.tail)
-          case _ => 0
-      )
+    lazy val cache: (String, List[Int]) => Long =
+      Cache.memoize[String, List[Int], Long]:
+        (springs: String, groups: List[Int]) =>
+          if groups.isEmpty && !springs.contains('#') then 1
+          else
+            springs.headOption match
+              case Some('.') => cache(springs.tail, groups)
+              case Some('?') =>
+                cache("." + springs.tail, groups) +
+                  cache("#" + springs.tail, groups)
+              case Some('#') =>
+                groups.headOption match
+                  case Some(g) if springs.length < g             => 0
+                  case Some(g) if springs.take(g).contains('.')  => 0
+                  case Some(g) if springs.slice(g, g + 1) == "#" => 0
+                  case Some(g) => cache(springs.drop(g + 1), groups.tail)
+                  case None    => 0
+              case _ => 0
 
     extension (self: Vector[Record])
       def sumArrangements: Long =
         self
-          .map((r: Record) => arrangements(r.springs, r.groups))
+          .map(_.arrangements)
           .sum
 
   lazy val pt1: Long =
