@@ -3,7 +3,7 @@ package aoc2023
 
 import utilities.AdventOfCode.*
 
-object Day12 extends AdventOfCode(Test):
+object Day12 extends AdventOfCode(Prod):
   val conditionRecords: Vector[Record] =
     input
       .linesIterator
@@ -26,8 +26,9 @@ object Day12 extends AdventOfCode(Test):
     val cache = scala.collection.mutable.Map.empty[(String, List[Int]), Long]
 
     def arrangements(springs: String, groups: List[Int]): Long =
-      cache.getOrElseUpdate((springs: String, groups: List[Int]),
-        if groups.isEmpty then 1
+      cache.getOrElseUpdate((springs, groups),
+        if groups.isEmpty && springs.contains('#') then 0
+        else if groups.isEmpty then 1
         else springs.headOption match
           case Some('.') => arrangements(springs.tail, groups)
           case Some('?') => arrangements("." + springs.tail, groups) + arrangements("#" + springs.tail, groups)
