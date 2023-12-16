@@ -48,6 +48,10 @@ class GridSpec extends AnyFunSuite:
 
     assertResult(true)(grid2.exists(_ > 9))
 
+    assertResult(Some(5))(grid1.lift(1, 1))
+
+    assertResult(None)(grid1.lift(3, 0))
+
     assertResult(true)(grid2.contains(10))
 
     assertResult((3, 3))(grid1.size)

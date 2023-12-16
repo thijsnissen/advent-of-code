@@ -33,6 +33,12 @@ object Grid:
     def getCol(x: Int): Vector[A] =
       self.map(_(x))
 
+    def lift(x: Int, y: Int): Option[A] =
+      for
+        y <- self.lift(y)
+        x <- y.lift(x)
+      yield x
+
     def map[B](f: A => B): Grid[B] =
       self.map(_.map(f))
 
