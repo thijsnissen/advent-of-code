@@ -24,8 +24,8 @@ object Day16 extends AdventOfCode(Prod):
     extension (self: Grid[Char])
       @tailrec def move(
         todo: List[Beam],
-        acc: Vector[Beam] = Vector.empty[Beam]
-      ): Vector[Beam] =
+        acc: Set[Beam] = Set.empty[Beam]
+      ): Set[Beam] =
         if todo.isEmpty then acc
         else if acc.contains(todo.head) then move(todo.tail, acc)
         else
@@ -60,13 +60,13 @@ object Day16 extends AdventOfCode(Prod):
 
           move(
             next ::: todo.tail,
-            if next.isEmpty then acc else acc :+ todo.head
+            if next.isEmpty then acc else acc + todo.head
           )
 
       def energized(start: Beam): Int =
         self
           .move(start :: Nil)
-          .distinctBy((b: Beam) => (b.x, b.y))
+          .map((b: Beam) => (b.x, b.y))
           .size
 
   lazy val pt1: Int =
