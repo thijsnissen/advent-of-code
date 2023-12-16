@@ -4,7 +4,7 @@ package aoc2023
 import utilities.AdventOfCode.*
 import utilities.Grid
 
-object Day16 extends AdventOfCode(Prod):
+object Day16 extends AdventOfCode(Test):
   import Beam.*
   import Direction.*
 
