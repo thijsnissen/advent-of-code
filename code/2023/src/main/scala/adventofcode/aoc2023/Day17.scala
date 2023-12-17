@@ -17,7 +17,7 @@ object Day17 extends AdventOfCode(Prod):
         .toVector
 
   enum Direction:
-    case Up, Right, Down, Left, Unknown
+    case Horizontal, Vertical, Unknown
 
   type TrafficPatterns = Grid[Int]
 
@@ -53,22 +53,18 @@ object Day17 extends AdventOfCode(Prod):
         val (xMax: Int, yMax: Int) = self.size
 
         WeightedGraph.unit: (sX: Int, sY: Int, sDir: Direction) =>
-          lazy val left: IndexedSeq[(Int, Int, Direction)] =
-            (offsetFrom to offsetTo).map((i: Int) => (sX - i, sY, Left))
+          lazy val horizontal: IndexedSeq[(Int, Int, Direction)] =
+            (offsetFrom to offsetTo).flatMap: (i: Int) =>
+              Seq((sX + i, sY, Horizontal), (sX - i, sY, Horizontal))
 
-          lazy val right: IndexedSeq[(Int, Int, Direction)] =
-            (offsetFrom to offsetTo).map((i: Int) => (sX + i, sY, Right))
-
-          lazy val up: IndexedSeq[(Int, Int, Direction)] =
-            (offsetFrom to offsetTo).map((i: Int) => (sX, sY - i, Up))
-
-          lazy val down: IndexedSeq[(Int, Int, Direction)] =
-            (offsetFrom to offsetTo).map((i: Int) => (sX, sY + i, Down))
+          lazy val vertical: IndexedSeq[(Int, Int, Direction)] =
+            (offsetFrom to offsetTo).flatMap: (i: Int) =>
+              Seq((sX, sY + i, Vertical), (sX, sY - i, Vertical))
 
           val next: IndexedSeq[(Int, Int, Direction)] = sDir match
-            case Up | Down    => left ++ right
-            case Left | Right => up ++ down
-            case Unknown      => left ++ right ++ up ++ down
+            case Vertical   => horizontal
+            case Horizontal => vertical
+            case Unknown    => horizontal ++ vertical
 
           next
             .filter: (x: Int, y: Int, _) =>
