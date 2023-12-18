@@ -70,12 +70,23 @@ class PosSpec extends AnyFunSuite:
 
     assertResult(
       """
-				|  0 1 2
-				|0 # # #
-				|1 # . #
-				|2 # # #
+				|   0 0 0 0 0
+				|   1 0 1 2 3
+				|01 . . . . .
+				|00 . # # # .
+				|01 . # . # .
+				|02 . # # # .
+				|03 . . . . .
 				|""".stripMargin
     )(Pos.asString(list.filterNot(_ == Pos(1, 1))))
+
+    assertResult(25)(List(
+      Pos(0, 0),
+      Pos(0, 5),
+      Pos(5, 5),
+      Pos(5, 0),
+      Pos(0, 0)
+    ).shoelaceFormula)
 
   test("Pos3D"):
     val pos1 = Pos3D(0, 4, -2)

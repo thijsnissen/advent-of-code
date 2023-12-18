@@ -66,40 +66,49 @@ object Pos:
     Pos(0, 0)
 
   def asString(seq: Seq[Pos], found: Char = '#', notFound: Char = '.'): String =
-    val xMin   = seq.minBy(_.x)
-    val xMax   = seq.maxBy(_.x)
-    val yMin   = seq.minBy(_.y)
-    val yMax   = seq.maxBy(_.y)
-    val deltaX = xMin.delta(xMax).x
+    def intString(i: Int): String =
+      val int: String = math.abs(i).toString
 
-    val a =
-      for
-        y <- (yMin.y to yMax.y).iterator
-        x <- (xMin.x to xMax.x).iterator
-      yield
-        if seq.contains(Pos(x, y)) then found.toString + " "
-        else notFound.toString + " "
+      if int.length == 1 then "0" + int else int
 
-    val b =
-      a
-        .zipWithIndex
-        .map: (s, i) =>
-          if (i + 1) % (deltaX + 1) == 0 then s.trim + "\n" else s
+    val box: Box              = Box.bounding(seq)
+    val Pos(dx: Int, dy: Int) = box.delta
 
-    val xLegend = "  " +
-      (xMin.x to xMax.x)
-        .iterator
-        .map((i: Int) => s"${i.toString.last} ")
+    val legend10: String = "\n   " + (box.min.x - 1 to box.max.x + 1)
+      .map(intString(_).dropRight(1).last)
+      .mkString(" ") + "\n"
+
+    val legend1: String = "   " + (box.min.x - 1 to box.max.x + 1)
+      .map(intString(_).last)
+      .mkString(" ") + "\n"
+
+    val rowFirst: String =
+      s"${intString(box.min.y - 1).takeRight(2)} " +
+        (s"$notFound " * (dx + 3)).trim + "\n"
+
+    val rowLast: String =
+      s"${intString(box.max.y + 1).takeRight(2)} " +
+        (s"$notFound " * (dx + 3)).trim + "\n"
+
+    val body: String =
+      box.iterator.map: (p: Pos) =>
+        if seq.contains(p) then found else notFound
+      .grouped(dx + 1)
+        .zip(box.min.y to box.max.y)
+        .map: (r, i) =>
+          s"${intString(i).takeRight(2)} " +
+            r.mkString(s"$notFound ", " ", s" $notFound") + "\n"
         .mkString
 
-    val yLegend =
-      (yMin.y to yMax.y).iterator
+    legend10 + legend1 + rowFirst + body + rowLast
 
-    val result =
-      (xLegend.init + "\n" + b.mkString).map: c =>
-        if c == '\n' && yLegend.hasNext then
-          c.toString + yLegend.next.toString.last + " "
-        else
-          c.toString
-
-    result.mkString("\n", "", "")
+  extension (self: Seq[Pos])
+    def shoelaceFormula: Long =
+      (self.last +: self :+ self.head)
+        .sliding(3)
+        .map:
+          case Seq(a: Pos, b: Pos, c: Pos) =>
+            b.x.toLong * (c.y.toLong - a.y.toLong)
+        .sum
+        .abs
+        / 2

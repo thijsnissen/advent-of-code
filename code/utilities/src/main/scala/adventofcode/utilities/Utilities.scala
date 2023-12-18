@@ -59,6 +59,9 @@ object Utilities:
 
     tail ++ init
 
+  def picksTheorem(area: Long, boundaryPoints: Long): Long =
+    area - boundaryPoints / 2 + 1
+
   extension [A: Integral](a: A)
     @targetName("wholeNumberModulo")
     def +%(n: A): A = (a % n + n) % n

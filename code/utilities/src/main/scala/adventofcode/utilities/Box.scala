@@ -16,8 +16,8 @@ case class Box(min: Pos, max: Pos):
 
   def iterator: Iterator[Pos] =
     for
-      x <- (min.x to max.x).iterator
       y <- (min.y to max.y).iterator
+      x <- (min.x to max.x).iterator
     yield Pos(x, y)
 
   def axisOffsets: Set[Pos] =

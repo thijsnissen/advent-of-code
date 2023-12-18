@@ -34,3 +34,5 @@ class UtilitiesSpec extends AnyFunSuite:
 
     assertResult(6)(List(1, 2, 3).sumBy(identity))
     assertResult(6)(List(1, 2, 3).productBy(identity))
+
+    assertResult(24)(picksTheorem(42, 38))
