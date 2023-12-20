@@ -24,6 +24,15 @@ case class Range(min: Long, max: Long):
   def contains(i: Long): Boolean =
     i >= min && i <= max
 
+  def size: Long =
+    max - min + 1
+
+  def isEmpty: Boolean =
+    max <= min
+
+  def nonEmpty: Boolean =
+    !isEmpty
+
   def toVector: Vector[Long] =
     Vector.range(min, max + 1)
 

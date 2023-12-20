@@ -22,3 +22,6 @@ class RangeSpec extends AnyFunSuite:
     assertResult((1 to 3) union (7 to 9))(rangeUntil)
     assertResult(range.contains(5))(true)
     assertResult(range.contains(2))(false)
+    assertResult(false)(range.isEmpty)
+    assertResult(true)(range.nonEmpty)
+    assertResult(4)(range.size)
