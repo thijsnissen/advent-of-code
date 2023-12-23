@@ -125,7 +125,7 @@ class AdventOfCode2023Spec extends AnyFunSuite:
   test("Day14"):
     if Day14.getEnv == Test then
       assertResult(136)(Day14.pt1) // [4ms]
-      assertResult(64)(Day14.pt2)  // [10ms] // Somehow the test returns 69
+      assertResult(64)(Day14.pt2)  // [10ms]
 
     if Day14.getEnv == Prod then
       assertResult(105784)(Day14.pt1) // [31ms]
@@ -173,5 +173,32 @@ class AdventOfCode2023Spec extends AnyFunSuite:
       assertResult(167409079868000L)(Day19.pt2) // [1ms]
 
     if Day19.getEnv == Prod then
-      assertResult(425811)(Day19.pt1) // [4ms]
-      assertResult(131796824371749L)(Day19.pt2)    // [8ms]
+      assertResult(425811)(Day19.pt1)           // [4ms]
+      assertResult(131796824371749L)(Day19.pt2) // [8ms]
+
+  test("Day20"):
+    if Day20.getEnv == Test then
+      assertResult(???)(Day20.pt1) // [0ms]
+      assertResult(???)(Day20.pt2) // [0ms]
+
+    if Day20.getEnv == Prod then
+      assertResult(???)(Day20.pt1) // [0ms]
+      assertResult(???)(Day20.pt2) // [0ms]
+
+  test("Day21"):
+    if Day21.getEnv == Test then
+      assertResult(16)(Day21.pt1)       // [14ms]
+      assertResult(16733044)(Day21.pt2) // [0ms]
+
+    if Day21.getEnv == Prod then
+      assertResult(3782)(Day21.pt1) // [82ms]
+      assertResult(???)(Day21.pt2)  // [0ms]
+
+  test("Day22"):
+    if Day22.getEnv == Test then
+      assertResult(5)(Day22.pt1) // [7ms]
+      assertResult(7)(Day22.pt2) // [4ms]
+
+    if Day22.getEnv == Prod then
+      assertResult(391)(Day22.pt1)   // [80ms]
+      assertResult(69601)(Day22.pt2) // [145ms]

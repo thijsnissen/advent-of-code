@@ -1,15 +1,14 @@
 package adventofcode
 package aoc2023
 
-import scala.collection.immutable.SortedMap
 import utilities.AdventOfCode.*
 import utilities.Cycle
 import utilities.Pos
 import utilities.Utilities.sumBy
 
-object Day14 extends AdventOfCode(Prod):
-  import Platform.north
+// TODO: This needs fixing...
 
+object Day14 extends AdventOfCode(Test):
   val platform: Platform =
     val positions: Iterator[(Pos, Char)] =
       for
@@ -17,29 +16,32 @@ object Day14 extends AdventOfCode(Prod):
         (c, x) <- l.zipWithIndex
       yield Pos(x, y) -> c
 
-    Platform.fromMap(positions.toMap)
+    positions.toVector
 
-  type Platform = SortedMap[Pos, Char]
+  type Platform = Vector[(Pos, Char)]
 
   object Platform:
-    def fromMap(map: Map[Pos, Char])(using Ordering[Pos]): Platform =
-      SortedMap.empty[Pos, Char] ++ map
-
     extension (self: Platform)
+      def replace(k: Pos, v: Char): Platform =
+        val index = self.indexWhere:
+          case (p: Pos, _) => p == k
+
+        self.updated(index, (k, v))
+
       def roundedRocks: Platform =
         self.filter((_, r: Char) => r == 'O')
 
       def tilt(dir: Pos)(using Ordering[Pos]): Platform =
-        @tailrec def loop(platform: Platform, p: Pos): Pos =
-          platform.get(p + dir) match
-            case Some(c) if c == '.' => loop(platform, p + dir)
-            case _                   => p
+        @tailrec def move(platform: Platform, pos: Pos): Pos =
+          platform.find((p: Pos, _: Char) => p == pos + dir) match
+            case Some(_, '.') => move(platform, pos + dir)
+            case _            => pos
 
-        Platform.fromMap(roundedRocks).foldLeft(self):
-          case (acc: Platform, (p: Pos, _: Char)) =>
-            val moved: Pos = loop(acc, p)
+        roundedRocks.sortBy((p: Pos, _) => p).foldLeft(self):
+          case (acc: Platform, (p: Pos, _)) =>
+            val moved: Pos = move(acc, p)
 
-            if moved != p then acc.updated(moved, 'O').updated(p, '.') else acc
+            if moved != p then acc.replace(moved, 'O').replace(p, '.') else acc
 
       def cycle: Platform =
         val directions: Set[(Pos, Ordering[Pos])] =
@@ -51,8 +53,10 @@ object Day14 extends AdventOfCode(Prod):
           )
 
         directions.foldLeft(self):
-          case (acc: Platform, (dir: Pos, ord: Ordering[Pos])) =>
-            acc.tilt(dir)(using ord)
+          (acc: Platform, dir: (Pos, Ordering[Pos])) =>
+            val (p: Pos, o: Ordering[Pos]) = dir
+
+            acc.tilt(p)(using o)
 
       def totalLoad: Int =
         val (max, _): (Pos, Char) =
@@ -62,26 +66,18 @@ object Day14 extends AdventOfCode(Prod):
           .roundedRocks
           .sumBy((p: Pos, _) => max.y + 1 - p.y)
 
-    given north: Ordering[Pos] =
-      Ordering.fromLessThan: (a, b) =>
-        a.y < b.y || (a.y == b.y && a.x < b.x)
+    given north: Ordering[Pos] = Ordering.by((p: Pos) => p.y)
 
-    given west: Ordering[Pos] =
-      Ordering.fromLessThan: (a, b) =>
-        a.x < b.x || (a.x == b.x && a.y < b.y)
+    given west: Ordering[Pos] = Ordering.by((p: Pos) => p.x)
 
-    given south: Ordering[Pos] =
-      Ordering.fromLessThan: (a, b) =>
-        a.y > b.y || (a.y == b.y && a.x < b.x)
+    given south: Ordering[Pos] = Ordering.by((p: Pos) => -p.y)
 
-    given east: Ordering[Pos] =
-      Ordering.fromLessThan: (a, b) =>
-        a.x > b.x || (a.x == b.x && a.y < b.y)
+    given east: Ordering[Pos] = Ordering.by((p: Pos) => -p.x)
 
   import Platform.*
 
   lazy val pt1: Int =
-    platform.tilt(Pos(0, -1)).totalLoad
+    platform.tilt(Pos(0, -1))(using Platform.north).totalLoad
 
   lazy val pt2: Int =
     val cycle: Cycle[Platform] =

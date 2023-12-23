@@ -80,7 +80,9 @@ object Day19 extends AdventOfCode(Prod):
         case s"$category<$condition:$target" =>
           Rule(category.charAt(0), '<', condition.toInt, target)
 
-  trait withCategory[A](x: A, m: A, a: A, s: A):
+  trait withCategory[A]:
+    val x: A; val m: A; val a: A; val s: A
+
     def category(c: Char): A =
       c match
         case 'x' => x
@@ -88,8 +90,7 @@ object Day19 extends AdventOfCode(Prod):
         case 'a' => a
         case 's' => s
 
-  case class Part(x: Int, m: Int, a: Int, s: Int)
-      extends withCategory[Int](x, m, a, s):
+  case class Part(x: Int, m: Int, a: Int, s: Int) extends withCategory[Int]:
     lazy val totalRating: Int = x + m + a + s
 
   object Part:
@@ -116,7 +117,7 @@ object Day19 extends AdventOfCode(Prod):
         loop(self.map("in" -> _), Vector.empty[Part])
 
   case class Ranges(x: Range, m: Range, a: Range, s: Range)
-      extends withCategory[Range](x, m, a, s):
+      extends withCategory[Range]:
     lazy val combinations: Long = x.size * m.size * a.size * s.size
 
     def updated(c: Char, r: Range): Ranges =
