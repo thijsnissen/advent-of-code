@@ -27,7 +27,7 @@ object AdventOfCode:
         case Some(env) => Env.valueOf(env)
 
     lazy val input: String =
-      Using.resource(Source.fromResource(s"$day-${getEnv.file}.txt")):
+      Using.resource(Source.fromResource(s"$day.${getEnv.file}")):
         (i: BufferedSource) => i.mkString
 
     def answer[A](part: Int)(a: => A): Unit =

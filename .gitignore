@@ -43,4 +43,4 @@ metals.sbt
 *.iml
 
 # AoC
-**/resources/adventofcode/**/*-input.txt
+**/resources/adventofcode/**/*.input
