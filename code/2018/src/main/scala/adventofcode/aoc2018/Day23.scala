@@ -10,10 +10,10 @@ object Day23 extends AdventOfCode(Prod):
       .linesIterator
       .collect:
         case s"pos=<$x,$y,$z>, r=$r" =>
-          Nanobot(Pos3D(x.toInt, y.toInt, z.toInt), r.toInt)
+          Nanobot(Pos3D(x.toLong, y.toLong, z.toLong), r.toLong)
       .toVector
 
-  case class Nanobot(pos: Pos3D, signalRadius: Int):
+  case class Nanobot(pos: Pos3D, signalRadius: Long):
     def nanobotsInRange(nanobots: Vector[Nanobot]): Vector[Nanobot] =
       nanobots.filter(n => n.pos.manhattan(pos) <= signalRadius)
 
