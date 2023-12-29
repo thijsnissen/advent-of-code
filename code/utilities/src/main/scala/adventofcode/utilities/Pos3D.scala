@@ -1,7 +1,7 @@
 package adventofcode
 package utilities
 
-case class Pos3D(x: Long, y: Long, z: Long):
+case class Pos3D(x: Int, y: Int, z: Int):
   @annotation.targetName("addition")
   def +(that: Pos3D): Pos3D =
     Pos3D(x + that.x, y + that.y, z + that.z)

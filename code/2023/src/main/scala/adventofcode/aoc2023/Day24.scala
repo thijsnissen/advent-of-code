@@ -1,7 +1,6 @@
 package adventofcode
 package aoc2023
 
-import adventofcode.utilities.Pos3D
 import utilities.AdventOfCode.*
 
 object Day24 extends AdventOfCode(Prod):
@@ -11,45 +10,42 @@ object Day24 extends AdventOfCode(Prod):
       .map(Hailstone.fromString)
       .toVector
 
-  case class Hailstone(start: Pos3D, vector: Pos3D):
+  case class Hailstone(start: Pos, vector: Pos):
     // https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
-    def futureIntersection(that: Hailstone): Option[(Long, Long)] =
-      def isFuture(px: Long, py: Long): Boolean =
-        vector.x * (px - start.x) >= 0 && vector.y * (py - start.y) >= 0 &&
-          that.vector.x * (px - that.start.x) >= 0 && that.vector.y * (py - that.start.y) >= 0
+    def futureIntersection(that: Hailstone): Option[(BigDecimal, BigDecimal)] =
+      def isFuture(px: BigDecimal, py: BigDecimal): Boolean =
+        (px - start.x).sign == vector.x.sign && (px - that.start.x).sign == that.vector.x.sign &&
+          (py - start.y).sign == vector.y.sign && (py - that.start.y).sign == that.vector.y.sign
 
       // Line 1
-      val x1: Long = start.x
-      val y1: Long = start.y
-      val x2: Long = start.x + vector.x
-      val y2: Long = start.y + vector.y
+      val Pos(x1, y1, _) = start
+      val Pos(x2, y2, _) = start + vector
 
       // Line 2
-      val x3: Long = that.start.x
-      val y3: Long = that.start.y
-      val x4: Long = that.start.x + that.vector.x
-      val y4: Long = that.start.y + that.vector.y
+      val Pos(x3, y3, _) = that.start
+      val Pos(x4, y4, _) = that.start + that.vector
 
-      val denominator: Long = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
+      val denominator: BigDecimal =
+        (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
 
-      if denominator != 0 then
-        val px: Long =
+      if denominator == 0 then None
+      else
+        val px: BigDecimal =
           ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) /
             denominator
 
-        val py: Long =
+        val py: BigDecimal =
           ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) /
             denominator
 
         Option.when(isFuture(px, py))(px -> py)
-      else None
 
   object Hailstone:
     def fromString(s: String): Hailstone =
       s match
-        case s"$x, $y, $z @ $vx, $vy, $vz" => Hailstone(
-            Pos3D(x.trim.toLong, y.trim.toLong, z.trim.toLong),
-            Pos3D(vx.trim.toLong, vy.trim.toLong, vz.trim.toLong)
+        case s"$sx, $sy, $sz @ $vx, $vy, $vz" => Hailstone(
+            Pos(BigDecimal(sx.trim), BigDecimal(sy.trim), BigDecimal(sz.trim)),
+            Pos(BigDecimal(vx.trim), BigDecimal(vy.trim), BigDecimal(vz.trim))
           )
 
     extension (self: Vector[Hailstone])
@@ -58,12 +54,25 @@ object Day24 extends AdventOfCode(Prod):
           .combinations(2)
           .count:
             case Vector(a: Hailstone, b: Hailstone) =>
-              a.futureIntersection(b) match
+              a futureIntersection b match
                 case None => false
                 case Some(px, py) =>
                   px >= windowMin && px <= windowMax &&
-                    py >= windowMin && py <= windowMax
+                  py >= windowMin && py <= windowMax
             case _ => sys.error("should never get here...")
+
+  case class Pos(x: BigDecimal, y: BigDecimal, z: BigDecimal):
+    @targetName("addition")
+    def +(that: Pos): Pos =
+      Pos(x + that.x, y + that.y, z + that.z)
+
+    @targetName("subtraction")
+    def -(that: Pos): Pos =
+      Pos(x - that.x, y - that.y, z - that.z)
+
+    @targetName("product")
+    def *(i: Int): Pos =
+      Pos(x * i, y * i, z * i)
 
   import Hailstone.*
 

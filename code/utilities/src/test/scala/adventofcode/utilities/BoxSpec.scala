@@ -27,7 +27,10 @@ class BoxSpec extends AnyFunSuite:
     assertResult(true)(box1.contains(Pos(1, 0)))
     assertResult(false)(box2.contains(Pos(1, -2)))
 
-    assertResult(true)(Box(Pos.zero, Pos(4, 4)).contains(Box(Pos(1, 1), Pos(3, 4))))
+    assertResult(true)(Box(Pos.zero, Pos(4, 4)).contains(Box(
+      Pos(1, 1),
+      Pos(3, 4)
+    )))
     assertResult(false)(box1.contains(box2))
 
     assertResult(pos)(box1.iterator.toSet)

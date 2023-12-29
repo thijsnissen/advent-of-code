@@ -21,8 +21,8 @@ object Day22 extends AdventOfCode(Prod):
     def fromString(s: String): Box3D =
       s match
         case s"$xMin,$yMin,$zMin~$xMax,$yMax,$zMax" => Box3D(
-            Pos3D(xMin.toLong, yMin.toLong, zMin.toLong),
-            Pos3D(xMax.toLong, yMax.toLong, zMax.toLong)
+            Pos3D(xMin.toInt, yMin.toInt, zMin.toInt),
+            Pos3D(xMax.toInt, yMax.toInt, zMax.toInt)
           )
 
     given Ordering[Box3D] = Ordering.by:
@@ -39,8 +39,8 @@ object Day22 extends AdventOfCode(Prod):
           todo.headOption match
             case None => acc
             case Some(box) =>
-              val z: Long =
-                acc.foldLeft(1L): (acc: Long, b: Box3D) =>
+              val z: Int =
+                acc.foldLeft(1): (acc: Int, b: Box3D) =>
                   if b.overlap(box) then acc max b.max.z + 1
                   else acc
 

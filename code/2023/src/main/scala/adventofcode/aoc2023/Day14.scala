@@ -52,11 +52,10 @@ object Day14 extends AdventOfCode(Test):
             Pos(1, 0)  -> east
           )
 
-        directions.foldLeft(self):
-          (acc: Platform, dir: (Pos, Ordering[Pos])) =>
-            val (p: Pos, o: Ordering[Pos]) = dir
+        directions.foldLeft(self): (acc: Platform, dir: (Pos, Ordering[Pos])) =>
+          val (p: Pos, o: Ordering[Pos]) = dir
 
-            acc.tilt(p)(using o)
+          acc.tilt(p)(using o)
 
       def totalLoad: Int =
         val (max, _): (Pos, Char) =

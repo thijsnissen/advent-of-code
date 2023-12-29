@@ -2,8 +2,8 @@ package adventofcode
 package aoc2023
 
 import utilities.AdventOfCode.*
-import utilities.Pos
 import utilities.Box
+import utilities.Pos
 
 object Day21 extends AdventOfCode(Prod):
   val garden: Garden =
@@ -37,7 +37,9 @@ object Day21 extends AdventOfCode(Prod):
 
             val next: Set[(Pos, Int)] =
               if s <= target && !visited.contains(p) then
-                p.axisOffsetsFn(p => self.contains(Pos(p.x, p.y))).map(_ -> (s + 1))
+                p.axisOffsetsFn(p => self.contains(Pos(p.x, p.y))).map(
+                  _ -> (s + 1)
+                )
               else Set.empty[(Pos, Int)]
 
             loop(todo ++ next, visited + (p -> s))
@@ -51,7 +53,7 @@ object Day21 extends AdventOfCode(Prod):
 
   lazy val pt1: Int =
     val (start: Pos, _) = garden.find((_, c) => c == 'S').get
-    val target: Int = if getEnv == Test then 6 else 64
+    val target: Int     = if getEnv == Test then 6 else 64
 
     garden
       .steps(start, target)

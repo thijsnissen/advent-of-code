@@ -16,7 +16,7 @@ case class Box(min: Pos, max: Pos):
 
   def contains(that: Box): Boolean =
     min.x <= that.min.x && max.x >= that.max.x &&
-    min.y <= that.min.y && max.y >= that.max.y
+      min.y <= that.min.y && max.y >= that.max.y
 
   def iterator: Iterator[Pos] =
     for
