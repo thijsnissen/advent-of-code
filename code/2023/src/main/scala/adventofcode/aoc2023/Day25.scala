@@ -40,10 +40,10 @@ object Day25 extends AdventOfCode(Prod):
             println(s"Finding minCut($cardinality). Iteration $i.")
 
           val (v: Set[Vertex], e: Vector[Edge]) =
-            Karger.karger(vertices, r.shuffle(edges))
+            Karger.karger(vertices, edges)
 
           if e.size == cardinality then (v, e)
-          else loop(vertices, edges, i + 1)
+          else loop(vertices, r.shuffle(edges), i + 1)
 
         loop(self.toVertices, self)
 
