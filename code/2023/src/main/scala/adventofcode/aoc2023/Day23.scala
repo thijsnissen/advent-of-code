@@ -5,7 +5,7 @@ import utilities.AdventOfCode.*
 import utilities.Pos
 import utilities.Pos.*
 
-object Day23 extends AdventOfCode(Test):
+object Day23 extends AdventOfCode(Prod):
   val hikingTrails: Map[Pos, Char] =
     val result: Iterator[(Pos, Char)] =
       for
