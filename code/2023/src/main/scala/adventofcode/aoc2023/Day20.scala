@@ -79,21 +79,21 @@ object Day20 extends AdventOfCode(Prod):
     firstHighFor: Map[String, Int] = Map.empty[String, Int],
     low: Int = 0,
     high: Int = 0,
-    i: Int = 0
+    pushed: Int = 0
   ):
-    def count(message: Message): ButtonModule =
+    def logPulses(message: Message): ButtonModule =
       message.pulse match
         case 0 => copy(low = low + 1)
         case 1 => copy(high = high + 1)
 
-    def logFirstHigh(messages: List[Message]): ButtonModule =
-      val nextFirstHighFor =
-        messages
-          .filter(_.pulse == 1)
-          .foldLeft(firstHighFor): (f: Map[String, Int], m: Message) =>
-            if f.exists((module: String, i: Int) => module == m.from && i <= 0)
-            then f.updated(m.from, i + 1)
-            else f
+    def logFirstHighs(messages: List[Message]): ButtonModule =
+      val nextFirstHighFor: Map[String, Int] =
+        firstHighFor.map: (module: String, i: Int) =>
+          if messages.exists(
+              (m: Message) => m.from == module && m.pulse == 1
+            ) && i <= 0
+          then module -> pushed
+          else module -> i
 
       copy(firstHighFor = nextFirstHighFor)
 
@@ -103,10 +103,10 @@ object Day20 extends AdventOfCode(Prod):
         state: ButtonModule
       ): ButtonModule =
         todo.headOption match
-          case None => state.copy(i = state.i + 1)
+          case None => state
           case Some(message: Message) =>
             state.state.get(message.to) match
-              case None => loop(todo.tail, state.count(message))
+              case None => loop(todo.tail, state.logPulses(message))
               case Some(module: Module) =>
                 val (nextModule: Module, nextTodo: List[Message]) =
                   module.incoming(message)
@@ -114,12 +114,15 @@ object Day20 extends AdventOfCode(Prod):
                 val nextState: ButtonModule =
                   state
                     .copy(state = state.state.updated(message.to, nextModule))
-                    .count(message)
-                    .logFirstHigh(nextTodo)
+                    .logPulses(message)
+                    .logFirstHighs(nextTodo)
 
                 loop(todo.tail ::: nextTodo, nextState)
 
-      loop(List(Message("buttonModule", "broadcaster", 0)), this)
+      loop(
+        List(Message("buttonModule", "broadcaster", 0)),
+        copy(pushed = pushed + 1)
+      )
 
   lazy val pt1: Int =
     val buttonModule: Iterator[ButtonModule] =
@@ -135,7 +138,7 @@ object Day20 extends AdventOfCode(Prod):
   lazy val pt2: Long =
     if getEnv == Test then 0
     else
-      val modules: List[String] =
+      val firstHighFor: List[String] =
         moduleConfiguration.find((_, m: Module) => m.dest.contains("rx")) match
           case Some(_, module: Conjunction) => module.state.keys.toList
           case _                            => List.empty[String]
@@ -143,11 +146,11 @@ object Day20 extends AdventOfCode(Prod):
       val buttonModule: Iterator[ButtonModule] =
         Iterator.iterate(ButtonModule(
           moduleConfiguration,
-          modules.map(_ -> 0).toMap
+          firstHighFor.map(_ -> 0).toMap
         ))(_.push)
 
       buttonModule
-        .dropWhile((b: ButtonModule) => !b.firstHighFor.values.forall(_ > 0))
+        .dropWhile((bm: ButtonModule) => !bm.firstHighFor.values.forall(_ > 0))
         .next
         .firstHighFor
         .map((_, i: Int) => i.toLong)
