@@ -30,13 +30,11 @@ case class Pos(x: Int, y: Int):
     Pos((x - that.x).sign, (y - that.y).sign)
 
   def manhattan(that: Pos): Long =
-    math.abs(math.max(x, that.x) - math.min(x, that.x)) +
-      math.abs(math.max(y, that.y) - math.min(y, that.y))
+    (x - that.x).abs + (y - that.y).abs
 
   def euclidean(that: Pos): Double =
     math.sqrt:
-      math.pow(math.abs(math.max(x, that.x) - math.min(x, that.x)), 2) +
-        math.pow(math.abs(math.max(y, that.y) - math.min(y, that.y)), 2)
+      math.pow((x - that.x).abs, 2) + math.pow((y - that.y).abs, 2)
 
   def axisOffsets: Set[Pos] =
     Set(Pos(x + 1, y), Pos(x - 1, y), Pos(x, y + 1), Pos(x, y - 1))

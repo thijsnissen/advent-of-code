@@ -21,9 +21,7 @@ case class Pos3D(x: Int, y: Int, z: Int):
     Pos3D(x max that.x, y max that.y, z max that.z)
 
   def manhattan(that: Pos3D): Long =
-    math.abs(math.max(x, that.x) - math.min(x, that.x)) +
-      math.abs(math.max(y, that.y) - math.min(y, that.y)) +
-      math.abs(math.max(z, that.z) - math.min(z, that.z))
+    (x - that.x).abs + (y - that.y).abs + (z - that.z).abs
 
   def axisOffsets: Set[Pos3D] =
     Set(
