@@ -11,14 +11,14 @@ import utilities.Pos
 // - https://www.reddit.com/r/adventofcode/comments/18nevo3/comment/keaj1mg/
 object Day21 extends AdventOfCode(Prod):
   val garden: Garden =
-    val map: Iterator[(Pos, Char)] =
+    val garden: Iterator[(Pos, Char)] =
       for
         (l, y) <- input.linesIterator.zipWithIndex
         (c, x) <- l.zipWithIndex
         if c != '#'
       yield Pos(x, y) -> c
 
-    Garden(map.toMap)
+    Garden(garden.toMap)
 
   case class Garden(garden: Map[Pos, Char]):
     lazy val (start: Pos, _) = garden.find((_, c) => c == 'S').get
