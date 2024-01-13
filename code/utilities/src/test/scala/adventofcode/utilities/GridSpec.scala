@@ -58,6 +58,14 @@ class GridSpec extends AnyFunSuite:
 
     assertResult(grid4)(grid1.iterator.toVector)
 
+    assertResult(grid3)(grid1.mapWithIndex((i, _, _) => i + 1))
+
+    assertResult(grid4)(grid1.flatten)
+
     assertResult(grid5)(grid1.transpose)
+
+    assertResult(grid1)(
+      grid1.rotateClockwise.rotateClockwise.rotateClockwise.rotateClockwise
+    )
 
     assertResult(grid1AsString)(grid1.asString)

@@ -1,8 +1,7 @@
 package adventofcode
 package utilities
 
-opaque type Grid[A] =
-  Vector[Vector[A]]
+opaque type Grid[A] = Vector[Vector[A]]
 
 object Grid:
   def unit[A](grid: Vector[Vector[A]]): Grid[A] =
@@ -60,8 +59,23 @@ object Grid:
         x <- y.iterator
       yield x
 
+    def mapWithIndex[B](f: (A, Int, Int) => B): Grid[B] =
+      self
+        .zipWithIndex
+        .map: (va: Vector[A], y: Int) =>
+          va
+            .zipWithIndex
+            .map: (a: A, x: Int) =>
+              f(a, x, y)
+
+    def flatten: Vector[A] =
+      self.flatten
+
     def transpose: Grid[A] =
       self.transpose
+
+    def rotateClockwise: Grid[A] =
+      self.transpose.map(_.reverse)
 
     def asString: String =
       self.map(_.mkString(" ")).mkString("\n", "\n", "\n")

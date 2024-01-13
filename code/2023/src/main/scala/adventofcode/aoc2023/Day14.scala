@@ -3,92 +3,59 @@ package aoc2023
 
 import utilities.AdventOfCode.*
 import utilities.Cycle
-import utilities.Pos
 import utilities.Utilities.sumBy
 
-// TODO: This needs fixing...
-
-object Day14 extends AdventOfCode(Test):
+object Day14 extends AdventOfCode(Prod):
   val platform: Platform =
-    val positions: Iterator[(Pos, Char)] =
-      for
-        (l, y) <- input.linesIterator.zipWithIndex
-        (c, x) <- l.zipWithIndex
-      yield Pos(x, y) -> c
+    input
+      .linesIterator
+      .toVector
 
-    positions.toVector
-
-  type Platform = Vector[(Pos, Char)]
+  type Platform = Vector[String]
 
   object Platform:
     extension (self: Platform)
-      def replace(k: Pos, v: Char): Platform =
-        val index = self.indexWhere:
-          case (p: Pos, _) => p == k
+      def toggleLeftTiltable: Platform =
+        self.transpose.map(_.mkString)
 
-        self.updated(index, (k, v))
+      def rotateClockwise: Platform =
+        self.transpose.map(_.reverse.mkString)
 
-      def roundedRocks: Platform =
-        self.filter((_, r: Char) => r == 'O')
-
-      def tilt(dir: Pos)(using Ordering[Pos]): Platform =
-        @tailrec def move(platform: Platform, pos: Pos): Pos =
-          platform.find((p: Pos, _: Char) => p == pos + dir) match
-            case Some(_, '.') => move(platform, pos + dir)
-            case _            => pos
-
-        roundedRocks.sortBy((p: Pos, _) => p).foldLeft(self):
-          case (acc: Platform, (p: Pos, _)) =>
-            val moved: Pos = move(acc, p)
-
-            if moved != p then acc.replace(moved, 'O').replace(p, '.') else acc
+      def tilt: Platform =
+        self
+          .toggleLeftTiltable
+          .map: (row: String) =>
+            row
+              .split('#')
+              .map(_.sorted.reverse)
+              .mkString("#")
+              .padTo(self.length, '#')
+          .toggleLeftTiltable
 
       def cycle: Platform =
-        val directions: Set[(Pos, Ordering[Pos])] =
-          Set(
-            Pos(0, -1) -> north,
-            Pos(-1, 0) -> west,
-            Pos(0, 1)  -> south,
-            Pos(1, 0)  -> east
-          )
-
-        directions.foldLeft(self): (acc: Platform, dir: (Pos, Ordering[Pos])) =>
-          val (p: Pos, o: Ordering[Pos]) = dir
-
-          acc.tilt(p)(using o)
+        (1 to 4).foldLeft(self)((acc: Platform, _) => acc.tilt.rotateClockwise)
 
       def totalLoad: Int =
-        val (max, _): (Pos, Char) =
-          self.maxBy((p: Pos, _) => p.y)
-
         self
-          .roundedRocks
-          .sumBy((p: Pos, _) => max.y + 1 - p.y)
-
-    given north: Ordering[Pos] = Ordering.by((p: Pos) => p.y)
-
-    given west: Ordering[Pos] = Ordering.by((p: Pos) => p.x)
-
-    given south: Ordering[Pos] = Ordering.by((p: Pos) => -p.y)
-
-    given east: Ordering[Pos] = Ordering.by((p: Pos) => -p.x)
+          .zipWithIndex
+          .sumBy: (row: String, y: Int) =>
+            row.count(_ == 'O') * (self.length - y)
 
   import Platform.*
 
   lazy val pt1: Int =
-    platform.tilt(Pos(0, -1))(using Platform.north).totalLoad
+    platform.tilt.totalLoad
 
   lazy val pt2: Int =
     val cycle: Cycle[Platform] =
-      Cycle.find((p: Platform) => p.cycle, platform)(_.totalLoad)
+      Cycle.find((p: Platform) => p.cycle, platform)(identity)
 
     val iterator: Iterator[Platform] =
       Iterator.iterate(platform)(_.cycle)
 
     iterator
-      .drop(
-        cycle.stemLength + (1_000_000_000 - cycle.stemLength) % cycle.cycleLength
-      )
+      .drop:
+        cycle.stemLength + ((1_000_000_000 - cycle.stemLength) % cycle.cycleLength)
       .next
       .totalLoad
 
