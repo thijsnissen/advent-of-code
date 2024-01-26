@@ -73,8 +73,8 @@ object Day24 extends AdventOfCode(Prod):
             b <- -range to range
           yield (a, b)
 
-        val stones: Vector[Vector[Stone2D]] =
-          self.combinations(2).toVector
+        val stones: IndexedSeq[Vector[Stone2D]] =
+          self.combinations(2).toIndexedSeq
 
         @tailrec def loopVelocities(todo: IndexedSeq[(Int, Int)]): Stone2D =
           val (va, vb) = todo.head
@@ -84,7 +84,7 @@ object Day24 extends AdventOfCode(Prod):
             case None       => loopVelocities(todo.tail)
 
         @tailrec def loopStones(
-          todo: Vector[Vector[Stone2D]],
+          todo: IndexedSeq[Vector[Stone2D]],
           va: Int,
           vb: Int,
           found: Option[(BigDecimal, BigDecimal)] = None
