@@ -66,15 +66,9 @@ object Day24 extends AdventOfCode(Prod):
                 pb >= windowMin && pb <= windowMax &&
                 stones(0).time(pa, pb) >= 0 && stones(1).time(pa, pb) >= 0
 
-      def rock(range: Int): Stone2D =
-        val velocities: IndexedSeq[(Int, Int)] =
-          for
-            a <- -range to range
-            b <- -range to range
-          yield (a, b)
-
-        val stones: IndexedSeq[Vector[Stone2D]] =
-          self.combinations(2).toIndexedSeq
+      def rock(velocities: IndexedSeq[(Int, Int)]): Stone2D =
+        val stones: Vector[Vector[Stone2D]] =
+          self.combinations(2).toVector
 
         @tailrec def loopVelocities(todo: IndexedSeq[(Int, Int)]): Stone2D =
           val (va, vb) = todo.head
@@ -84,7 +78,7 @@ object Day24 extends AdventOfCode(Prod):
             case None       => loopVelocities(todo.tail)
 
         @tailrec def loopStones(
-          todo: IndexedSeq[Vector[Stone2D]],
+          todo: Vector[Vector[Stone2D]],
           va: Int,
           vb: Int,
           found: Option[(BigDecimal, BigDecimal)] = None
@@ -147,9 +141,15 @@ object Day24 extends AdventOfCode(Prod):
   lazy val pt2: BigDecimal =
     val range: Int = if getEnv == Test then 5 else 300
 
-    val Stone2D(x1, y1, vx1, vy1) = hailstones.project(Axis.Z).rock(range)
-    val Stone2D(x2, z1, vx2, vz1) = hailstones.project(Axis.Y).rock(range)
-    val Stone2D(y2, z2, vy2, vz2) = hailstones.project(Axis.X).rock(range)
+    val velocities: IndexedSeq[(Int, Int)] =
+      for
+        a <- -range to range
+        b <- -range to range
+      yield (a, b)
+
+    val Stone2D(x1, y1, vx1, vy1) = hailstones.project(Axis.Z).rock(velocities)
+    val Stone2D(x2, z1, vx2, vz1) = hailstones.project(Axis.Y).rock(velocities)
+    val Stone2D(y2, z2, vy2, vz2) = hailstones.project(Axis.X).rock(velocities)
 
     assert(x1 == x2 && y1 == y2 && z1 == z2)
     assert(vx1 == vx2 && vy1 == vy2 && vz1 == vz2)
