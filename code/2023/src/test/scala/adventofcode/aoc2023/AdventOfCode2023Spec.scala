@@ -213,12 +213,12 @@ class AdventOfCode2023Spec extends AnyFunSuite:
 
   test("Day24"):
     if Day24.getEnv == Test then
-      assertResult(2)(Day24.pt1)  // [0ms]
-      assertResult(47)(Day24.pt2) // [0ms]
+      assertResult(2)(Day24.pt1)  // [7ms]
+      assertResult(47)(Day24.pt2) // [9ms]
 
     if Day24.getEnv == Prod then
-      assertResult(13149)(Day24.pt1)                         // [0ms]
-      assertResult(BigDecimal(1033770143421619L))(Day24.pt2) // [0ms]
+      assertResult(13149)(Day24.pt1)                         // [195ms]
+      assertResult(BigDecimal(1033770143421619L))(Day24.pt2) // [827ms]
 
   test("Day25"):
     if Day25.getEnv == Test then

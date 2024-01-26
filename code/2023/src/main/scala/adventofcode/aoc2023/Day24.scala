@@ -3,7 +3,7 @@ package aoc2023
 
 import utilities.AdventOfCode.*
 
-object Day24 extends AdventOfCode(Test):
+object Day24 extends AdventOfCode(Prod):
   val hailstones: Vector[Stone3D] =
     input
       .linesIterator
@@ -19,15 +19,14 @@ object Day24 extends AdventOfCode(Test):
     va: BigDecimal,
     vb: BigDecimal
   ):
-    def reframe(vc: Int, vd: Int): Stone2D =
-      copy(va = va - vc, vb = vb - vd)
+    def reframe(dva: Int, dvb: Int): Stone2D =
+      copy(va = va - dva, vb = vb - dvb)
+
+    def time(pa: BigDecimal, pb: BigDecimal): BigDecimal =
+      if va == 0 then (pb - b) / vb else (pa - a) / va
 
     // https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
-    def futureIntersection(that: Stone2D): Option[(BigDecimal, BigDecimal)] =
-      def isFuture(pa: BigDecimal, pb: BigDecimal): Boolean =
-        (pa - a).sign == va.sign && (pb - b).sign == vb.sign &&
-          (pa - that.a).sign == that.va.sign && (pb - that.b).sign == that.vb.sign
-
+    def intersection(that: Stone2D): Option[(BigDecimal, BigDecimal)] =
       // Line 1
       val a1: BigDecimal = a
       val b1: BigDecimal = b
@@ -43,8 +42,7 @@ object Day24 extends AdventOfCode(Test):
       val denominator: BigDecimal =
         (a1 - a2) * (b3 - b4) - (b1 - b2) * (a3 - a4)
 
-      if denominator == 0 then None
-      else
+      Option.when(denominator != 0):
         val pa: BigDecimal =
           ((a1 * b2 - b1 * a2) * (a3 - a4) - (a1 - a2) * (a3 * b4 - b3 * a4)) /
             denominator
@@ -53,7 +51,7 @@ object Day24 extends AdventOfCode(Test):
           ((a1 * b2 - b1 * a2) * (b3 - b4) - (b1 - b2) * (a3 * b4 - b3 * a4)) /
             denominator
 
-        Option.when(isFuture(pa, pb))(pa -> pb)
+        pa -> pb
 
   object Stone2D:
     extension (self: Vector[Stone2D])
@@ -61,23 +59,24 @@ object Day24 extends AdventOfCode(Test):
         self
           .combinations(2)
           .count: (stones: Vector[Stone2D]) =>
-            stones(0) futureIntersection stones(1) match
+            stones(0) intersection stones(1) match
               case None => false
               case Some(pa, pb) =>
                 pa >= windowMin && pa <= windowMax &&
-                pb >= windowMin && pb <= windowMax
+                pb >= windowMin && pb <= windowMax &&
+                stones(0).time(pa, pb) >= 0 && stones(1).time(pa, pb) >= 0
 
-      def rock: Stone2D =
+      def rock(range: Int): Stone2D =
         val velocities: IndexedSeq[(Int, Int)] =
           for
-            a <- self.minBy(_.va).va.toInt to self.maxBy(_.va).va.toInt
-            b <- self.minBy(_.vb).vb.toInt to self.maxBy(_.vb).vb.toInt
+            a <- -range to range
+            b <- -range to range
           yield (a, b)
 
         val stones: Vector[Vector[Stone2D]] =
           self.combinations(2).toVector
 
-        @tailrec def loopVelocities(todo: Vector[(Int, Int)]): Stone2D =
+        @tailrec def loopVelocities(todo: IndexedSeq[(Int, Int)]): Stone2D =
           val (va, vb) = todo.head
 
           loopStones(stones, va, vb) match
@@ -96,14 +95,16 @@ object Day24 extends AdventOfCode(Test):
               val aStone = stones(0).reframe(va, vb)
               val bStone = stones(1).reframe(va, vb)
 
-              (aStone futureIntersection bStone, found) match
+              (aStone intersection bStone, found) match
                 case (Some(a, b), None) =>
                   loopStones(todo.tail, va, vb, Some(a, b))
                 case (Some(a, b), Some(fa, fb)) if a == fa && b == fb =>
                   loopStones(todo.tail, va, vb, found)
+                case (None, _) =>
+                  loopStones(todo.tail, va, vb, found)
                 case _ => None
 
-        loopVelocities(velocities.toVector)
+        loopVelocities(velocities)
 
   case class Stone3D(
     x: BigDecimal,
@@ -139,12 +140,16 @@ object Day24 extends AdventOfCode(Test):
     val windowMin: Long = if getEnv == Test then 7 else 200000000000000L
     val windowMax: Long = if getEnv == Test then 27 else 400000000000000L
 
-    hailstones.project(Axis.Z).intersections(windowMin, windowMax)
+    hailstones
+      .project(Axis.Z)
+      .intersections(windowMin, windowMax)
 
   lazy val pt2: BigDecimal =
-    val Stone2D(x1, y1, vx1, vy1) = hailstones.project(Axis.Z).rock
-    val Stone2D(x2, z1, vx2, vz1) = hailstones.project(Axis.Y).rock
-    val Stone2D(y2, z2, vy2, vz2) = hailstones.project(Axis.X).rock
+    val range: Int = if getEnv == Test then 5 else 300
+
+    val Stone2D(x1, y1, vx1, vy1) = hailstones.project(Axis.Z).rock(range)
+    val Stone2D(x2, z1, vx2, vz1) = hailstones.project(Axis.Y).rock(range)
+    val Stone2D(y2, z2, vy2, vz2) = hailstones.project(Axis.X).rock(range)
 
     assert(x1 == x2 && y1 == y2 && z1 == z2)
     assert(vx1 == vx2 && vy1 == vy2 && vz1 == vz2)

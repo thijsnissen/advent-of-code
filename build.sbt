@@ -10,7 +10,7 @@ lazy val root =
       normalizedName := "advent-of-code",
       description    := "My solutions to the Advent of Code puzzles"
     )
-    .settings(commonSettings ++ commonImports ++ aliases)
+    .settings(Aliasses.common)
     .aggregate(
       aoc2018,
       aoc2021,
@@ -19,72 +19,38 @@ lazy val root =
       utilities
     )
 
-lazy val utilities =
-  project
-    .in(file("code/utilities"))
-    .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings ++ commonImports)
-
 lazy val aoc2018 =
   project
     .in(file("code/2018"))
     .dependsOn(utilities)
-    .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings ++ commonImports)
+    .settings(Settings.common ++ Settings.imports)
+    .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
 lazy val aoc2021 =
   project
     .in(file("code/2021"))
     .dependsOn(utilities)
-    .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings ++ commonImports)
+    .settings(Settings.common ++ Settings.imports)
+    .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
 lazy val aoc2022 =
   project
     .in(file("code/2022"))
     .dependsOn(utilities)
-    .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings ++ commonImports)
+    .settings(Settings.common ++ Settings.imports)
+    .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
 lazy val aoc2023 =
   project
     .in(file("code/2023"))
     .dependsOn(utilities)
-    .settings(libraryDependencies ++= Dependencies.common)
-    .settings(commonSettings ++ commonImports)
+    .settings(Settings.common ++ Settings.imports)
+    .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
-lazy val commonSettings = Seq(
-  scalacOptions ++= Seq(
-    "-encoding",
-    "utf8",
-    "-language:implicitConversions",
-    "-language:existentials",
-    "-deprecation",
-    "-feature",
-    "-unchecked",
-    "-Werror",
-    "-Wunused:imports",
-    "-Wunused:locals",
-    "-print-lines",
-    "-explain"
-  ),
-  Compile / run / fork         := true,
-  Compile / run / connectInput := true,
-  Compile / run / javaOptions += "-Xmx4G"
-)
-
-lazy val commonImports = Seq(
-  scalacOptions +=
-    Seq(
-      "java.lang",
-      "scala",
-      "scala.Predef",
-      "scala.annotation",
-      "scala.util.chaining"
-    ).mkString("-Yimports:", ",", "")
-)
-
-lazy val aliases =
-  addCommandAlias("format", "scalafmtAll;scalafmtSbt")
+lazy val utilities =
+  project
+    .in(file("code/utilities"))
+    .settings(Settings.common ++ Settings.imports)
+    .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
 ThisBuild / watchBeforeCommand := Watch.clearScreen

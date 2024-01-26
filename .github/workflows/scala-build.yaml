@@ -19,5 +19,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Formatting
+        run: sbt check
       - name: Tests
         run: ENV=Test sbt "project aoc2023; test"

@@ -8,7 +8,7 @@ for solving these puzzles.
 
 ## Events
 
-* [2023](https://github.com/thijsnissen/advent-of-code/tree/main/code/2023/src) `48*`
+* [2023](https://github.com/thijsnissen/advent-of-code/tree/main/code/2023/src) `50*`
 * [2022](https://github.com/thijsnissen/advent-of-code/tree/main/code/2022/src) `24*`
 * [2021](https://github.com/thijsnissen/advent-of-code/tree/main/code/2021/src) `6*`
 * [2018](https://github.com/thijsnissen/advent-of-code/tree/main/code/2018/src) `45*`
