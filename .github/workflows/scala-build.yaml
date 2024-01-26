@@ -22,4 +22,4 @@ jobs:
       - name: Formatting
         run: sbt check
       - name: Tests
-        run: ENV=Test sbt "project aoc2023; test"
+        run: ENV=Test sbt test

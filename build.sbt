@@ -54,3 +54,5 @@ lazy val utilities =
     .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
 ThisBuild / watchBeforeCommand := Watch.clearScreen
+
+Global / concurrentRestrictions += Tags.limit(Tags.Test, 1)
