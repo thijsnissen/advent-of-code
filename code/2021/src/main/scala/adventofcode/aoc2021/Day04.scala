@@ -49,10 +49,13 @@ object Day04 extends AdventOfCode(Prod):
       todo: Vector[Int],
       boards: Vector[Board]
     ): (Vector[Int], Vector[Board]) =
-      val i: Int              = todo.head
-      val game: Vector[Board] = boards.map(_.play(i)).filterNot(_.isWinner)
+      val game: Vector[Board] =
+        boards
+          .map(_.play(todo.head))
+          .filterNot(_.isWinner)
 
-      if game.sizeIs == 1 then (todo.tail, game) else lastBoard(todo.tail, game)
+      if game.sizeIs == 1 then (todo.tail, game)
+      else lastBoard(todo.tail, game)
 
     extension (self: Board)
       def play(i: Int): Board =
