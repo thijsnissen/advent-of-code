@@ -14,13 +14,13 @@ case class Pos4D(x: Int, y: Int, z: Int, w: Int):
   def *(i: Int): Pos4D =
     Pos4D(x * i, y * i, z * i, w * i)
 
-  def min(that: Pos4D): Pos4D =
+  infix def min(that: Pos4D): Pos4D =
     Pos4D(x min that.x, y min that.y, z min that.z, w min that.w)
 
-  def max(that: Pos4D): Pos4D =
+  infix def max(that: Pos4D): Pos4D =
     Pos4D(x max that.x, y max that.y, z max that.z, w max that.w)
 
-  def manhattan(that: Pos4D): Long =
+  infix def manhattan(that: Pos4D): Long =
     (x - that.x).abs + (y - that.y).abs + (z - that.z).abs + (w - that.w).abs
 
   def axisOffsets: Set[Pos4D] =

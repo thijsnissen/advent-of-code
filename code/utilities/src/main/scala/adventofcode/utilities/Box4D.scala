@@ -5,7 +5,7 @@ case class Box4D(min: Pos4D, max: Pos4D):
   val delta: Pos4D =
     max - min
 
-  def union(that: Box4D): Box4D =
+  infix def union(that: Box4D): Box4D =
     Box4D(min min that.min, max max that.max)
 
   def contains(p: Pos4D): Boolean =

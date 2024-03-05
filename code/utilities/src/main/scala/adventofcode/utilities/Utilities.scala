@@ -70,7 +70,7 @@ object Utilities:
     def gcd(b: A): A =
       if b == Integral[A].zero then a.abs else b.gcd(a % b)
 
-    def lcm(b: A): A =
+    infix def lcm(b: A): A =
       (a * b).abs / a.gcd(b)
 
   extension [A](i: Iterable[A])

@@ -8,13 +8,13 @@ case class Box(min: Pos, max: Pos):
   val area: Long =
     delta.x * delta.y
 
-  def union(that: Box): Box =
+  infix def union(that: Box): Box =
     Box(min min that.min, max max that.max)
 
-  def contains(p: Pos): Boolean =
+  infix def contains(p: Pos): Boolean =
     p.x >= min.x && p.x <= max.x && p.y >= min.y && p.y <= max.y
 
-  def contains(that: Box): Boolean =
+  infix def contains(that: Box): Boolean =
     min.x <= that.min.x && max.x >= that.max.x &&
       min.y <= that.min.y && max.y >= that.max.y
 
