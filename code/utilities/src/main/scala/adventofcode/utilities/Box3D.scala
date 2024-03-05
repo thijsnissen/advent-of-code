@@ -8,7 +8,7 @@ case class Box3D(min: Pos3D, max: Pos3D):
   val area: Long =
     2 * (delta.x * delta.y + delta.z * delta.x + delta.z * delta.y)
 
-  def union(that: Box3D): Box3D =
+  infix def union(that: Box3D): Box3D =
     Box3D(min min that.min, max max that.max)
 
   def contains(p: Pos3D): Boolean =

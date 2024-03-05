@@ -26,7 +26,7 @@ object Day24 extends AdventOfCode(Prod):
       if va == 0 then (pb - b) / vb else (pa - a) / va
 
     // https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
-    def intersection(that: Stone2D): Option[(BigDecimal, BigDecimal)] =
+    infix def intersection(that: Stone2D): Option[(BigDecimal, BigDecimal)] =
       // Line 1
       val a1: BigDecimal = a
       val b1: BigDecimal = b

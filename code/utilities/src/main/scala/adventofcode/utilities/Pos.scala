@@ -13,26 +13,26 @@ case class Pos(x: Int, y: Int):
   @annotation.targetName("product")
   def *(i: Int): Pos =
     Pos(x * i, y * i)
-
-  def min(that: Pos): Pos =
+  
+  infix def min(that: Pos): Pos =
     Pos(x min that.x, y min that.y)
 
-  def max(that: Pos): Pos =
+  infix def max(that: Pos): Pos =
     Pos(x max that.x, y max that.y)
 
-  def delta(that: Pos): Pos =
+  infix def delta(that: Pos): Pos =
     Pos(
       math.max(x, that.x) - math.min(x, that.x),
       math.max(y, that.y) - math.min(y, that.y)
     )
 
-  def sign(that: Pos): Pos =
+  infix def sign(that: Pos): Pos =
     Pos((x - that.x).sign, (y - that.y).sign)
 
-  def manhattan(that: Pos): Long =
+  infix def manhattan(that: Pos): Long =
     (x - that.x).abs + (y - that.y).abs
 
-  def euclidean(that: Pos): Double =
+  infix def euclidean(that: Pos): Double =
     math.sqrt:
       math.pow((x - that.x).abs, 2) + math.pow((y - that.y).abs, 2)
 
