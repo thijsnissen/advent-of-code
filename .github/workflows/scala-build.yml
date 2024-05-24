@@ -20,4 +20,4 @@ jobs:
       - name: Formatting
         run: sbt check
       - name: Tests
-        run: sbt test
+        run: ENV=Test sbt test
