@@ -56,3 +56,4 @@ lazy val utilities =
 ThisBuild / watchBeforeCommand := Watch.clearScreen
 
 Global / concurrentRestrictions += Tags.limit(Tags.Test, 1)
+Global / onChangedBuildSource := ReloadOnSourceChanges

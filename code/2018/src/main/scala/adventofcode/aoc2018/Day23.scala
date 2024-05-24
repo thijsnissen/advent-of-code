@@ -23,9 +23,8 @@ object Day23 extends AdventOfCode(Prod):
       .nanobotsInRange(nanobots)
       .length
 
-  lazy val pt2: Int =
-    ???
+  // lazy val pt2: Int = ???
 
   answer(1)(pt1)
 
-  answer(2)(pt2)
+  // answer(2)(pt2)
