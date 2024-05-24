@@ -40,3 +40,15 @@ class AdventOfCode2021Spec extends AnyFunSuite:
     if Day04.getEnv == Prod then
       assertResult(2745)(Day04.pt1) // [11ms]
       assertResult(6594)(Day04.pt2) // [17ms]
+<<<<<<< Updated upstream
+=======
+
+  test("Day05"):
+    if Day05.getEnv == Test then
+      assertResult(5)(Day05.pt1) // [0ms]
+      // assertResult(12)(Day05.pt2) // [0ms]
+
+    if Day05.getEnv == Prod then
+      assertResult(6856)(Day05.pt1) // [0ms]
+      // assertResult(???)(Day05.pt2)  // [0ms]
+>>>>>>> Stashed changes
