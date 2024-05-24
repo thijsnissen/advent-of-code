@@ -14,11 +14,7 @@ case class Pos(x: Int, y: Int):
   def *(i: Int): Pos =
     Pos(x * i, y * i)
 
-<<<<<<< Updated upstream
-  def min(that: Pos): Pos =
-=======
   infix def min(that: Pos): Pos =
->>>>>>> Stashed changes
     Pos(x min that.x, y min that.y)
 
   def max(that: Pos): Pos =
