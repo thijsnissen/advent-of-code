@@ -7,19 +7,17 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  scala-build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.1
-      - name: Setup Eclipse Temurin - JDK 21
-        uses: actions/setup-java@v3.13.0
+        uses: actions/checkout@v4
+      - name: Setup Eclipse Temurin 21
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
       - name: Formatting
         run: sbt check
       - name: Tests
-        run: ENV=Test sbt test
+        run: sbt test
