@@ -16,10 +16,11 @@ jobs:
       PR_URL: ${{ github.event.pull_request.html_url }}
       PR_TITLE: ${{ github.event.pull_request.title }}
       HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'auto-approve-merge') }}
+      Is_APPROVED: ${{ github.event.review.state == 'approved' }}
       IS_AUTOMERGE_DISABLED: ${{ github.event.action == 'auto_merge_disabled' }}
     steps:
       - name: Auto Approve
-        if: env.HAS_LABEL == 'true'
+        if: env.HAS_LABEL == 'true' && env.IS_APPROVED == 'false'
         run: gh pr review "$PR_URL" --approve
       - name: Enable Auto Merge
         if: env.HAS_LABEL == 'true' && env.IS_AUTOMERGE_DISABLED == 'false'
