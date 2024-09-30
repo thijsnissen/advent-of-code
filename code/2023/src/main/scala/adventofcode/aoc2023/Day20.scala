@@ -154,7 +154,7 @@ object Day20 extends AdventOfCode(Prod):
         .next
         .firstHighFor
         .map((_, i: Int) => i.toLong)
-        .reduce(_ lcm _)
+        .reduce(_.lcm(_))
 
   answer(1)(pt1)
 

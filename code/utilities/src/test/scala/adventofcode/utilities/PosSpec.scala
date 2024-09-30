@@ -23,16 +23,16 @@ class PosSpec extends AnyFunSuite:
     assertResult(Pos(-2, 6))(pos1 - pos2)
     assertResult(Pos(4, -4))(pos2 * 2)
 
-    assertResult(Pos(0, -2))(pos1 min pos2)
-    assertResult(Pos(2, 4))(pos1 max pos2)
+    assertResult(Pos(0, -2))(pos1.min(pos2))
+    assertResult(Pos(2, 4))(pos1.max(pos2))
 
-    assertResult(Pos(2, 6))(pos1 delta pos2)
+    assertResult(Pos(2, 6))(pos1.delta(pos2))
 
-    assertResult(8)(pos1 manhattan pos2)
-    assertResult(8)(pos2 manhattan pos1)
+    assertResult(8)(pos1.manhattan(pos2))
+    assertResult(8)(pos2.manhattan(pos1))
 
-    assertResult(6.324555320336759)(pos1 euclidean pos2)
-    assertResult(6.324555320336759)(pos2 euclidean pos1)
+    assertResult(6.324555320336759)(pos1.euclidean(pos2))
+    assertResult(6.324555320336759)(pos2.euclidean(pos1))
 
     assertResult(Set(Pos(1, -2), Pos(3, -2), Pos(2, -1), Pos(2, -3)))(
       pos2.axisOffsets
@@ -96,11 +96,11 @@ class PosSpec extends AnyFunSuite:
     assertResult(Pos3D(-2, 6, -4))(pos1 - pos2)
     assertResult(Pos3D(4, -4, 4))(pos2 * 2)
 
-    assertResult(Pos3D(0, -2, -2))(pos1 min pos2)
-    assertResult(Pos3D(2, 4, 2))(pos1 max pos2)
+    assertResult(Pos3D(0, -2, -2))(pos1.min(pos2))
+    assertResult(Pos3D(2, 4, 2))(pos1.max(pos2))
 
-    assertResult(12)(pos1 manhattan pos2)
-    assertResult(12)(pos2 manhattan pos1)
+    assertResult(12)(pos1.manhattan(pos2))
+    assertResult(12)(pos2.manhattan(pos1))
 
     val axisOffsets = Set(
       Pos3D(x = 2, y = -2, z = 1),
@@ -178,11 +178,11 @@ class PosSpec extends AnyFunSuite:
     assertResult(Pos4D(-2, 6, -4, 3))(pos1 - pos2)
     assertResult(Pos4D(4, -4, 4, -4))(pos2 * 2)
 
-    assertResult(Pos4D(0, -2, -2, -2))(pos1 min pos2)
-    assertResult(Pos4D(2, 4, 2, 1))(pos1 max pos2)
+    assertResult(Pos4D(0, -2, -2, -2))(pos1.min(pos2))
+    assertResult(Pos4D(2, 4, 2, 1))(pos1.max(pos2))
 
-    assertResult(15)(pos1 manhattan pos2)
-    assertResult(15)(pos2 manhattan pos1)
+    assertResult(15)(pos1.manhattan(pos2))
+    assertResult(15)(pos2.manhattan(pos1))
 
     val axisOffsets = Set(
       Pos4D(x = 2, y = -1, z = 2, w = -2),

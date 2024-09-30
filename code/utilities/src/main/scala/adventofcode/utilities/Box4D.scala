@@ -6,7 +6,7 @@ case class Box4D(min: Pos4D, max: Pos4D):
     max - min
 
   def union(that: Box4D): Box4D =
-    Box4D(min min that.min, max max that.max)
+    Box4D(min.min(that.min), max.max(that.max))
 
   def contains(p: Pos4D): Boolean =
     p.x >= min.x && p.x <= max.x &&
@@ -26,4 +26,4 @@ object Box4D:
   def apply(p: Pos4D): Box4D = Box4D(p, p)
 
   def bounding(ps: IterableOnce[Pos4D]): Box4D =
-    ps.iterator.map(apply).reduce(_ union _)
+    ps.iterator.map(apply).reduce(_.union(_))

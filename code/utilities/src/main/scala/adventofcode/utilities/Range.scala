@@ -38,7 +38,7 @@ case class Range(min: Long, max: Long):
 
 object Range:
   def make(min: Long, max: Long): Option[Range] =
-    Option.when(min <= max)(min to max)
+    Option.when(min <= max)(min.to(max))
 
   extension (min: Long)
     def until(max: Long): Range =

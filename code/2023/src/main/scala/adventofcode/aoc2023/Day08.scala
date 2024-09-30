@@ -40,7 +40,7 @@ object Day08 extends AdventOfCode(Prod):
       .keys
       .filter(_.endsWith("A"))
       .map(loop(_, instructions, nodes))
-      .reduce(_ lcm _)
+      .reduce(_.lcm(_))
 
   answer(1)(pt1)
 

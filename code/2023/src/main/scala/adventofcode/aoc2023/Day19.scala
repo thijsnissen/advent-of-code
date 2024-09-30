@@ -64,12 +64,12 @@ object Day19 extends AdventOfCode(Prod):
 
       op match
         case '>' => (
-            ranges.updated(category, condition + 1 to max),
-            ranges.updated(category, min to condition)
+            ranges.updated(category, (condition + 1).to(max)),
+            ranges.updated(category, min.to(condition))
           )
         case '<' => (
-            ranges.updated(category, min to condition - 1),
-            ranges.updated(category, condition to max)
+            ranges.updated(category, min.to(condition - 1)),
+            ranges.updated(category, condition.to(max))
           )
 
   object Rule:
@@ -142,7 +142,12 @@ object Day19 extends AdventOfCode(Prod):
               loop(todo.tail ++ self(wfl).evaluateRanges(ranges), accepted)
 
         loop(
-          Vector("in" -> Ranges(1 to 4000, 1 to 4000, 1 to 4000, 1 to 4000)),
+          Vector("in" -> Ranges(
+            1.to(4000),
+            1.to(4000),
+            1.to(4000),
+            1.to(4000)
+          )),
           Vector.empty[Ranges]
         )
 
