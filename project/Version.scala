@@ -1,5 +1,6 @@
 object Version {
   lazy val version = "0.1.0"
+  
   lazy val scala   = "3.5.1"
 
   lazy val pprint = "0.9.0"
