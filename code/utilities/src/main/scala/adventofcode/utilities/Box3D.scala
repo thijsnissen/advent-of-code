@@ -9,7 +9,7 @@ case class Box3D(min: Pos3D, max: Pos3D):
     2 * (delta.x * delta.y + delta.z * delta.x + delta.z * delta.y)
 
   def union(that: Box3D): Box3D =
-    Box3D(min min that.min, max max that.max)
+    Box3D(min.min(that.min), max.max(that.max))
 
   def contains(p: Pos3D): Boolean =
     p.x >= min.x && p.x <= max.x &&
@@ -27,4 +27,4 @@ object Box3D:
   def apply(p: Pos3D): Box3D = Box3D(p, p)
 
   def bounding(ps: IterableOnce[Pos3D]): Box3D =
-    ps.iterator.map(apply).reduce(_ union _)
+    ps.iterator.map(apply).reduce(_.union(_))

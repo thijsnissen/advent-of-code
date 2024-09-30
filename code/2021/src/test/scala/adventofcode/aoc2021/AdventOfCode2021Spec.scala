@@ -1,8 +1,8 @@
 package adventofcode
 package aoc2021
 
+import adventofcode.utilities.AdventOfCode.*
 import org.scalatest.funsuite.AnyFunSuite
-import utilities.AdventOfCode.*
 
 class AdventOfCode2021Spec extends AnyFunSuite:
   test("Day01"):
@@ -44,8 +44,8 @@ class AdventOfCode2021Spec extends AnyFunSuite:
   test("Day05"):
     if Day05.getEnv == Test then
       assertResult(5)(Day05.pt1) // [0ms]
-      // assertResult(12)(Day05.pt2) // [0ms]
+    // assertResult(12)(Day05.pt2) // [0ms]
 
     if Day05.getEnv == Prod then
       assertResult(6856)(Day05.pt1) // [0ms]
-      // assertResult(???)(Day05.pt2)  // [0ms]
+// assertResult(???)(Day05.pt2)  // [0ms]

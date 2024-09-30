@@ -104,7 +104,7 @@ object Day11 extends AdventOfCode(Prod):
   lazy val pt1: Long =
     Iterator
       .iterate(monkeys):
-        Monkey.playRound(_, monkeys.map(_.test).reduce(_ lcm _))
+        Monkey.playRound(_, monkeys.map(_.test).reduce(_.lcm(_)))
       .drop(20)
       .next
       .monkeyBusiness
@@ -112,7 +112,7 @@ object Day11 extends AdventOfCode(Prod):
   lazy val pt2: Long =
     Iterator
       .iterate(monkeys):
-        Monkey.playRound(_, monkeys.map(_.test).reduce(_ lcm _), true)
+        Monkey.playRound(_, monkeys.map(_.test).reduce(_.lcm(_)), true)
       .drop(10000)
       .next
       .monkeyBusiness

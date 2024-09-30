@@ -14,7 +14,7 @@ case class Pos(x: Int, y: Int):
   def *(i: Int): Pos =
     Pos(x * i, y * i)
 
-  infix def min(that: Pos): Pos =
+  def min(that: Pos): Pos =
     Pos(x min that.x, y min that.y)
 
   def max(that: Pos): Pos =

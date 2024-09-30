@@ -59,7 +59,7 @@ object Day24 extends AdventOfCode(Prod):
         self
           .combinations(2)
           .count: (stones: Vector[Stone2D]) =>
-            stones(0) intersection stones(1) match
+            stones(0).intersection(stones(1)) match
               case None => false
               case Some(pa, pb) =>
                 pa >= windowMin && pa <= windowMax &&
@@ -89,7 +89,7 @@ object Day24 extends AdventOfCode(Prod):
               val aStone = stones(0).reframe(va, vb)
               val bStone = stones(1).reframe(va, vb)
 
-              (aStone intersection bStone, found) match
+              (aStone.intersection(bStone), found) match
                 case (Some(a, b), None) =>
                   loopStones(todo.tail, va, vb, Some(a, b))
                 case (Some(a, b), Some(fa, fb)) if a == fa && b == fb =>

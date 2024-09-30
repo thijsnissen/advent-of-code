@@ -1,9 +1,9 @@
 package adventofcode
 package aoc2023
 
-import utilities.AdventOfCode.*
-import utilities.Range
-import utilities.Range.*
+import adventofcode.utilities.AdventOfCode.*
+import adventofcode.utilities.Range
+import adventofcode.utilities.Range.*
 
 object Day05 extends AdventOfCode(Prod):
   val mappings: Vector[Set[Mapping]] =
@@ -15,11 +15,13 @@ object Day05 extends AdventOfCode(Prod):
       .toVector
 
   case class Mapping(destination: Long, source: Long, length: Long):
-    lazy val sourceRange: Range = source until source + length
+    lazy val sourceRange: Range = source.until(source + length)
 
     def map(range: Range): Option[Range] =
       range.intersect(sourceRange).map: (overlap: Range) =>
-        overlap.min + (destination - source) to overlap.max + (destination - source)
+        (overlap.min + (destination - source)).to(
+          overlap.max + (destination - source)
+        )
 
   object Mapping:
     def fromString(mapping: String): Set[Mapping] =
@@ -37,7 +39,7 @@ object Day05 extends AdventOfCode(Prod):
         case s"seeds: $seeds" =>
           seeds
             .split(" ")
-            .map((seed: String) => seed.toLong to seed.toLong)
+            .map((seed: String) => seed.toLong.to(seed.toLong))
             .toSet
 
   object Ranges:
@@ -51,7 +53,7 @@ object Day05 extends AdventOfCode(Prod):
               val from   = range(0).toLong
               val length = range(1).toLong
 
-              from until from + length
+              from.until(from + length)
             .toSet
 
     def map(range: Range, mappings: Set[Mapping]): Set[Range] =
