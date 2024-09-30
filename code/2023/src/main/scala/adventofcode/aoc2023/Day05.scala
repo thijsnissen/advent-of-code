@@ -76,7 +76,6 @@ object Day05 extends AdventOfCode(Prod):
           .minBy(_.min)
           .min
 
-  import Mapping.*
   import Ranges.*
 
   lazy val pt1: Long =
