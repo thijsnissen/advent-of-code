@@ -16,6 +16,7 @@ lazy val root =
       aoc2021,
       aoc2022,
       aoc2023,
+      aoc2024,
       utilities
     )
 
@@ -43,6 +44,13 @@ lazy val aoc2022 =
 lazy val aoc2023 =
   project
     .in(file("code/2023"))
+    .dependsOn(utilities)
+    .settings(Settings.common ++ Settings.imports)
+    .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
+
+lazy val aoc2024 =
+  project
+    .in(file("code/2024"))
     .dependsOn(utilities)
     .settings(Settings.common ++ Settings.imports)
     .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)

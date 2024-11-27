@@ -1,8 +1,8 @@
 package adventofcode
 package aoc2021
 
-import utilities.AdventOfCode.*
-import utilities.Pos
+import adventofcode.utilities.AdventOfCode.*
+import adventofcode.utilities.Pos
 
 object Day05 extends AdventOfCode(Prod):
   val lines: Vector[Line] =
@@ -16,10 +16,13 @@ object Day05 extends AdventOfCode(Prod):
       from.x != to.x && from.y != to.y
 
     def points: Vector[Pos] =
-      (for
-        x <- (from.x min to.x) to (from.x max to.x)
-        y <- (from.y min to.y) to (from.y max to.y)
-      yield Pos(x, y)).toVector
+      val step = Pos((to.x - from.x).sign, (to.y - from.y).sign)
+
+      @tailrec def loop(curr: Pos, acc: Vector[Pos]): Vector[Pos] =
+        if curr == to then curr +: acc
+        else loop(curr + step, curr +: acc)
+
+      loop(from, Vector.empty[Pos])
 
   object Line:
     def fromString(s: String): Line =
@@ -39,9 +42,9 @@ object Day05 extends AdventOfCode(Prod):
       .filterNot(_.isDiagonal)
       .countPointsWithOverlap
 
-  // lazy val pt2: Int =
-  //  lines.countPointsWithOverlap
+  lazy val pt2: Int =
+    lines.countPointsWithOverlap
 
   answer(1)(pt1)
 
-  // answer(2)(pt2)
+  answer(2)(pt2)
