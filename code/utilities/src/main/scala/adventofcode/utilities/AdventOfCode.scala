@@ -48,14 +48,14 @@ object AdventOfCode:
         File("")
           .getAbsolutePath
           .split('/')
-          .takeWhile(_ != "advent-of-code")
+          .takeWhile(_ != "code")
           .mkString("/")
 
       Using.resource(
         Source.fromFile:
           createIfNotExists:
             new File(
-              s"$root/advent-of-code/code/$year/src/main/" +
+              s"$root/code/$year/src/main/" +
                 f"resources/day$day%02d.${getEnv.file}"
             )
       )(_.mkString)
