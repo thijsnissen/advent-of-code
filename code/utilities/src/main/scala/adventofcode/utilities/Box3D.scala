@@ -16,6 +16,14 @@ case class Box3D(min: Pos3D, max: Pos3D):
       p.y >= min.y && p.y <= max.y &&
       p.z >= min.z && p.z <= max.z
 
+  def manhattan(that: Pos3D): Int =
+    (if that.x >= min.x && that.x <= max.x then 0
+     else math.min(math.abs(min.x - that.x), math.abs(max.x - that.x))) +
+      (if that.y >= min.y && that.y <= max.y then 0
+       else math.min(math.abs(min.y - that.y), math.abs(max.y - that.y))) +
+      (if that.z >= min.z && that.z <= max.z then 0
+       else math.min(math.abs(min.z - that.z), math.abs(max.z - that.z)))
+
   def iterator: Iterator[Pos3D] =
     for
       x <- (min.x to max.x).iterator

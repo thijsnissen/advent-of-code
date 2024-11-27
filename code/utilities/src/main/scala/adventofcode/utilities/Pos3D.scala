@@ -6,18 +6,30 @@ case class Pos3D(x: Int, y: Int, z: Int):
   def +(that: Pos3D): Pos3D =
     Pos3D(x + that.x, y + that.y, z + that.z)
 
+  @annotation.targetName("addition")
+  def +(i: Int): Pos3D =
+    Pos3D(x + i, y + i, z + i)
+
   @annotation.targetName("subtraction")
   def -(that: Pos3D): Pos3D =
     Pos3D(x - that.x, y - that.y, z - that.z)
+
+  @annotation.targetName("subtraction")
+  def -(i: Int): Pos3D =
+    Pos3D(x - i, y - i, z - i)
 
   @annotation.targetName("product")
   def *(i: Int): Pos3D =
     Pos3D(x * i, y * i, z * i)
 
-  def min(that: Pos3D): Pos3D =
+  @annotation.targetName("division")
+  def /(i: Int): Pos3D =
+    Pos3D(x / i, y / i, z / i)
+
+  infix def min(that: Pos3D): Pos3D =
     Pos3D(x min that.x, y min that.y, z min that.z)
 
-  def max(that: Pos3D): Pos3D =
+  infix def max(that: Pos3D): Pos3D =
     Pos3D(x max that.x, y max that.y, z max that.z)
 
   def manhattan(that: Pos3D): Long =
@@ -56,3 +68,6 @@ case class Pos3D(x: Int, y: Int, z: Int):
 object Pos3D:
   def zero: Pos3D =
     Pos3D(0, 0, 0)
+
+  def apply(i: Int): Pos3D =
+    Pos3D(i, i, i)

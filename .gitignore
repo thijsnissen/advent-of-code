@@ -42,5 +42,9 @@ metals.sbt
 /.worksheet/
 *.iml
 
+# Env
+*.env
+.env
+
 # AoC
-**/resources/adventofcode/**/*.input
+*.input
