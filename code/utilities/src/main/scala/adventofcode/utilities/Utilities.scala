@@ -7,6 +7,12 @@ object Utilities:
   import scala.math.Integral.Implicits.*
   import scala.math.Ordering.Implicits.*
 
+  extension [A](a: A)
+    def dump: A =
+      pprint.log(a)
+
+      sys.exit(1)
+
   def exponentialSearch[A, B](f: A => B, min: A)(x: B)(using
     int: Integral[A],
     ord: Ordering[B]

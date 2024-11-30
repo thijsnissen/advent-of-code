@@ -238,7 +238,8 @@ object Day15 extends AdventOfCode(Prod):
         acc(u.loc.y).updated(u.loc.x, u.unitType.toString.charAt(0))
       )
     val box2 = map.filterNot(p => units.exists(_.loc == p)).foldLeft(box1):
-      (acc, loc) => acc.updated(loc.y, acc(loc.y).updated(loc.x, '.'))
+      (acc, loc) =>
+        acc.updated(loc.y, acc(loc.y).updated(loc.x, '.'))
 
     print("\u001b[2J")
     println:
