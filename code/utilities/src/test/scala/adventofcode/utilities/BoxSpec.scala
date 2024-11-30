@@ -105,6 +105,13 @@ class BoxSpec extends AnyFunSuite:
 
     assertResult(box1)(Box3D.bounding(pos))
 
+    assertResult(1)(Box3D(Pos3D(10, 10, 10), Pos3D(60, 60, 60)).manhattan(Pos3D(
+      9,
+      60,
+      50
+    )))
+    assertResult(1)(box1.manhattan(Pos3D.zero))
+
   test("Box4D"):
     val box1 = Box4D(Pos4D(0, 1, -2, 0), Pos4D(2, 1, 3, 1))
     val box2 = Box4D(Pos4D(-1, -1, 1, -2), Pos4D(3, 3, 3, 3))

@@ -95,6 +95,10 @@ class PosSpec extends AnyFunSuite:
     assertResult(Pos3D(2, 2, 0))(pos1 + pos2)
     assertResult(Pos3D(-2, 6, -4))(pos1 - pos2)
     assertResult(Pos3D(4, -4, 4))(pos2 * 2)
+    assertResult(Pos3D(1, -1, 1))(pos2 / 2)
+
+    assertResult(Pos3D(10, 14, 8))(pos1 + 10)
+    assertResult(Pos3D(-10, -6, -12))(pos1 - 10)
 
     assertResult(Pos3D(0, -2, -2))(pos1.min(pos2))
     assertResult(Pos3D(2, 4, 2))(pos1.max(pos2))
