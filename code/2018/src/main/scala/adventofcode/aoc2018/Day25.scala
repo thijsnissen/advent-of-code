@@ -4,7 +4,7 @@ package aoc2018
 import adventofcode.utilities.AdventOfCode.*
 import adventofcode.utilities.Pos4D
 
-object Day25 extends AdventOfCode(Prod):
+object Day25 extends AdventOfCode(Test):
   val fixedPointsInSpacetime: Vector[Pos4D] =
     input
       .linesIterator
@@ -50,8 +50,8 @@ object Day25 extends AdventOfCode(Prod):
   lazy val pt1: Int =
     findConstellations(
       fixedPointsInSpacetime,
-      fixedPointsInSpacetime,
-      Vector.empty[Pos4D]
+      Vector.empty[Pos4D],
+      fixedPointsInSpacetime
     )
 
   answer(1)(pt1)
