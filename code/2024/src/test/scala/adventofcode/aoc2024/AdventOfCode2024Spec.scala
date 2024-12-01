@@ -7,9 +7,9 @@ import utilities.AdventOfCode.*
 class AdventOfCode2024Spec extends AnyFunSuite:
   test("Day01"):
     if Day01.getEnv == Test then
-      assertResult(0)(Day01.pt1)
-      assertResult(0)(Day01.pt2)
+      assertResult(11)(Day01.pt1)
+      assertResult(31)(Day01.pt2)
 
     if Day01.getEnv == Prod then
-      assertResult(0)(Day01.pt1)
-      assertResult(0)(Day01.pt2)
+      assertResult(1320851)(Day01.pt1)
+      assertResult(26859182)(Day01.pt2)
