@@ -79,6 +79,9 @@ object Utilities:
     def lcm(b: A): A =
       (a * b).abs / a.gcd(b)
 
+    def triangular: A =
+      a * (a + Integral[A].one) / Integral[A].fromInt(2)
+
   extension [A](i: Iterable[A])
     def sumBy[B: Integral](f: A => B): B =
       i.foldLeft(Integral[B].zero): (acc, elem) =>
