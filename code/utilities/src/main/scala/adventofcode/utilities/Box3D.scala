@@ -18,11 +18,11 @@ case class Box3D(min: Pos3D, max: Pos3D):
 
   def manhattan(that: Pos3D): Int =
     (if that.x >= min.x && that.x <= max.x then 0
-     else math.min(math.abs(min.x - that.x), math.abs(max.x - that.x))) +
+     else (min.x - that.x).abs min (max.x - that.x).abs) +
       (if that.y >= min.y && that.y <= max.y then 0
-       else math.min(math.abs(min.y - that.y), math.abs(max.y - that.y))) +
+       else (min.y - that.y).abs min (max.y - that.y).abs) +
       (if that.z >= min.z && that.z <= max.z then 0
-       else math.min(math.abs(min.z - that.z), math.abs(max.z - that.z)))
+       else (min.z - that.z).abs min (max.z - that.z).abs)
 
   def iterator: Iterator[Pos3D] =
     for

@@ -5,7 +5,6 @@ import adventofcode.utilities.AdventOfCode.*
 import adventofcode.utilities.Box3D
 import adventofcode.utilities.Pos3D
 import scala.collection.mutable
-import scala.math.*
 
 object Day23 extends AdventOfCode(Prod):
   val nanobots: Set[Nanobot] =

@@ -19,11 +19,11 @@ object Day07 extends AdventOfCode(Prod):
 
   lazy val pt1: Int =
     cheapest(submarines): (a, b) =>
-      math.abs(a - b)
+      (a - b).abs
 
   lazy val pt2: Int =
     cheapest(submarines): (a, b) =>
-      math.abs(a - b).triangular
+      (a - b).abs.triangular
 
   answer(1)(pt1)
 

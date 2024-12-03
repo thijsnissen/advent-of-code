@@ -14,7 +14,7 @@ object Day11 extends AdventOfCode(Prod):
 
   case class Window(xMin: Int, xMax: Int, yMin: Int, yMax: Int):
     def maxSquareSize: Int =
-      math.min(math.abs(xMin - xMax), math.abs(yMin - yMax)) + 1
+      ((xMin - xMax).abs min (yMin - yMax).abs) + 1
 
   case class Cell(x: Int, y: Int):
     val powerLevel: Int => Int =
