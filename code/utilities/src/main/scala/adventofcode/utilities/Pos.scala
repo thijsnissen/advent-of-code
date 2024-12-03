@@ -22,8 +22,8 @@ case class Pos(x: Int, y: Int):
 
   def delta(that: Pos): Pos =
     Pos(
-      math.max(x, that.x) - math.min(x, that.x),
-      math.max(y, that.y) - math.min(y, that.y)
+      (x max that.x) - (x min that.x),
+      (y max that.y) - (y min that.y)
     )
 
   def sign(that: Pos): Pos =
@@ -65,7 +65,7 @@ object Pos:
 
   def asString(seq: Seq[Pos], found: Char = '#', notFound: Char = '.'): String =
     def intString(i: Int): String =
-      val int: String = math.abs(i).toString
+      val int: String = i.abs.toString
 
       if int.length == 1 then "0" + int else int
 

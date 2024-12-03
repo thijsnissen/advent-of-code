@@ -15,7 +15,7 @@ object Day01 extends AdventOfCode(Prod):
     left
       .sorted
       .zip(right.sorted)
-      .map((l, r) => math.abs(l - r))
+      .map((l, r) => (l - r).abs)
       .sum
 
   lazy val pt2: Int =

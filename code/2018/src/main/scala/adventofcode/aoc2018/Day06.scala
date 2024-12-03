@@ -14,7 +14,7 @@ object Day06 extends AdventOfCode(Prod):
 
   case class Coordinate(id: Int, x: Int, y: Int):
     def distanceTo(tx: Int, ty: Int): Int =
-      math.abs(x - tx) + math.abs(y - ty)
+      (x - tx).abs + (y - ty).abs
 
   lazy val maxX: Int = myInput.map(_.x).max + 1
   lazy val maxY: Int = myInput.map(_.y).max + 1

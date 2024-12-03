@@ -17,8 +17,8 @@ object Day10 extends AdventOfCode(Prod):
       Vector.fill(y, x)(a)
 
     def fromPoints(points: Vector[Point]): Grid[Char] =
-      val xCor = math.abs(points.minBy(_.x).x)
-      val yCor = math.abs(points.minBy(_.y).y)
+      val xCor = points.minBy(_.x).x.abs
+      val yCor = points.minBy(_.y).y.abs
 
       val (xArea, yArea) = Point.area(points)
 

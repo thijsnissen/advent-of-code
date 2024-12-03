@@ -247,7 +247,7 @@ object Day15 extends AdventOfCode(Prod):
         ((0 until size).map(_.toString.last).toVector +: box2)
           .zipWithIndex
           .map: (row, y) =>
-            (math.max(y - 1, 0).toString.last +: row)
+            ((y - 1 max 0).toString.last +: row)
               .map(_.toString)
               .mkString("\n", " ", "")
           .mkString

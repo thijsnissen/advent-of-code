@@ -17,36 +17,24 @@ object Day02 extends AdventOfCode(Prod):
       s.split(" ").map(_.toInt).toList
 
     extension (self: Report)
-      def problemDampener: List[Report] =
+      def isSafe: Boolean =
+        self.sliding(2).forall(ls => 1 to 3 contains ls(0) - ls(1)) ||
+          self.sliding(2).forall(ls => 1 to 3 contains ls(1) - ls(0))
+
+      def isSafeWithProblemDampener: Boolean =
         self
           .indices
-          .foldLeft(List(self)): (acc, i) =>
-            (self.take(i) ::: self.drop(i + 1)) :: acc
-
-      def checkRules: Boolean =
-        val windows = self.sliding(2).toVector
-
-        windows.forall(w => 1 to 3 contains w(0) - w(1)) ||
-        windows.forall(w => 1 to 3 contains w(1) - w(0))
-
-      def isSafe(withProblemDampener: Boolean): Boolean =
-        @tailrec def loop(todo: List[Report]): Boolean =
-          todo.headOption match
-            case None => false
-            case Some(report) =>
-              val result = report.checkRules
-
-              if result then result else loop(todo.tail)
-
-        loop(if withProblemDampener then self.problemDampener else List(self))
+          .exists: i =>
+            (self.take(i) ::: self.drop(i + 1)).isSafe
 
   import Report.*
 
   lazy val pt1: Int =
-    reports.count(_.isSafe(withProblemDampener = false))
+    reports.count(_.isSafe)
 
   lazy val pt2: Int =
-    reports.count(_.isSafe(withProblemDampener = true))
+    reports.count: r =>
+      r.isSafe || r.isSafeWithProblemDampener
 
   answer(1)(pt1)
 
