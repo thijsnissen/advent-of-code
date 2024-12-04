@@ -20,7 +20,9 @@ object Day03 extends AdventOfCode(Prod):
 
   extension (self: String)
     def isInt: Boolean =
-      self.toIntOption.isDefined
+      self
+        .toIntOption
+        .exists((0 to 999).contains)
 
   lazy val pt1: Int =
     multiply(program)(withConditionals = false)
