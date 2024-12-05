@@ -19,22 +19,12 @@ object Day04 extends AdventOfCode(Prod):
       def offset(pos: Pos)(f: Pos => Boolean): Set[Pos] =
         val offset =
           self match
-            case Hor => Set(
-                pos.copy(x = pos.x - 1),
-                pos.copy(x = pos.x + 1)
-              )
-            case Ver => Set(
-                pos.copy(y = pos.y - 1),
-                pos.copy(y = pos.y + 1)
-              )
-            case DgL => Set(
-                pos.copy(x = pos.x - 1, y = pos.y + 1),
-                pos.copy(x = pos.x + 1, y = pos.y - 1)
-              )
-            case DgR => Set(
-                pos.copy(x = pos.x - 1, y = pos.y - 1),
-                pos.copy(x = pos.x + 1, y = pos.y + 1)
-              )
+            case Hor => Set(pos.copy(x = pos.x - 1), pos.copy(x = pos.x + 1))
+            case Ver => Set(pos.copy(y = pos.y - 1), pos.copy(y = pos.y + 1))
+            case DgL =>
+              Set(Pos(pos.x - 1, pos.y + 1), Pos(pos.x + 1, pos.y - 1))
+            case DgR =>
+              Set(Pos(pos.x - 1, pos.y - 1), Pos(pos.x + 1, pos.y + 1))
 
         offset.filter(f)
 
@@ -82,9 +72,7 @@ object Day04 extends AdventOfCode(Prod):
             case Some(p) =>
               loop(
                 ps.tail,
-                if
-                  isMas(p)(Direction.DgR) &&
-                  isMas(p)(Direction.DgL)
+                if isMas(p)(Direction.DgR) && isMas(p)(Direction.DgL)
                 then acc + 1
                 else acc
               )
