@@ -38,6 +38,16 @@ object Grid:
         x <- y.lift(x)
       yield x
 
+    def find(p: A => Boolean): Option[A] =
+      iterate
+        .dropWhile(a => !p(a))
+        .nextOption()
+
+    def findWithIndex(p: ((Int, Int, A)) => Boolean): Option[(Int, Int, A)] =
+      iterateWithIndex
+        .dropWhile(a => !p(a))
+        .nextOption()
+
     def map[B](f: A => B): Grid[B] =
       self.map(_.map(f))
 
@@ -53,11 +63,17 @@ object Grid:
     def size: (Int, Int) =
       (self(0).length, self.length)
 
-    def iterator: Iterator[A] =
+    def iterate: Iterator[A] =
       for
         y <- self.iterator
         x <- y.iterator
       yield x
+
+    def iterateWithIndex: Iterator[(Int, Int, A)] =
+      for
+        (r, y) <- self.iterator.zipWithIndex
+        (c, x) <- r.iterator.zipWithIndex
+      yield (x, y, c)
 
     def mapWithIndex[B](f: (A, Int, Int) => B): Grid[B] =
       self
