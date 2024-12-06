@@ -11,6 +11,7 @@ import scala.util.Using
 object AdventOfCode:
   export Env.Prod
   export Env.Test
+  export adventofcode.utilities.Utilities.dump
 
   enum Env(val file: String):
     case Test extends Env("test")

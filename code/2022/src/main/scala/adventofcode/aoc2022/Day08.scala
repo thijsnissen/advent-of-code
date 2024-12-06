@@ -50,7 +50,7 @@ object Day08 extends AdventOfCode(Prod):
   lazy val pt2: Int =
     trees
       .map(_.scenicScore(trees))
-      .iterator
+      .iterate
       .max
 
   answer(1)(pt1)
