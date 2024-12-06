@@ -9,7 +9,7 @@ object Utilities:
 
   extension [A](a: A)
     def dump: A =
-      pprint.log(a)
+      pprint.log(a, height = 10000)
 
       sys.exit(1)
 

@@ -29,27 +29,27 @@ object Day06 extends AdventOfCode(Prod):
       case '<' => '^'
 
   def walk(
-    map: Grid[Char],
+    labMap: Grid[Char],
     startPos: Pos,
-    startDir: Char,
-    maxSteps: Int = 10000
-  ): Set[Pos] =
+    startDir: Char
+  ): Option[Set[Pos]] =
     @tailrec def loop(
       p: Pos,
       d: Char,
-      acc: Set[Pos],
-      steps: Int = 0
-    ): Set[Pos] =
-      if steps >= maxSteps then Set.empty[Pos]
+      acc: Set[(Pos, Char)]
+    ): Option[Set[Pos]] =
+      if acc.contains(p -> d) then None
       else
         val np = p + nextPos(d)
 
-        map.lift(np.x, np.y) match
-          case Some('#') => loop(p, nextDir(d), acc, steps)
-          case Some('.') => loop(np, d, acc + p, steps + 1)
-          case _         => acc + p
+        labMap.lift(np.x, np.y) match
+          case Some('#') =>
+            loop(p, nextDir(d), acc)
+          case Some(c) if c == '.' || c == startDir =>
+            loop(np, d, acc + (p -> d))
+          case _ => Some(acc.map((p, _) => p) + p)
 
-    loop(startPos, startDir, Set.empty[Pos])
+    loop(startPos, startDir, Set.empty[(Pos, Char)])
 
   def findGuard(map: Grid[Char]): (Pos, Char) =
     map
@@ -58,28 +58,23 @@ object Day06 extends AdventOfCode(Prod):
       .get
 
   lazy val pt1: Int =
-    val (guardPos, guardDir) = findGuard(labMap)
-    val labMapWithoutGuard   = labMap.set(guardPos.x, guardPos.y)('.')
+    val (guardPos, guardDir) =
+      findGuard(labMap)
 
-    walk(labMapWithoutGuard, guardPos, guardDir).size
+    walk(labMap, guardPos, guardDir)
+      .get
+      .size
 
   lazy val pt2: Int =
     val (guardPos, guardDir) = findGuard(labMap)
 
-    val labMapWithoutGuard =
-      labMap.set(guardPos.x, guardPos.y)('.')
-
-    val result: Iterator[Int] =
-      labMapWithoutGuard.iterateWithIndex.map: (x, y, c) =>
-        if c != '.' then 1
-        else
-          walk(
-            labMapWithoutGuard.set(x, y)('#'),
-            guardPos,
-            guardDir
-          ).size
-
-    result.count(_ == 0)
+    walk(labMap, guardPos, guardDir)
+      .get
+      .toVector
+      .map:
+        case Pos(x, y) =>
+          walk(labMap.set(x, y)('#'), guardPos, guardDir)
+      .count(_.isEmpty)
 
   answer(1)(pt1)
 
