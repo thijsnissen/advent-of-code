@@ -2,8 +2,9 @@ package adventofcode
 package aoc2024
 
 import adventofcode.utilities.AdventOfCode.*
+import adventofcode.utilities.Grid
 import adventofcode.utilities.Grid.*
-import adventofcode.utilities.{Grid, Pos}
+import adventofcode.utilities.Pos
 
 object Day06 extends AdventOfCode(Prod):
   val labMap: Grid[Char] =
