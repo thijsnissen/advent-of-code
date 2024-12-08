@@ -35,7 +35,7 @@ object Day07 extends AdventOfCode(Prod):
       @tailrec def loop(todo: List[Long], comb: List[Int], acc: Long): Long =
         (todo, comb) match
           case (h :: t, ch :: ct) => loop(t, ct, ops(ch).run(acc, h))
-          case (_, _)             => acc
+          case _                  => acc
 
       Operator
         .combinations(equations.length - 1, ops.length)
