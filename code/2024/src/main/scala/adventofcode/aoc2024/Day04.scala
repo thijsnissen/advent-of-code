@@ -47,9 +47,9 @@ object Day04 extends AdventOfCode(Prod):
                 for
                   m <- dir.offset(x)(self.get(_).contains('M'))
                   a <- dir.offset(m)(self.get(_).contains('A'))
-                yield dir.offset(a)(self.get(_).contains('S')).size
+                yield dir.offset(a)(self.get(_).contains('S'))
 
-              loop(xs.tail, acc + s.sum)
+              loop(xs.tail, acc + s.toVector.flatten.length)
 
         val xs =
           self.allPos('X').toVector

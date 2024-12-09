@@ -4,7 +4,7 @@ package aoc2018
 import adventofcode.utilities.AdventOfCode.*
 import adventofcode.utilities.Pos4D
 
-object Day25 extends AdventOfCode(Test):
+object Day25 extends AdventOfCode(Prod):
   val fixedPointsInSpacetime: Vector[Pos4D] =
     input
       .linesIterator
