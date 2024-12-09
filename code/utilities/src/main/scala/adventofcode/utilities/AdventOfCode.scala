@@ -81,7 +81,7 @@ object AdventOfCode:
         URI(s"https://adventofcode.com/$year/day/$day/input").toURL.openConnection match
           case conn: HttpURLConnection =>
             println:
-              s"${Console.RED} Downloading input file for day $day of $year ${Console.RESET}"
+              s"${Console.RED} Downloading input file for $year day $day ${Console.RESET}"
 
             conn.setRequestProperty("Cookie", s"session=${sys.env("SESSION")}")
             conn.setRequestProperty(

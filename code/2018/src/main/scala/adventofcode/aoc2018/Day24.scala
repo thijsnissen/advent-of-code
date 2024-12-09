@@ -5,7 +5,7 @@ import adventofcode.utilities.AdventOfCode.*
 import adventofcode.utilities.Utilities.sumBy
 import scala.collection.immutable.SortedSet
 
-object Day24 extends AdventOfCode(Test):
+object Day24 extends AdventOfCode(Prod):
   val immuneSystem: Vector[Group] =
     input
       .linesIterator

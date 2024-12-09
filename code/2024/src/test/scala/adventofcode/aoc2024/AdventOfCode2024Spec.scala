@@ -76,3 +76,12 @@ class AdventOfCode2024Spec extends AnyFunSuite:
     if Day08.getEnv == Prod then
       assertResult(276)(Day08.pt1)
       assertResult(991)(Day08.pt2)
+
+  test("Day09"):
+    if Day09.getEnv == Test then
+      assertResult(1928)(Day09.pt1)
+      assertResult(2858)(Day09.pt2)
+
+    if Day09.getEnv == Prod then
+      assertResult(6283404590840L)(Day09.pt1)
+      assertResult(6304576012713L)(Day09.pt2)
