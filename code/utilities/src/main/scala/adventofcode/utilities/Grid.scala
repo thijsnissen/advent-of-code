@@ -43,6 +43,11 @@ object Grid:
         .dropWhile(a => !p(a))
         .nextOption()
 
+    def swap(x1: Int, y1: Int)(x2: Int, y2: Int): Grid[A] =
+      self
+        .set(x1, y1)(self.get(x2, y2))
+        .set(x2, y2)(self.get(x1, y1))
+
     def findWithIndex(p: ((Int, Int, A)) => Boolean): Option[(Int, Int, A)] =
       iterateWithIndex
         .dropWhile(a => !p(a))
@@ -50,6 +55,21 @@ object Grid:
 
     def map[B](f: A => B): Grid[B] =
       self.map(_.map(f))
+
+    def flatMap[B](f: A => Vector[B]): Grid[B] =
+      self.map(_.flatMap(f))
+
+    def mapWithIndex[B](f: (A, Int, Int) => B): Grid[B] =
+      self
+        .zipWithIndex
+        .map: (va: Vector[A], y: Int) =>
+          va
+            .zipWithIndex
+            .map: (a: A, x: Int) =>
+              f(a, x, y)
+
+    def flatten: Vector[A] =
+      self.flatten
 
     def count(f: A => Boolean): Int =
       self.map(_.count(f)).sum
@@ -74,18 +94,6 @@ object Grid:
         (r, y) <- self.iterator.zipWithIndex
         (c, x) <- r.iterator.zipWithIndex
       yield (x, y, c)
-
-    def mapWithIndex[B](f: (A, Int, Int) => B): Grid[B] =
-      self
-        .zipWithIndex
-        .map: (va: Vector[A], y: Int) =>
-          va
-            .zipWithIndex
-            .map: (a: A, x: Int) =>
-              f(a, x, y)
-
-    def flatten: Vector[A] =
-      self.flatten
 
     def transpose: Grid[A] =
       self.transpose

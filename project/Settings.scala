@@ -8,6 +8,7 @@ object Settings {
       "utf8",
       "-language:implicitConversions",
       "-language:existentials",
+      "-language:experimental.namedTuples",
       "-deprecation",
       "-feature",
       "-unchecked",

@@ -36,6 +36,9 @@ class GridSpec extends AnyFunSuite:
         (2, 2, 9)
       )
 
+    val grid7: Grid[Int] =
+      Grid.unit(Vector(Vector(9, 2, 3), Vector(4, 5, 6), Vector(7, 8, 1)))
+
     val grid1AsString: String =
       """
 				|1 2 3
@@ -57,6 +60,12 @@ class GridSpec extends AnyFunSuite:
 
     assertResult(grid3)(grid1.map(_ + 1))
 
+    assertResult(grid3)(grid1.flatMap(i => Vector(i + 1)))
+
+    assertResult(grid3)(grid1.mapWithIndex((i, _, _) => i + 1))
+
+    assertResult(grid4)(grid1.flatten)
+
     assertResult(4)(grid1.count(_ % 2 == 0))
 
     assertResult(true)(grid2.exists(_ > 9))
@@ -75,11 +84,9 @@ class GridSpec extends AnyFunSuite:
 
     assertResult(Some(5))(grid1.find(_ == 5))
 
+    assertResult(grid7)(grid1.swap(0, 0)(2, 2))
+
     assertResult(Some(1, 1, 5))(grid1.findWithIndex((_, _, i) => i == 5))
-
-    assertResult(grid3)(grid1.mapWithIndex((i, _, _) => i + 1))
-
-    assertResult(grid4)(grid1.flatten)
 
     assertResult(grid5)(grid1.transpose)
 
