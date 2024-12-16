@@ -1,10 +1,10 @@
 package adventofcode
 package aoc2023
 
-import adventofcode.utilities.Utilities.+%
 import utilities.AdventOfCode.*
 import utilities.Box
 import utilities.Pos
+import utilities.Utilities.+%
 
 // TODO: figure out a general solution:
 // - https://www.reddit.com/r/adventofcode/comments/18nevo3/comment/keb7zhu/

@@ -1,8 +1,8 @@
 package adventofcode
 package aoc2021
 
-import adventofcode.utilities.AdventOfCode.*
 import org.scalatest.funsuite.AnyFunSuite
+import utilities.AdventOfCode.*
 
 class AdventOfCode2021Spec extends AnyFunSuite:
   test("Day01"):

@@ -1,9 +1,9 @@
 package adventofcode
 package aoc2023
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Range
-import adventofcode.utilities.Range.*
+import utilities.AdventOfCode.*
+import utilities.Range
+import utilities.Range.*
 
 object Day05 extends AdventOfCode(Prod):
   val mappings: Vector[Set[Mapping]] =

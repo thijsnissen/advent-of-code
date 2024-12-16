@@ -1,12 +1,12 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Grid
-import adventofcode.utilities.Grid.*
-import adventofcode.utilities.Pos
-import adventofcode.utilities.Utilities.+%
 import scala.collection.mutable
+import utilities.AdventOfCode.*
+import utilities.Grid
+import utilities.Grid.*
+import utilities.Pos
+import utilities.Utilities.+%
 
 object Day16 extends AdventOfCode(Prod):
   val maze: Grid[Char] =

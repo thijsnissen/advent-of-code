@@ -7,7 +7,7 @@ import utilities.Grid.*
 import utilities.Pos
 import utilities.Utilities.sumBy
 
-object Day12 extends AdventOfCode(Test):
+object Day12 extends AdventOfCode(Prod):
   val gardenPlots: Grid[Char] =
     Grid.unit:
       input
