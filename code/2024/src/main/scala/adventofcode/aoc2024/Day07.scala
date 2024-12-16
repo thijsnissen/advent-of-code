@@ -1,8 +1,8 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Utilities.sumBy
+import utilities.AdventOfCode.*
+import utilities.Utilities.sumBy
 
 object Day07 extends AdventOfCode(Prod):
   val calibrationEquations: Vector[Equation] =

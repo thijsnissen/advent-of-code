@@ -1,9 +1,9 @@
 package adventofcode
 package aoc2018
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Utilities.sumBy
 import scala.collection.immutable.SortedSet
+import utilities.AdventOfCode.*
+import utilities.Utilities.sumBy
 
 object Day24 extends AdventOfCode(Prod):
   val immuneSystem: Vector[Group] =

@@ -1,7 +1,7 @@
 package adventofcode
 package aoc2021
 
-import adventofcode.utilities.AdventOfCode.*
+import utilities.AdventOfCode.*
 
 object Day06 extends AdventOfCode(Prod):
   val initialState: State =

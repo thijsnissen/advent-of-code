@@ -1,9 +1,9 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Grid
-import adventofcode.utilities.Grid.*
+import utilities.AdventOfCode.*
+import utilities.Grid
+import utilities.Grid.*
 
 object Day08 extends AdventOfCode(Prod):
   val antennas: Grid[Antenna] =

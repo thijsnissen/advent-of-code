@@ -1,8 +1,8 @@
 package adventofcode
 package aoc2021
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Pos
+import utilities.AdventOfCode.*
+import utilities.Pos
 
 object Day05 extends AdventOfCode(Prod):
   val lines: Vector[Line] =

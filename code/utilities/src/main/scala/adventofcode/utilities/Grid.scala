@@ -101,5 +101,11 @@ object Grid:
     def rotateClockwise: Grid[A] =
       self.transpose.map(_.reverse)
 
+    def findPos(t: A): Pos =
+      self
+        .findWithIndex((_, _, a) => a == t)
+        .map((x, y, _) => Pos(x, y))
+        .get
+
     def asString: String =
       self.map(_.mkString(" ")).mkString("\n", "\n", "\n")

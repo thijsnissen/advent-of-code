@@ -94,4 +94,6 @@ class GridSpec extends AnyFunSuite:
       grid1.rotateClockwise.rotateClockwise.rotateClockwise.rotateClockwise
     )
 
+    assertResult(Pos(1, 1))(grid1.findPos(5))
+
     assertResult(grid1AsString)(grid1.asString)
