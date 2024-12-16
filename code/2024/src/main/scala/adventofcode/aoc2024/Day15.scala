@@ -1,10 +1,10 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Grid
-import adventofcode.utilities.Grid.*
-import adventofcode.utilities.Pos
+import utilities.AdventOfCode.*
+import utilities.Grid
+import utilities.Grid.*
+import utilities.Pos
 
 object Day15 extends AdventOfCode(Prod):
   val (warehouse: Grid[Char], moves: Vector[Pos]) =
@@ -21,12 +21,6 @@ object Day15 extends AdventOfCode(Prod):
     )
 
   extension (self: Grid[Char])
-    def findRobot: Pos =
-      self
-        .findWithIndex((_, _, c) => c == '@')
-        .map((x, y, _) => Pos(x, y))
-        .get
-
     def move(c: Pos, m: Pos): (s: Grid[Char], r: Pos) =
       val n = c + m
 
@@ -57,7 +51,7 @@ object Day15 extends AdventOfCode(Prod):
 
     def move(ms: Vector[Pos]): Grid[Char] =
       ms
-        .foldLeft((s = self, r = findRobot)): (acc, m) =>
+        .foldLeft((s = self, r = self.findPos('@'))): (acc, m) =>
           acc.s.move(acc.r, m)
         .s
 

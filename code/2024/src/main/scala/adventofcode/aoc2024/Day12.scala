@@ -1,11 +1,11 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Grid
-import adventofcode.utilities.Grid.*
-import adventofcode.utilities.Pos
-import adventofcode.utilities.Utilities.sumBy
+import utilities.AdventOfCode.*
+import utilities.Grid
+import utilities.Grid.*
+import utilities.Pos
+import utilities.Utilities.sumBy
 
 object Day12 extends AdventOfCode(Test):
   val gardenPlots: Grid[Char] =
@@ -43,13 +43,13 @@ object Day12 extends AdventOfCode(Test):
   object Region:
     extension (self: Region)
       def offsets(p: Pos): Set[Pos] =
-        p.axisOffsetsFn(p => self.exists(_.pos  == p))
+        p.axisOffsetsFn(p => self.exists(_.pos == p))
 
       def sides: Int =
         ???
 
       def price(withDiscount: Boolean): Int =
-        if withDiscount then self.length * self.sides.dump
+        if withDiscount then self.length * self.sides
         else self.length * self.sumBy(_.perimeter)
 
   import Region.*

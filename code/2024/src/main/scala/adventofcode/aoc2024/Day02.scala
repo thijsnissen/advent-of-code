@@ -1,7 +1,7 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
+import utilities.AdventOfCode.*
 
 object Day02 extends AdventOfCode(Prod):
   val reports: List[Report] =

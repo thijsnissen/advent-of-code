@@ -1,9 +1,9 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Cache
-import adventofcode.utilities.Utilities.sumBy
+import utilities.AdventOfCode.*
+import utilities.Cache
+import utilities.Utilities.sumBy
 
 object Day11 extends AdventOfCode(Prod):
   val stones: Vector[Stone] =

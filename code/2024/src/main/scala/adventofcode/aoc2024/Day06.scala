@@ -1,10 +1,10 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Grid
-import adventofcode.utilities.Grid.*
-import adventofcode.utilities.Pos
+import utilities.AdventOfCode.*
+import utilities.Grid
+import utilities.Grid.*
+import utilities.Pos
 
 object Day06 extends AdventOfCode(Prod):
   val labMap: Grid[Char] =
@@ -38,19 +38,13 @@ object Day06 extends AdventOfCode(Prod):
 
     loop(startPos, startDir, Set.empty[(Pos, Pos)])
 
-  def findGuard(labMap: Grid[Char]): Pos =
-    labMap
-      .findWithIndex((_, _, c) => c == '^')
-      .map((x, y, _) => Pos(x, y))
-      .get
-
   lazy val pt1: Int =
-    walk(labMap, findGuard(labMap), Pos(0, -1))
+    walk(labMap, labMap.findPos('^'), Pos(0, -1))
       .get
       .size
 
   lazy val pt2: Int =
-    val guardPos   = findGuard(labMap)
+    val guardPos   = labMap.findPos('^')
     val initialDir = Pos(0, -1)
 
     walk(labMap, guardPos, initialDir)

@@ -1,8 +1,8 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.Pos
 import utilities.AdventOfCode.*
+import utilities.Pos
 import utilities.Utilities.sumBy
 
 object Day10 extends AdventOfCode(Prod):

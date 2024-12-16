@@ -1,7 +1,7 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
+import utilities.AdventOfCode.*
 
 object Day13 extends AdventOfCode(Prod):
   val clawMachines: Vector[Machine] =

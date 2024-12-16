@@ -1,9 +1,9 @@
 package adventofcode
 package aoc2024
 
-import adventofcode.utilities.AdventOfCode.*
-import adventofcode.utilities.Pos
-import adventofcode.utilities.Utilities.+%
+import utilities.AdventOfCode.*
+import utilities.Pos
+import utilities.Utilities.+%
 
 object Day14 extends AdventOfCode(Prod):
   val robots: Vector[Robot] =
