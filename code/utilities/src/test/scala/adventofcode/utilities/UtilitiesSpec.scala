@@ -7,11 +7,16 @@ class UtilitiesSpec extends AnyFunSuite:
   test("Utilities"):
     import Utilities.*
 
-    val fn: Int => Int = (a: Int) => a + 10
+    val fn: Int => Int     = (a: Int) => a + 10
+    val fb: Int => Boolean = (a: Int) => a < 100
 
     assertResult((522, 1034))(exponentialSearch(fn, 10)(750))
     assertResult(740)(binarySearch(fn, 10, 999)(750))
     assertResult(740)(exponentialBinarySearch(fn, 10)(750))
+
+    assertResult((74, 138))(exponentialSearch(10)(fb))
+    assertResult(100)(binarySearch(10, 999)(fb))
+    assertResult(100)(exponentialBinarySearch(10)(fb))
 
     val rotateSeq = Utilities.rotateSeq(Vector(1, 2, 3, 4, 5))
     val cycleSeq  = Utilities.cycleSeq(Vector.range(1, 11))
