@@ -8,7 +8,7 @@ import utilities.Grid.*
 import utilities.Pos
 import utilities.Utilities.+%
 
-object Day16 extends AdventOfCode(Test):
+object Day16 extends AdventOfCode(Prod):
   val maze: Grid[Char] =
     Grid.unit:
       input
