@@ -48,45 +48,45 @@ object Day12 extends AdventOfCode(Prod):
       def sides: Int =
         self
           .map: plot =>
-            val topLeftInside =
+            val topLeftOutside =
               !self.has(plot.pos + Pos(0, -1)) &&
                 !self.has(plot.pos + Pos(-1, 0))
 
-            val bottomRightOutside =
+            val bottomRightInside =
               self.has(plot.pos + Pos(0, -1)) &&
                 self.has(plot.pos + Pos(-1, 0)) &&
                 !self.has(plot.pos + Pos(-1, -1))
 
-            val topRightInside =
+            val topRightOutside =
               !self.has(plot.pos + Pos(0, -1)) &&
                 !self.has(plot.pos + Pos(1, 0))
 
-            val bottomLeftOutside =
+            val bottomLeftInside =
               self.has(plot.pos + Pos(0, -1)) &&
                 self.has(plot.pos + Pos(1, 0)) &&
                 !self.has(plot.pos + Pos(1, -1))
 
-            val bottomLeftInside =
+            val bottomLeftOutside =
               !self.has(plot.pos + Pos(0, 1)) &&
                 !self.has(plot.pos + Pos(-1, 0))
 
-            val topRightOutside =
+            val topRightInside =
               self.has(plot.pos + Pos(0, 1)) &&
                 self.has(plot.pos + Pos(-1, 0)) &&
                 !self.has(plot.pos + Pos(-1, 1))
 
-            val bottomRightInside =
+            val bottomRightOutside =
               !self.has(plot.pos + Pos(0, 1)) &&
                 !self.has(plot.pos + Pos(1, 0))
 
-            val topLeftOutside =
+            val topLeftInside =
               self.has(plot.pos + Pos(0, 1)) &&
                 self.has(plot.pos + Pos(1, 0)) &&
                 !self.has(plot.pos + Pos(1, 1))
 
-            topLeftInside :: bottomRightOutside :: topRightInside ::
-              bottomLeftOutside :: bottomLeftInside :: topRightOutside ::
-              bottomRightInside :: topLeftOutside :: Nil count identity
+            topLeftOutside :: bottomRightInside :: topRightOutside ::
+              bottomLeftInside :: bottomLeftOutside :: topRightInside ::
+              bottomRightOutside :: topLeftInside :: Nil count identity
           .sum
 
       def price(withDiscount: Boolean): Int =
