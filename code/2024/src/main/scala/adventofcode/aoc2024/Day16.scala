@@ -85,9 +85,12 @@ object Day16 extends AdventOfCode(Prod):
         .score
 
     def bestSeats(dir: Direction): Int =
-      val start = self.findPos('S')
+      val start    = self.findPos('S')
+      val paths    = find(start, self.findPos('E'), dir)
+      val minScore = paths.minBy(_.score).score
 
-      find(start, self.findPos('E'), dir)
+      paths
+        .takeWhile(_.score == minScore)
         .flatMap(_.path(start))
         .distinct
         .length

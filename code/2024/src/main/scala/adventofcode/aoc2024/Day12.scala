@@ -42,11 +42,52 @@ object Day12 extends AdventOfCode(Prod):
 
   object Region:
     extension (self: Region)
-      def offsets(p: Pos): Set[Pos] =
-        p.axisOffsetsFn(p => self.exists(_.pos == p))
+      def has(p: Pos): Boolean =
+        self.exists(plot => plot.pos == p)
 
       def sides: Int =
-        ???
+        self
+          .map: plot =>
+            val topLeftOutside =
+              !self.has(plot.pos + Pos(0, -1)) &&
+                !self.has(plot.pos + Pos(-1, 0))
+
+            val bottomRightInside =
+              self.has(plot.pos + Pos(0, -1)) &&
+                self.has(plot.pos + Pos(-1, 0)) &&
+                !self.has(plot.pos + Pos(-1, -1))
+
+            val topRightOutside =
+              !self.has(plot.pos + Pos(0, -1)) &&
+                !self.has(plot.pos + Pos(1, 0))
+
+            val bottomLeftInside =
+              self.has(plot.pos + Pos(0, -1)) &&
+                self.has(plot.pos + Pos(1, 0)) &&
+                !self.has(plot.pos + Pos(1, -1))
+
+            val bottomLeftOutside =
+              !self.has(plot.pos + Pos(0, 1)) &&
+                !self.has(plot.pos + Pos(-1, 0))
+
+            val topRightInside =
+              self.has(plot.pos + Pos(0, 1)) &&
+                self.has(plot.pos + Pos(-1, 0)) &&
+                !self.has(plot.pos + Pos(-1, 1))
+
+            val bottomRightOutside =
+              !self.has(plot.pos + Pos(0, 1)) &&
+                !self.has(plot.pos + Pos(1, 0))
+
+            val topLeftInside =
+              self.has(plot.pos + Pos(0, 1)) &&
+                self.has(plot.pos + Pos(1, 0)) &&
+                !self.has(plot.pos + Pos(1, 1))
+
+            topLeftOutside :: bottomRightInside :: topRightOutside ::
+              bottomLeftInside :: bottomLeftOutside :: topRightInside ::
+              bottomRightOutside :: topLeftInside :: Nil count identity
+          .sum
 
       def price(withDiscount: Boolean): Int =
         if withDiscount then self.length * self.sides
