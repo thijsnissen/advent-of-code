@@ -31,20 +31,20 @@ object Day20 extends AdventOfCode(Prod):
 
   extension (self: Map[Pos, Int])
     def cheats(ps: Int): Vector[Int] =
+      val keys = self.keys.toVector
+
       @tailrec def loop(todo: Vector[Pos], saved: Vector[Int]): Vector[Int] =
         todo.headOption match
           case None => saved
           case Some(p) =>
             val c =
-              self
-                .keys
-                .toVector
+              keys
                 .filter(q => p.manhattan(q) <= ps)
                 .map(q => self(q) - self(p) - p.manhattan(q).toInt)
 
             loop(todo.tail, saved ++ c)
 
-      loop(self.keys.toVector, Vector.empty[Int])
+      loop(keys, Vector.empty[Int])
 
   lazy val pt1: Int =
     raceTrack

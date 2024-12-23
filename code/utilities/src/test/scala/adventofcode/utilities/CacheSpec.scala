@@ -15,3 +15,9 @@ class CacheSpec extends AnyFunSuite:
         (a + b).toString
 
     assertResult("46")(cache2(12, 34))
+
+    val cache3: (Int, Int, Int) => String =
+      Cache.memoize[Int, Int, Int, String]: (a: Int, b: Int, c: Int) =>
+        (a + b + c).toString
+
+    assertResult("61")(cache3(12, 34, 15))
