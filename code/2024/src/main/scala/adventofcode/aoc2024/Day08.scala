@@ -14,11 +14,11 @@ object Day08 extends AdventOfCode(Prod):
         .toVector
 
   type Antenna = Char
-  type Pos     = (Int, Int)
+  type Point   = (Int, Int)
 
   object Antenna:
     extension (self: Grid[Antenna])
-      def combinations: Set[(Pos, Pos)] =
+      def combinations: Set[(Point, Point)] =
         self
           .iterateWithIndex
           .filterNot:
@@ -28,22 +28,22 @@ object Day08 extends AdventOfCode(Prod):
           .values
           .flatMap(_.combinations(2))
           .collect:
-            case Vector(a: Pos, b: Pos) => (a, b)
+            case Vector(a: Point, b: Point) => (a, b)
           .toSet
 
-      def contains(p: Pos): Boolean =
+      def contains(p: Point): Boolean =
         val (xMax, yMax) = self.size
         val (x, y)       = p
 
         x >= 0 && x <= xMax - 1 && y >= 0 && y <= yMax - 1
 
-      def antinodes(a: Pos, b: Pos)(
+      def antinodes(a: Point, b: Point)(
         withResonantHarmonics: Boolean
-      ): Vector[Pos] =
+      ): Vector[Point] =
         val ((ax, ay), (bx, by)) = (a, b)
         val (dx, dy)             = ((ax - bx).abs, (ay - by).abs)
 
-        @tailrec def loop(acc: Vector[Pos], i: Int = 1): Vector[Pos] =
+        @tailrec def loop(acc: Vector[Point], i: Int = 1): Vector[Point] =
           val ans = Vector(
             (
               if ax < bx then ax - dx * i else ax + dx * i,
@@ -60,7 +60,9 @@ object Day08 extends AdventOfCode(Prod):
           else
             acc ++ ans
 
-        loop(if withResonantHarmonics then Vector(a, b) else Vector.empty[Pos])
+        loop(
+          if withResonantHarmonics then Vector(a, b) else Vector.empty[Point]
+        )
 
   import Antenna.*
 
