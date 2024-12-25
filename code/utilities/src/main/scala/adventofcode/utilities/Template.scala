@@ -6,9 +6,9 @@ import utilities.AdventOfCode.*
 object Day00 extends AdventOfCode(Prod):
   val myInput = input
 
-  lazy val pt1: Int = ???
+  lazy val pt1: Long = ???
 
-  lazy val pt2: Int = ???
+  lazy val pt2: Long = ???
 
   answer(1)(pt1)
 

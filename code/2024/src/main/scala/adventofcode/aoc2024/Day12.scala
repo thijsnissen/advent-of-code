@@ -45,6 +45,7 @@ object Day12 extends AdventOfCode(Prod):
       def has(p: Pos): Boolean =
         self.exists(plot => plot.pos == p)
 
+      // This idea is credited to @jan-pieter
       def sides: Int =
         self
           .map: plot =>
