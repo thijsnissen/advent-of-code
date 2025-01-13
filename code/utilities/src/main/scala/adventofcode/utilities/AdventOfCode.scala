@@ -78,7 +78,9 @@ object AdventOfCode:
       if (!file.createNewFile && file.length() != 0) || getEnv == Env.Test then
         file
       else
-        URI(s"https://adventofcode.com/$year/day/$day/input").toURL.openConnection match
+        URI(
+          s"https://adventofcode.com/$year/day/$day/input"
+        ).toURL.openConnection match
           case conn: HttpURLConnection =>
             println:
               s"${Console.RED} Downloading input file for $year day $day ${Console.RESET}"
