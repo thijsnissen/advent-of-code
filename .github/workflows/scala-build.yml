@@ -19,7 +19,5 @@ jobs:
           java-version: '21'
       - name: Setup SBT
         uses: sbt/setup-sbt@96cf3f09dc501acdad7807fffe97dba9fa0709be
-      - name: Formatting
-        run: sbt check
-      - name: Tests
-        run: ENV=Test sbt test
+      - name: Formatting & Tests
+        run: ENV=test sbt -v check test
