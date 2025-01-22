@@ -16,18 +16,27 @@ jobs:
       PR_URL: ${{ github.event.pull_request.html_url }}
       PR_TITLE: ${{ github.event.pull_request.title }}
       HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'auto-approve-merge') }}
-      IS_AUTO_MERGE_DISABLED: ${{ github.event.action == 'auto_merge_disabled' }}
+      AUTO_MERGE_DISABLED_EVENT: ${{ github.event.action == 'auto_merge_disabled' }}
       IS_PR_APPROVED: ${{ github.event.pull_request.reviews.*.state == 'APPROVED' }}
+      IS_PR_BEHIND: ${{ github.event.pull_request.mergeable_state == 'behind' }}
     steps:
+      - name: Rebase
+        if: env.HAS_LABEL == 'true' && env.IS_PR_BEHIND == 'true'
+        run: |
+          if ! gh pr update-branch "$PR_URL" --rebase; then
+            gh pr comment "$PR_URL" --body \
+              "⚠️ Attempted to update branch from main, but encountered an error. Please update manually."
+            exit 1
+          fi
       - name: Auto Approve
         if: env.HAS_LABEL == 'true' && env.IS_PR_APPROVED == 'false'
         run: gh pr review "$PR_URL" --approve
       - name: Enable Auto Merge
-        if: env.HAS_LABEL == 'true' && env.IS_AUTO_MERGE_DISABLED == 'false'
+        if: env.HAS_LABEL == 'true' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
         run: gh pr merge "$PR_URL" --auto --squash --body "$PR_TITLE"
       - name: Disable Auto Merge
         if: env.HAS_LABEL == 'false'
         run: gh pr merge "$PR_URL" --disable-auto
       - name: Remove Label
-        if: env.IS_AUTO_MERGE_DISABLED == 'true'
+        if: env.AUTO_MERGE_DISABLED_EVENT == 'true'
         run: gh pr edit "$PR_URL" --remove-label "auto-approve-merge"
