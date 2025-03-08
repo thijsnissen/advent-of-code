@@ -75,7 +75,7 @@ jobs:
             };
 
       - name: Rebase
-        if: env.HAS_LABEL == 'true' && env.IS_PR_BEHIND == 'true'
+        if: env.HAS_LABEL == 'true' && env.IS_PR_BEHIND == 'true' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
         run: |
           if ! gh pr update-branch "$PR_URL"; then
             gh pr comment "$PR_URL" --body \
@@ -86,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Auto Approve
-        if: env.HAS_LABEL == 'true' && env.IS_PR_APPROVED == 'false'
+        if: env.HAS_LABEL == 'true' && env.IS_PR_APPROVED == 'false' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
         run: gh pr review "$PR_URL" --approve
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
