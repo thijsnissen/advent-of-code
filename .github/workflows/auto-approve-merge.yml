@@ -1,7 +1,7 @@
 name: Auto Approve/Merge PR
 on:
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled, auto_merge_disabled]
+    types: [opened, reopened, labeled, unlabeled, auto_merge_disabled, synchronize]
 permissions:
   pull-requests: write
   contents: write
@@ -12,67 +12,57 @@ jobs:
       - name: Set environment variables
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const prUrl = context.payload.pull_request.html_url;
             const prTitle = context.payload.pull_request.title;
             const hasLabel = context.payload.pull_request.labels.some(label => label.name === 'auto-approve-merge');
             const autoMergeDisabledEvent = context.payload.action === 'auto_merge_disabled';
             
-            // Approval check graphql
-            const { repository } = await github.graphql(`
-              query($owner: String!, $repo: String!, $prNumber: Int!) {
-                repository(owner: $owner, name: $repo) {
-                  pullRequest(number: $prNumber) {
-                    reviews(last: 100) {
-                      nodes {
-                        state
+            try {
+              const { repository } = await github.graphql(`
+                query($owner: String!, $repo: String!, $prNumber: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    pullRequest(number: $prNumber) {
+                      reviews(last: 100) {
+                        nodes {
+                          state
+                        }
+                      }
+                      compareWithBase(mergeType: MERGE) {
+                        behindBy
                       }
                     }
                   }
                 }
-              }
-            `, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              prNumber: context.payload.pull_request.number
-            });
-            
-            const isPrApproved = repository.pullRequest.reviews.nodes.some(review => review.state === 'APPROVED');
-            
-            // behind check rest api
-            const { data: comparison } = await github.rest.repos.compareCommits({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              base: context.payload.pull_request.base.ref,
-              head: context.payload.pull_request.head.sha
-            });
-            
-            const isPrBehind = comparison.behind_by > 0;
-            console.log(`PR is behind by ${comparison.behind_by} commits`);
-            
-            core.exportVariable('PR_URL', prUrl);
-            core.exportVariable('PR_TITLE', prTitle);
-            core.exportVariable('HAS_LABEL', hasLabel.toString());
-            core.exportVariable('AUTO_MERGE_DISABLED_EVENT', autoMergeDisabledEvent.toString());
-            core.exportVariable('IS_PR_APPROVED', isPrApproved.toString());
-            core.exportVariable('IS_PR_BEHIND', isPrBehind.toString());
-            
-            console.log('Environment variables set:');
-            console.log(`PR_URL: ${prUrl}`);
-            console.log(`PR_TITLE: ${prTitle}`);
-            console.log(`HAS_LABEL: ${hasLabel}`);
-            console.log(`AUTO_MERGE_DISABLED_EVENT: ${autoMergeDisabledEvent}`);
-            console.log(`IS_PR_APPROVED: ${isPrApproved}`);
-            console.log(`IS_PR_BEHIND: ${isPrBehind}`);
-            
-            return {
-              prUrl,
-              prTitle,
-              hasLabel,
-              autoMergeDisabledEvent,
-              isPrApproved,
-              isPrBehind
-            };
+              `, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                prNumber: context.payload.pull_request.number
+              });
+              
+              const pullRequest = repository.pullRequest;
+              const isPrApproved = pullRequest.reviews.nodes.some(review => review.state === 'APPROVED');
+              const isPrBehind = pullRequest.compareWithBase.behindBy > 0;
+              
+              core.exportVariable('PR_URL', prUrl);
+              core.exportVariable('PR_TITLE', prTitle);
+              core.exportVariable('HAS_LABEL', hasLabel.toString());
+              core.exportVariable('AUTO_MERGE_DISABLED_EVENT', autoMergeDisabledEvent.toString());
+              core.exportVariable('IS_PR_APPROVED', isPrApproved.toString());
+              core.exportVariable('IS_PR_BEHIND', isPrBehind.toString());
+              
+              console.log('Environment variables set:');
+              console.log(`PR_URL: ${prUrl}`);
+              console.log(`PR_TITLE: ${prTitle}`);
+              console.log(`HAS_LABEL: ${hasLabel}`);
+              console.log(`AUTO_MERGE_DISABLED_EVENT: ${autoMergeDisabledEvent}`);
+              console.log(`IS_PR_APPROVED: ${isPrApproved}`);
+              console.log(`IS_PR_BEHIND: ${isPrBehind}`);
+            } catch (error) {
+              console.error('Error fetching PR data:', error);
+              core.setFailed(`Failed to fetch PR data: ${error.message}`);
+            }
 
       - name: Rebase
         if: env.HAS_LABEL == 'true' && env.IS_PR_BEHIND == 'true' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
