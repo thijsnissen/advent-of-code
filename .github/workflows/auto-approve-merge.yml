@@ -1,100 +1,32 @@
 name: Auto Approve/Merge PR
+
 on:
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled, auto_merge_disabled, synchronize]
+    types: [opened, reopened, labeled, unlabeled, auto_merge_disabled]
+
 permissions:
   pull-requests: write
   contents: write
+
 jobs:
   auto-approve-merge:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PR_URL: ${{ github.event.pull_request.html_url }}
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'auto-approve-merge') }}
+      AUTO_MERGE_DISABLED_EVENT: ${{ github.event.action == 'auto_merge_disabled' }}
     steps:
-      - name: Set environment variables
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const prUrl = context.payload.pull_request.html_url;
-            const prTitle = context.payload.pull_request.title;
-            const hasLabel = context.payload.pull_request.labels.some(label => label.name === 'auto-approve-merge');
-            const autoMergeDisabledEvent = context.payload.action === 'auto_merge_disabled';
-            
-            try {
-              const { repository } = await github.graphql(`
-                query($owner: String!, $repo: String!, $prNumber: Int!) {
-                  repository(owner: $owner, name: $repo) {
-                    pullRequest(number: $prNumber) {
-                      reviews(last: 100) {
-                        nodes {
-                          state
-                        }
-                      }
-                      compareWithBase(mergeType: MERGE) {
-                        behindBy
-                      }
-                    }
-                  }
-                }
-              `, {
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                prNumber: context.payload.pull_request.number
-              });
-              
-              const pullRequest = repository.pullRequest;
-              const isPrApproved = pullRequest.reviews.nodes.some(review => review.state === 'APPROVED');
-              const isPrBehind = pullRequest.compareWithBase.behindBy > 0;
-              
-              core.exportVariable('PR_URL', prUrl);
-              core.exportVariable('PR_TITLE', prTitle);
-              core.exportVariable('HAS_LABEL', hasLabel.toString());
-              core.exportVariable('AUTO_MERGE_DISABLED_EVENT', autoMergeDisabledEvent.toString());
-              core.exportVariable('IS_PR_APPROVED', isPrApproved.toString());
-              core.exportVariable('IS_PR_BEHIND', isPrBehind.toString());
-              
-              console.log('Environment variables set:');
-              console.log(`PR_URL: ${prUrl}`);
-              console.log(`PR_TITLE: ${prTitle}`);
-              console.log(`HAS_LABEL: ${hasLabel}`);
-              console.log(`AUTO_MERGE_DISABLED_EVENT: ${autoMergeDisabledEvent}`);
-              console.log(`IS_PR_APPROVED: ${isPrApproved}`);
-              console.log(`IS_PR_BEHIND: ${isPrBehind}`);
-            } catch (error) {
-              console.error('Error fetching PR data:', error);
-              core.setFailed(`Failed to fetch PR data: ${error.message}`);
-            }
-
-      - name: Rebase
-        if: env.HAS_LABEL == 'true' && env.IS_PR_BEHIND == 'true' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
-        run: |
-          if ! gh pr update-branch "$PR_URL"; then
-            gh pr comment "$PR_URL" --body \
-              "⚠️ Attempted to update branch from main, but encountered an error. Please update manually."
-            exit 1
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Auto Approve
-        if: env.HAS_LABEL == 'true' && env.IS_PR_APPROVED == 'false' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
+        if: env.HAS_LABEL == 'true'
         run: gh pr review "$PR_URL" --approve
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Enable Auto Merge
         if: env.HAS_LABEL == 'true' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
         run: gh pr merge "$PR_URL" --auto --squash --body "$PR_TITLE"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Disable Auto Merge
         if: env.HAS_LABEL == 'false'
         run: gh pr merge "$PR_URL" --disable-auto
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Remove Label
         if: env.AUTO_MERGE_DISABLED_EVENT == 'true'
         run: gh pr edit "$PR_URL" --remove-label "auto-approve-merge"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
