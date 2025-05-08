@@ -92,7 +92,7 @@ object Day24 extends AdventOfCode(Prod):
           gs: Map[String, Gate],
           cs: Iterator[Vector[Gate]],
           acc: Vector[String],
-          b: Int = 0
+          b: Int
         ): Vector[String] =
           if acc.length == 8 then acc
           else

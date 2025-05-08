@@ -11,8 +11,8 @@ object Day02 extends AdventOfCode(Prod):
       .toVector
 
   lazy val pt1: Long =
-    spreadsheet.foldLeft(0):
-      (acc, s) => acc + s.max - s.min
+    spreadsheet.foldLeft(0): (acc, s) =>
+      acc + s.max - s.min
 
   lazy val pt2: Long =
     spreadsheet
