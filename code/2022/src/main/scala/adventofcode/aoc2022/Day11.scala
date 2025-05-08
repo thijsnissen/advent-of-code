@@ -97,7 +97,7 @@ object Day11 extends AdventOfCode(Prod):
     extension (self: Vector[Monkey])
       def monkeyBusiness: Long =
         self
-          .sortBy(_.counter)(Ordering[Long].reverse)
+          .sortBy(_.counter)(using Ordering[Long].reverse)
           .take(2)
           .productBy(_.counter)
 

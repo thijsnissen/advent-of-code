@@ -71,8 +71,9 @@ object Day23 extends AdventOfCode(Prod):
         Box3D.bounding(nanobots.map(_.pos))
 
       val queue =
-        mutable.PriorityQueue((box, box.nanobotsInRange(nanobots))):
-          Ordering.by((_, nanobotsInRange) => nanobotsInRange)
+        mutable.PriorityQueue((box, box.nanobotsInRange(nanobots)))(
+          using Ordering.by((_, nanobotsInRange) => nanobotsInRange)
+        )
 
       @tailrec def loop(acc: Map[Pos3D, Int], visited: Set[Box3D]): Set[Pos3D] =
         queue.dequeue match

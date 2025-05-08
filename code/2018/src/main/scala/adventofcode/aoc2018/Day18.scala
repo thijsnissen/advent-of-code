@@ -1,9 +1,8 @@
 package adventofcode
 package aoc2018
 
-import utilities.AdventOfCode.*
-import utilities.Box
-import utilities.Pos
+import adventofcode.utilities.AdventOfCode.*
+import adventofcode.utilities.Pos
 
 object Day18 extends AdventOfCode(Prod):
   import Acres.*
@@ -42,8 +41,6 @@ object Day18 extends AdventOfCode(Prod):
 
     extension (self: Acres)
       def changeLandscape(minutes: Int): Acres =
-        val boundingBox: Box = Box.bounding(self.keys)
-
         @annotation.tailrec
         def loop(acres: Acres, mins: Int): Acres =
           if mins <= 0 then

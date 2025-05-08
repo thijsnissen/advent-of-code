@@ -41,10 +41,12 @@ object Day05 extends AdventOfCode(Prod):
 
     extension (self: Update)
       def order(rs: Rules): Update =
-        self.sorted: (x: Int, y: Int) =>
-          if rs.get(x).exists(_.contains(y)) then -1
-          else if rs.get(y).exists(_.contains(x)) then 1
-          else 0
+        self.sorted(using
+          (x: Int, y: Int) =>
+            if rs.get(x).exists(_.contains(y)) then -1
+            else if rs.get(y).exists(_.contains(x)) then 1
+            else 0
+        )
 
       def isCorrect(rs: Rules): Boolean =
         self == self.order(rs)

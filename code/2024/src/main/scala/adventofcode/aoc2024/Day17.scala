@@ -36,6 +36,7 @@ object Day17 extends AdventOfCode(Prod):
           case (5, o) => copy(io = io + s"${combo(o) & 0b111}").run(p, ip + 2)
           case (6, o) => copy(b = a >> combo(o)).run(p, ip + 2)
           case (7, o) => copy(c = a >> combo(o)).run(p, ip + 2)
+          case (_, _) => sys.error("program crashed!")
 
   object Register:
     def make(s: Vector[String]): Register =

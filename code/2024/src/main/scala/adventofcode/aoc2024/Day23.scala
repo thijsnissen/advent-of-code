@@ -19,6 +19,7 @@ object Day23 extends AdventOfCode(Prod):
       cs.foldLeft(LANParty.Empty):
         case (acc, s"$a-$b") =>
           acc.updated(a, acc(a) + b).updated(b, acc(b) + a)
+        case (_, _) => sys.error("BOOM!")
 
     extension (self: Set[String])
       def password: String =

@@ -43,8 +43,7 @@ object Day22 extends AdventOfCode(Prod):
 
   object State:
     given stateOrdering(using ord: Ordering[Pos]): Ordering[State] =
-      Ordering.comparatorToOrdering: (a, b) =>
-        ord.compare(a.pos, b.pos)
+      Ordering.comparatorToOrdering(using (a, b) => ord.compare(a.pos, b.pos))
 
   case class Regions(
     mouthOfCave: Pos,

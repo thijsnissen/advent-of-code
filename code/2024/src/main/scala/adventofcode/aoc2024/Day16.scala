@@ -58,8 +58,9 @@ object Day16 extends AdventOfCode(Prod):
   extension (self: Grid[Char])
     def find(start: Pos, end: Pos, dir: Direction): Vector[Path] =
       val queue =
-        mutable.PriorityQueue(Path(dir, start, 0)):
+        mutable.PriorityQueue(Path(dir, start, 0))(using
           Ordering.by(p => -p.score)
+        )
 
       @tailrec def loop(
         acc: Vector[Path],
