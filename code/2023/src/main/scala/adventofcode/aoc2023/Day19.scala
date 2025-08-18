@@ -37,7 +37,7 @@ object Day19 extends AdventOfCode(Prod):
         next: Vector[(String, Ranges)]
       ): Vector[(String, Ranges)] =
         rules.headOption match
-          case None => next :+ (default, ranges)
+          case None       => next :+ (default, ranges)
           case Some(rule) =>
             val (rTrue, rFalse) = rule.split(ranges)
 
@@ -106,9 +106,9 @@ object Day19 extends AdventOfCode(Prod):
           accepted: Vector[Part]
         ): Vector[Part] =
           todo.headOption match
-            case None            => accepted
-            case Some("A", part) => loop(todo.tail, accepted :+ part)
-            case Some("R", _)    => loop(todo.tail, accepted)
+            case None                 => accepted
+            case Some("A", part)      => loop(todo.tail, accepted :+ part)
+            case Some("R", _)         => loop(todo.tail, accepted)
             case Some(workflow, part) => loop(
                 todo.tail :+ (workflows(workflow).evaluate(part), part),
                 accepted

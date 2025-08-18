@@ -55,7 +55,7 @@ object Parser:
     (s: String) =>
       r.findPrefixOf(s) match
         case Some(m) => succeed(m)(s.substring(m.length))
-        case None => fail(
+        case None    => fail(
             s"Could not match regex '${r.toString}' with string: ${s.take(10)}..."
           )("")
 

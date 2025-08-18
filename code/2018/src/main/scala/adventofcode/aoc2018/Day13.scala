@@ -87,7 +87,7 @@ object Day13 extends AdventOfCode(Prod):
 
         findCollisionPos(remainingCarts, movedCart) match
           case Some(pos) => pos
-          case None =>
+          case None      =>
             tick(toMove.tail, moved :+ movedCart.turn(tracks(movedCart.loc)))
 
     tick(carts.sortBy(_.loc), Vector.empty[Cart])
@@ -108,7 +108,7 @@ object Day13 extends AdventOfCode(Prod):
 
         findCollisionPos(remainingCarts, movedCart) match
           case Some(pos) if remainingCarts.forall(_.loc == pos) => pos
-          case Some(pos) => tick(
+          case Some(pos)                                        => tick(
               toMove.tail.filterNot(_.loc == pos),
               moved.filterNot(_.loc == pos)
             )

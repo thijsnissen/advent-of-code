@@ -61,7 +61,7 @@ object Day12 extends AdventOfCode(Prod):
 
     val generation = cycle.generation
     val sum        = cycle.sumOfAllPotsWithPlants
-    val interval =
+    val interval   =
       cycle.mutate(1).sumOfAllPotsWithPlants - cycle.sumOfAllPotsWithPlants
 
     sum + (50000000000L - generation) * interval

@@ -112,7 +112,7 @@ class GraphSpec extends AnyFunSuite:
     val aStarTarget   = Pos(4, 4)
     val aStarSource   = Pos(1, 1)
     val aStarGraphBox = Box(aStarStart, aStarTarget)
-    val aStarGraph =
+    val aStarGraph    =
       for
         b <- aStarGraphBox.iterator
         a <- b.axisOffsetsFn(aStarGraphBox.contains)
@@ -121,7 +121,7 @@ class GraphSpec extends AnyFunSuite:
     val heuristic: (Pos, Int) => Double =
       (v, _) => aStarTarget.euclidean(v)
 
-    val aStar = WeightedGraph.fromTupleList(aStarGraph.toList)
+    val aStar       = WeightedGraph.fromTupleList(aStarGraph.toList)
     val aStarResult = (
       6,
       List(

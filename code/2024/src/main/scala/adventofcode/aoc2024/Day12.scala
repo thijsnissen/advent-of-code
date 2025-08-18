@@ -25,7 +25,7 @@ object Day12 extends AdventOfCode(Prod):
     def region(p: Pos): Region =
       @tailrec def loop(todo: Vector[Pos], acc: Region): Region =
         todo.headOption match
-          case None => acc
+          case None                                   => acc
           case Some(pos) if !acc.exists(_.pos == pos) =>
             val n = offsets(pos)
 

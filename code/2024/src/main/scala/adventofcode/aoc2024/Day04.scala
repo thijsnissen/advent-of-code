@@ -41,7 +41,7 @@ object Day04 extends AdventOfCode(Prod):
       def findXmas: Int =
         @tailrec def loop(xs: Vector[(Pos, Direction)], acc: Int = 0): Int =
           xs.headOption match
-            case None => acc
+            case None         => acc
             case Some(x, dir) =>
               val s =
                 for
@@ -68,7 +68,7 @@ object Day04 extends AdventOfCode(Prod):
 
         @tailrec def loop(ps: Vector[Pos], acc: Int = 0): Int =
           ps.headOption match
-            case None => acc
+            case None    => acc
             case Some(p) =>
               loop(
                 ps.tail,

@@ -127,7 +127,7 @@ object Day24 extends AdventOfCode(Prod):
 
       def verifyZ(w: String, b: Int): Boolean =
         self.get(w) match
-          case Some(g) if b == 0 => g.hasInputWires("x00", "y00")
+          case Some(g) if b == 0  => g.hasInputWires("x00", "y00")
           case Some(XOR(l, r, _)) =>
             isIntermediateXor(l, b) && isCarry(r, b) ||
             isIntermediateXor(r, b) && isCarry(l, b)
@@ -142,7 +142,7 @@ object Day24 extends AdventOfCode(Prod):
       def isCarry(w: String, b: Int): Boolean =
         self.get(w) match
           case Some(g: AND) if b == 1 => g.hasInputWires("x00", "y00")
-          case Some(OR(l, r, _)) =>
+          case Some(OR(l, r, _))      =>
             isDirectCarry(l, b - 1) && isRecarry(r, b - 1) ||
             isDirectCarry(r, b - 1) && isRecarry(l, b - 1)
           case _ => false

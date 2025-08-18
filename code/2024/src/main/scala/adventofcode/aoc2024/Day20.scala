@@ -22,7 +22,7 @@ object Day20 extends AdventOfCode(Prod):
         path: Map[Pos, Int]
       ): Map[Pos, Int] =
         todo.head match
-          case (p, d) if p == e => path + (p -> d)
+          case (p, d) if p == e            => path + (p -> d)
           case (p, d) if !path.contains(p) =>
             loop(todo.tail ++ next(p).map(_ -> (d + 1)), path + (p -> d))
           case _ => loop(todo.tail, path)
@@ -35,7 +35,7 @@ object Day20 extends AdventOfCode(Prod):
 
       @tailrec def loop(todo: Vector[Pos], saved: Vector[Int]): Vector[Int] =
         todo.headOption match
-          case None => saved
+          case None    => saved
           case Some(p) =>
             val c =
               keys

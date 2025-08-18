@@ -37,7 +37,7 @@ object Day21 extends AdventOfCode(Prod):
         visited: Map[Pos, Int]
       ): Map[Pos, Int] =
         todo.headOption match
-          case None => visited
+          case None                 => visited
           case Some(p: Pos, s: Int) =>
             val next: Set[(Pos, Int)] =
               if s < target && !visited.contains(p) then

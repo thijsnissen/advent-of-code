@@ -39,8 +39,8 @@ object Day07 extends AdventOfCode(Prod):
 
     def fromInput(input: Vector[String]): FileSystem =
       input.foldLeft(FileSystem.empty):
-        case (acc, "$ ls")      => acc
-        case (acc, s"$$ cd ..") => acc.copy(currDir = acc.currDir.tail)
+        case (acc, "$ ls")        => acc
+        case (acc, s"$$ cd ..")   => acc.copy(currDir = acc.currDir.tail)
         case (acc, s"$$ cd $dir") =>
           acc.copy(currDir = s"${acc.currDir.head}/$dir" :: acc.currDir)
         case (acc, s"dir $dir") =>
