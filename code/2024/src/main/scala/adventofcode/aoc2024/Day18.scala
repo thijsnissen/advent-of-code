@@ -33,7 +33,7 @@ object Day18 extends AdventOfCode(Prod):
             case None                        => None
             case Some(p, d) if p == exit     => Some(p, d)
             case Some(p, _) if v.contains(p) => loop(todo.tail, v)
-            case Some(p, d) =>
+            case Some(p, d)                  =>
               val next =
                 p
                   .axisOffsetsFn: p =>

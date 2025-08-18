@@ -58,10 +58,10 @@ object JSON:
   extension (self: JSON)
     def asString: String =
       self match
-        case JNull           => "null"
-        case JNumber(number) => number.toString
-        case JString(string) => string.mkString("\"", "", "\"")
-        case JBool(boolean)  => boolean.toString
+        case JNull            => "null"
+        case JNumber(number)  => number.toString
+        case JString(string)  => string.mkString("\"", "", "\"")
+        case JBool(boolean)   => boolean.toString
         case JArray(elements) =>
           elements.map(_.asString).mkString("[", ",", "]")
         case JObject(fields) => fields.map(

@@ -51,7 +51,7 @@ object Day23 extends AdventOfCode(Prod):
         acc: Set[(Pos, Int)]
       ): Set[(Pos, Int)] =
         todo.headOption match
-          case None => acc
+          case None       => acc
           case Some(p, i) =>
             if intersections.contains(p) && i > 0 then
               loop(todo.tail, seen + p, acc + (p -> i))
@@ -75,7 +75,7 @@ object Day23 extends AdventOfCode(Prod):
         if pos == target then acc
         else
           adj.get(pos) match
-            case None => 0
+            case None    => 0
             case Some(a) =>
               a.map((p: Pos, i: Int) => loop(p, adj - pos, acc + i)).max
 

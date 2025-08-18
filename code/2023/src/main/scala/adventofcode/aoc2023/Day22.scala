@@ -37,7 +37,7 @@ object Day22 extends AdventOfCode(Prod):
       def fall: Bricks =
         @tailrec def loop(todo: Bricks, acc: Bricks): Bricks =
           todo.headOption match
-            case None => acc
+            case None      => acc
             case Some(box) =>
               val z: Int =
                 acc.foldLeft(1): (acc: Int, b: Box3D) =>
@@ -85,7 +85,7 @@ object Day22 extends AdventOfCode(Prod):
 
         @tailrec def loop(todo: Set[Box3D], acc: Set[Box3D]): Int =
           todo.headOption match
-            case None => acc.size - 1
+            case None      => acc.size - 1
             case Some(box) =>
               val fallen = acc + box
 

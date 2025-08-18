@@ -103,7 +103,7 @@ object Day20 extends AdventOfCode(Prod):
         state: ButtonModule
       ): ButtonModule =
         todo.headOption match
-          case None => state
+          case None                   => state
           case Some(message: Message) =>
             state.state.get(message.to) match
               case None => loop(todo.tail, state.logPulses(message))

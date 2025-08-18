@@ -136,7 +136,7 @@ object Day24 extends AdventOfCode(Prod):
         acc: Map[Group, Option[Group]]
       ): Map[Group, Option[Group]] =
         attacking.headOption match
-          case None => acc
+          case None        => acc
           case Some(group) =>
             val target =
               group.selectTarget(defending)
@@ -161,7 +161,7 @@ object Day24 extends AdventOfCode(Prod):
         targets: Map[Group, Option[Group]]
       ): Vector[Group] =
         todo.headOption match
-          case None => targets.keys.toVector
+          case None            => targets.keys.toVector
           case Some(attacking) =>
             targets(attacking) match
               case Some(defending) =>

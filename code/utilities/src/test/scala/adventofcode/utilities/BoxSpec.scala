@@ -7,7 +7,7 @@ class BoxSpec extends AnyFunSuite:
   test("Box"):
     val box1 = Box(Pos(0, -2), Pos(2, 0))
     val box2 = Box(Pos(1, -1), Pos(3, 3))
-    val pos = Set(
+    val pos  = Set(
       Pos(0, -2),
       Pos(0, -1),
       Pos(0, 0),
@@ -72,7 +72,7 @@ class BoxSpec extends AnyFunSuite:
   test("Box3D"):
     val box1 = Box3D(Pos3D(0, 1, -2), Pos3D(2, 1, 3))
     val box2 = Box3D(Pos3D(-1, -1, 1), Pos3D(3, 3, 3))
-    val pos = Set(
+    val pos  = Set(
       Pos3D(x = 0, y = 1, z = -2),
       Pos3D(x = 0, y = 1, z = -1),
       Pos3D(x = 0, y = 1, z = 0),
@@ -115,7 +115,7 @@ class BoxSpec extends AnyFunSuite:
   test("Box4D"):
     val box1 = Box4D(Pos4D(0, 1, -2, 0), Pos4D(2, 1, 3, 1))
     val box2 = Box4D(Pos4D(-1, -1, 1, -2), Pos4D(3, 3, 3, 3))
-    val pos = Set(
+    val pos  = Set(
       Pos4D(x = 1, y = 1, z = 3, w = 0),
       Pos4D(x = 2, y = 1, z = -2, w = 1),
       Pos4D(x = 0, y = 1, z = 3, w = 1),

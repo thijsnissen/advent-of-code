@@ -12,7 +12,7 @@ case class Range(min: Long, max: Long):
 
   def diff(that: Range): Set[Range] =
     this.intersect(that) match
-      case None => Set(this)
+      case None          => Set(this)
       case Some(overlap) => Set(
           make(this.min, overlap.min - 1),
           make(overlap.max + 1, this.max)

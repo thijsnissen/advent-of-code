@@ -30,7 +30,7 @@ object Day10 extends AdventOfCode(Prod):
           todo.headOption match
             case None                    => acc
             case Some(p) if self(p) == 9 => loop(todo.tail, p :: acc)
-            case Some(p) =>
+            case Some(p)                 =>
               loop(
                 todo.tail ::: p
                   .axisOffsetsFn(x => self(x) == self(p) + 1)

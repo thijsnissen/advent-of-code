@@ -60,7 +60,7 @@ object Day24 extends AdventOfCode(Prod):
           .combinations(2)
           .count: (stones: Vector[Stone2D]) =>
             stones(0).intersection(stones(1)) match
-              case None => false
+              case None         => false
               case Some(pa, pb) =>
                 pa >= windowMin && pa <= windowMax &&
                 pb >= windowMin && pb <= windowMax &&
@@ -84,7 +84,7 @@ object Day24 extends AdventOfCode(Prod):
           found: Option[(BigDecimal, BigDecimal)] = None
         ): Option[(BigDecimal, BigDecimal)] =
           todo.headOption match
-            case None => found
+            case None         => found
             case Some(stones) =>
               val aStone = stones(0).reframe(va, vb)
               val bStone = stones(1).reframe(va, vb)

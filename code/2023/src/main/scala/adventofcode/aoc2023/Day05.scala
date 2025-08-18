@@ -28,7 +28,7 @@ object Day05 extends AdventOfCode(Prod):
       mapping
         .linesIterator
         .foldLeft(Set.empty[Mapping]):
-          case (acc, s"$_ map:") => acc
+          case (acc, s"$_ map:")                      => acc
           case (acc, s"$destination $source $length") =>
             acc + Mapping(destination.toLong, source.toLong, length.toLong)
           case (acc, _) => acc

@@ -73,7 +73,7 @@ object Day21 extends AdventOfCode(Prod):
           todo.headOption match
             case None                           => acc
             case Some(_, cs) if cs.length > max => acc
-            case Some(cp, cs) if cp == e =>
+            case Some(cp, cs) if cp == e        =>
               loop(todo.tail, acc :+ cs + 'A', cs.length + 1)
             case Some(cp, cs) =>
               loop(

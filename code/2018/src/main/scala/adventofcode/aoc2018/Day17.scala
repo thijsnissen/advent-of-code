@@ -70,7 +70,7 @@ object Day17 extends AdventOfCode(Prod):
                 (None, modified)
 
       queue.distinct.dequeueOption match
-        case None => tiles
+        case None            => tiles
         case Some(pos, tail) =>
           tiles(pos) match
             case TileType.Sand | TileType.Flow =>

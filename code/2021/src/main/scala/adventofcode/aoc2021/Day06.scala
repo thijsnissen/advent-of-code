@@ -27,7 +27,7 @@ object Day06 extends AdventOfCode(Prod):
       def simulate: State =
         @tailrec def loop(days: List[Int], state: State, acc: State): State =
           days.headOption match
-            case None => acc
+            case None      => acc
             case Some(day) =>
               if day == 0 then
                 loop(

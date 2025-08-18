@@ -9,7 +9,7 @@ object Day03 extends AdventOfCode(Prod):
   def multiply(s: String)(withConditionals: Boolean): Int =
     @tailrec def loop(todo: String, acc: Int = 0): Int =
       todo match
-        case "" => acc
+        case ""                                  => acc
         case s"don't()$tail" if withConditionals =>
           loop(tail.drop(tail.indexOf("do()")), acc)
         case s"mul($x,$y)$tail" if x.isInt && y.isInt =>
