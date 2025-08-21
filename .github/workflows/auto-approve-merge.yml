@@ -2,7 +2,7 @@ name: Auto Approve/Merge PR
 
 on:
   pull_request_target:
-    types: [opened, reopened, labeled, unlabeled, auto_merge_disabled]
+    types: [opened, unlabeled, auto_merge_disabled]
 
 permissions:
   pull-requests: write
@@ -15,18 +15,34 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PR_URL: ${{ github.event.pull_request.html_url }}
       PR_TITLE: ${{ github.event.pull_request.title }}
+      ACTION: ${{github.event.action}}
       HAS_LABEL: ${{ contains(github.event.pull_request.labels.*.name, 'auto-approve-merge') }}
-      AUTO_MERGE_DISABLED_EVENT: ${{ github.event.action == 'auto_merge_disabled' }}
+      IS_AUTO_MERGE_DISABLED_EVENT: ${{ github.event.action == 'auto_merge_disabled' }}
+      IS_APPROVED: false
+
     steps:
+      - name: Set IS_APPROVED
+        run: |
+          if gh pr view "$PR_URL" --json reviews --jq '.reviews[].state' | grep -q "APPROVED"; then
+            echo "IS_APPROVED=true" >> $GITHUB_ENV
+          else
+            echo "IS_APPROVED=false" >> $GITHUB_ENV
+          fi
       - name: Auto Approve
-        if: env.HAS_LABEL == 'true'
+        if: env.HAS_LABEL == 'true' && env.IS_APPROVED == 'false'
         run: gh pr review "$PR_URL" --approve
       - name: Enable Auto Merge
-        if: env.HAS_LABEL == 'true' && env.AUTO_MERGE_DISABLED_EVENT == 'false'
+        if: env.HAS_LABEL == 'true' && env.IS_AUTO_MERGE_DISABLED_EVENT == 'false'
         run: gh pr merge "$PR_URL" --auto --squash --body "$PR_TITLE"
       - name: Disable Auto Merge
         if: env.HAS_LABEL == 'false'
         run: gh pr merge "$PR_URL" --disable-auto
       - name: Remove Label
-        if: env.AUTO_MERGE_DISABLED_EVENT == 'true'
+        if: env.IS_AUTO_MERGE_DISABLED_EVENT == 'true'
         run: gh pr edit "$PR_URL" --remove-label "auto-approve-merge"
+      - name: Summary
+        run: |
+          echo "PR_TITLE: $PR_TITLE"
+          echo "ACTION: $ACTION"
+          echo "HAS_LABEL: $HAS_LABEL"
+          echo "IS_APPROVED: $IS_APPROVED"
