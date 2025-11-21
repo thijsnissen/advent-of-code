@@ -3,7 +3,7 @@ object Version {
 
   lazy val scala = "3.7.4"
 
-  lazy val pprint = "0.9.4"
+  lazy val pprint = "0.9.5"
 
   lazy val scalatest = "3.2.19"
 }
