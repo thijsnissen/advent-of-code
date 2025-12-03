@@ -6,6 +6,8 @@ I make extensive use of
 [my handcrafted utilities library](https://github.com/thijsnissen/advent-of-code/tree/main/code/utilities/src)
 for solving these puzzles.
 
+For 2025 [I decided to explore Kotlin](https://github.com/thijsnissen/aoc-kotlin) as my language of choice.
+
 ## Events
 
 * [2024](https://github.com/thijsnissen/advent-of-code/tree/main/code/2024/src) `50*`
