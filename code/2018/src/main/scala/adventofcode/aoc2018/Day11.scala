@@ -13,8 +13,7 @@ object Day11 extends AdventOfCode(Prod):
   case class Result(cell: Cell, squareSize: Int, totalPower: Int)
 
   case class Window(xMin: Int, xMax: Int, yMin: Int, yMax: Int):
-    def maxSquareSize: Int =
-      ((xMin - xMax).abs min (yMin - yMax).abs) + 1
+    def maxSquareSize: Int = ((xMin - xMax).abs min (yMin - yMax).abs) + 1
 
   case class Cell(x: Int, y: Int):
     val powerLevel: Int => Int =
@@ -42,12 +41,13 @@ object Day11 extends AdventOfCode(Prod):
         yield Cell(x, y)
 
       grid.foldLeft(Grid.empty): (acc, c) =>
-        acc + (c -> (
-          c.powerLevel(gsn) +
-            acc(Cell(c.x, c.y - 1)) +
-            acc(Cell(c.x - 1, c.y)) -
-            acc(Cell(c.x - 1, c.y - 1))
-        ))
+        acc +
+          (c -> (
+            c.powerLevel(gsn) +
+              acc(Cell(c.x, c.y - 1)) +
+              acc(Cell(c.x - 1, c.y)) -
+              acc(Cell(c.x - 1, c.y - 1))
+          ))
 
     def largestTotalPowerForSquare(
       grid: Grid[Int],

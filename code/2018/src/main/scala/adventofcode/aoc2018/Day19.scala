@@ -81,9 +81,8 @@ object Day19 extends AdventOfCode(Prod):
       .getRegister(0)
 
   lazy val pt2: Int =
-    val divisors =
-      (1 to 10551330)
-        .filter(i => 10551330 % i == 0)
+    val divisors = (1 to 10551330)
+      .filter(i => 10551330 % i == 0)
 
     divisors.sum
 

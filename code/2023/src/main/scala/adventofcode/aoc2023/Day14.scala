@@ -32,8 +32,9 @@ object Day14 extends AdventOfCode(Prod):
               .padTo(self.length, '#')
           .toggleLeftTiltable
 
-      def cycle: Platform =
-        (1 to 4).foldLeft(self)((acc: Platform, _) => acc.tilt.rotateClockwise)
+      def cycle: Platform = (1 to 4).foldLeft(self)(
+        (acc: Platform, _) => acc.tilt.rotateClockwise
+      )
 
       def totalLoad: Int =
         self
@@ -55,7 +56,8 @@ object Day14 extends AdventOfCode(Prod):
 
     iterator
       .drop:
-        cycle.stemLength + ((1_000_000_000 - cycle.stemLength) % cycle.cycleLength)
+        cycle.stemLength +
+          ((1_000_000_000 - cycle.stemLength) % cycle.cycleLength)
       .next
       .totalLoad
 

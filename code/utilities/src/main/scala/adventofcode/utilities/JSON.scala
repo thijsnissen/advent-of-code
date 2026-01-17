@@ -15,8 +15,9 @@ object JSON:
   val jnull: Parser[JSON] =
     string("null").map(_ => JNull)
 
-  val jbool: Parser[JBool] =
-    (string("true") | string("false")).map(b => JBool(b.toBoolean))
+  val jbool: Parser[JBool] = (string("true") | string("false")).map(
+    b => JBool(b.toBoolean)
+  )
 
   val jnumber: Parser[JNumber] =
     regex("[-+]?([0-9]*\\.)?[0-9]+([eE][-+]?[0-9]+)?".r).map(

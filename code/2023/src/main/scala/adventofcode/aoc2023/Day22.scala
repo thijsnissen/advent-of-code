@@ -29,9 +29,9 @@ object Day22 extends AdventOfCode(Prod):
       case Box3D(min, _) => min.z
 
     extension (self: Box3D)
-      def overlap(that: Box3D): Boolean =
-        (self.min.x max that.min.x) <= (self.max.x min that.max.x) &&
-          (self.min.y max that.min.y) <= (self.max.y min that.max.y)
+      def overlap(that: Box3D): Boolean = (self.min.x max that.min.x) <=
+        (self.max.x min that.max.x) &&
+        (self.min.y max that.min.y) <= (self.max.y min that.max.y)
 
     extension (self: Bricks)
       def fall: Bricks =

@@ -17,19 +17,18 @@ object Day13 extends AdventOfCode(Prod):
       s.linesIterator.toVector
 
     def reflectionLine(pattern: Pattern)(reflection: Int => Boolean)
-      : Option[Int] =
-      (1 until pattern.length)
-        .find: (i: Int) =>
-          val (l: Pattern, r: Pattern) =
-            pattern.splitAt(i)
+      : Option[Int] = (1 until pattern.length)
+      .find: (i: Int) =>
+        val (l: Pattern, r: Pattern) =
+          pattern.splitAt(i)
 
-          val size: Int = l.length min r.length
+        val size: Int = l.length min r.length
 
-          reflection:
-            l.reverse.take(size)
-              .zip(r.take(size))
-              .map((l: String, r: String) => l.zip(r).count(_ != _))
-              .sum
+        reflection:
+          l.reverse.take(size)
+            .zip(r.take(size))
+            .map((l: String, r: String) => l.zip(r).count(_ != _))
+            .sum
 
     extension (self: Pattern)
       def summarize(reflection: Int => Boolean): Int =

@@ -26,16 +26,15 @@ object Day14 extends AdventOfCode(Prod):
       def simulate(width: Int, height: Int): Vector[Robot] =
         self.map(_.simulate(width, height))
 
-      def christmasTree(width: Int, height: Int): Int =
-        (1 to width * height)
-          .foldLeft((second = 0, safetyFactor = Int.MaxValue, state = self)):
-            (acc, s) =>
-              val ns  = acc.state.simulate(width, height)
-              val nsf = ns.safetyFactor(width, height)
+      def christmasTree(width: Int, height: Int): Int = (1 to width * height)
+        .foldLeft((second = 0, safetyFactor = Int.MaxValue, state = self)):
+          (acc, s) =>
+            val ns  = acc.state.simulate(width, height)
+            val nsf = ns.safetyFactor(width, height)
 
-              if nsf < acc.safetyFactor then (s, nsf, ns)
-              else (acc.second, acc.safetyFactor, ns)
-          .second
+            if nsf < acc.safetyFactor then (s, nsf, ns)
+            else (acc.second, acc.safetyFactor, ns)
+        .second
 
       def safetyFactor(width: Int, height: Int): Int =
         val (mx, my) = (width / 2, height / 2)

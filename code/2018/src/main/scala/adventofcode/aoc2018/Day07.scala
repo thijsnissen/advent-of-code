@@ -31,9 +31,8 @@ object Day07 extends AdventOfCode(Prod):
         edgesWithNoDeps: SortedMap[A, Set[A]],
         currentTime: Int
       ): Workload =
-        val (newWorking, newQueue) =
-          (queue ++ edgesWithNoDeps.keys)
-            .splitAt(workers - working.size)
+        val (newWorking, newQueue) = (queue ++ edgesWithNoDeps.keys)
+          .splitAt(workers - working.size)
 
         val (done, notDone) =
           (working ++ newWorking.map(s => s -> (currentTime + timer(s) - 1)))

@@ -92,12 +92,10 @@ object Day18 extends AdventOfCode(Prod):
     val it =
       Iterator.iterate(cycle.head)(f)
 
-    val cycleSum: IndexedSeq[Int] =
-      (0 until cycle.cycleLength).map: _ =>
-        g(it.next)
+    val cycleSum: IndexedSeq[Int] = (0 until cycle.cycleLength).map: _ =>
+      g(it.next)
 
-    val index: Int =
-      (1000000000 - cycle.stemLength) % cycle.cycleLength
+    val index: Int = (1000000000 - cycle.stemLength) % cycle.cycleLength
 
     cycleSum(index)
 

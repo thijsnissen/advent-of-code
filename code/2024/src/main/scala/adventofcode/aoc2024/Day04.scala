@@ -60,11 +60,10 @@ object Day04 extends AdventOfCode(Prod):
         )
 
       def findXedMas: Int =
-        def isMas(p: Pos)(d: Direction): Boolean =
-          (d.offset(p)(_ => true) + p)
-            .flatMap(self.get)
-            .intersect(Set('M', 'A', 'S'))
-            .size == 3
+        def isMas(p: Pos)(d: Direction): Boolean = (d.offset(p)(_ => true) + p)
+          .flatMap(self.get)
+          .intersect(Set('M', 'A', 'S'))
+          .size == 3
 
         @tailrec def loop(ps: Vector[Pos], acc: Int = 0): Int =
           ps.headOption match

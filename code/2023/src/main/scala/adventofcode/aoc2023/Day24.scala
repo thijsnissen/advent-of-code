@@ -44,11 +44,17 @@ object Day24 extends AdventOfCode(Prod):
 
       Option.when(denominator != 0):
         val pa: BigDecimal =
-          ((a1 * b2 - b1 * a2) * (a3 - a4) - (a1 - a2) * (a3 * b4 - b3 * a4)) /
+          ((a1 * b2 - b1 * a2) *
+            (a3 - a4) -
+            (a1 - a2) *
+            (a3 * b4 - b3 * a4)) /
             denominator
 
         val pb: BigDecimal =
-          ((a1 * b2 - b1 * a2) * (b3 - b4) - (b1 - b2) * (a3 * b4 - b3 * a4)) /
+          ((a1 * b2 - b1 * a2) *
+            (b3 - b4) -
+            (b1 - b2) *
+            (a3 * b4 - b3 * a4)) /
             denominator
 
         pa -> pb

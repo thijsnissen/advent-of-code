@@ -20,8 +20,8 @@ case class Pos4D(x: Int, y: Int, z: Int, w: Int):
   def max(that: Pos4D): Pos4D =
     Pos4D(x max that.x, y max that.y, z max that.z, w max that.w)
 
-  def manhattan(that: Pos4D): Long =
-    (x - that.x).abs + (y - that.y).abs + (z - that.z).abs + (w - that.w).abs
+  def manhattan(that: Pos4D): Long = (x - that.x).abs + (y - that.y).abs +
+    (z - that.z).abs + (w - that.w).abs
 
   def axisOffsets: Set[Pos4D] =
     Set(

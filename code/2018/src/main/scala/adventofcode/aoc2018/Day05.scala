@@ -14,10 +14,9 @@ object Day05 extends AdventOfCode(Prod):
     else
       removeReactingUnits(input.tail, s"${input.head}$acc")
 
-  def shortestPolymer(input: String) =
-    ('a' to 'z')
-      .map(x => input.filterNot(_.toLower == x))
-      .map(removeReactingUnits(_).length).min
+  def shortestPolymer(input: String) = ('a' to 'z')
+    .map(x => input.filterNot(_.toLower == x))
+    .map(removeReactingUnits(_).length).min
 
   lazy val pt1: Int =
     removeReactingUnits(input).length

@@ -7,8 +7,7 @@ object Day03 extends AdventOfCode(Prod):
   val rucksacks: Vector[String] =
     input.linesIterator.toVector
 
-  lazy val priorities: Vector[Char] =
-    (('a' to 'z') ++ ('A' to 'Z')).toVector
+  lazy val priorities: Vector[Char] = (('a' to 'z') ++ ('A' to 'Z')).toVector
 
   def itemInBothCompartments(s: String): Char =
     val l = s.take(s.length / 2)
