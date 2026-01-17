@@ -18,12 +18,11 @@ object Day03 extends AdventOfCode(Prod):
     val yStart: Int = top
     val yEnd: Int   = top + height - 1
 
-    def getSquares: Set[Square] =
-      (yStart to yEnd)
-        .flatMap: y =>
-          (xStart to xEnd).map: x =>
-            Square(x, y, id)
-        .toSet
+    def getSquares: Set[Square] = (yStart to yEnd)
+      .flatMap: y =>
+        (xStart to xEnd).map: x =>
+          Square(x, y, id)
+      .toSet
 
   case class Square(x: Int, y: Int, id: Int)
 

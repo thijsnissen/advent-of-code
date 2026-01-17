@@ -34,9 +34,8 @@ object Cycle:
     val cycleLength =
       findCycleLength(x0, f(x0), 1, 1)
 
-    val hare =
-      (0 until cycleLength).foldLeft(x0): (acc, _) =>
-        f(acc)
+    val hare = (0 until cycleLength).foldLeft(x0): (acc, _) =>
+      f(acc)
 
     val (stemLength, head, last) =
       findStemLength(x0, hare, hare, 0)

@@ -71,7 +71,10 @@ object Day21 extends AdventOfCode(Prod):
 
       // this function I graciously borrowed from @nmcb
       def quadratic(y0: Long, y1: Long, y2: Long)(x: Long): Long =
-        y0 + (y1 - y0) * x + (x * (x - 1) / 2) * (y2 - 2 * y1 + y0)
+        y0 +
+          (y1 - y0) * x +
+          (x * (x - 1) / 2) *
+          (y2 - 2 * y1 + y0)
 
       val target: Int    = 26501365
       val width: Int     = garden.max.x

@@ -36,9 +36,10 @@ object Day08 extends AdventOfCode(Prod):
         trees.getCol(pos.x).filterNot(_.pos == pos).splitAt(pos.y)
 
       (up.length min (up.reverse.takeWhile(_.height < height).length + 1)) *
-        (left.length min (left.reverse.takeWhile(
-          _.height < height
-        ).length + 1)) *
+        (left.length min
+          (left.reverse.takeWhile(
+            _.height < height
+          ).length + 1)) *
         (down.length min (down.takeWhile(_.height < height).length + 1)) *
         (right.length min (right.takeWhile(_.height < height).length + 1))
 

@@ -72,7 +72,8 @@ object AdventOfCode:
 
       println:
         s"${envs(getEnv.ordinal)} The answer to $year day $day part $part is: " +
-          s"${Console.BLUE}${a.toString}${Console.RESET} [${System.currentTimeMillis - startTime}ms]"
+          s"${Console.BLUE}${a.toString}${Console.RESET} [${System.currentTimeMillis -
+              startTime}ms]"
 
     private def createIfNotExists(file: File): File =
       if (!file.createNewFile && file.length() != 0) || getEnv == Env.Test then

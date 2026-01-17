@@ -108,9 +108,10 @@ object Day22 extends AdventOfCode(Prod):
             case Some(_) => acc
             case None    => getErosionLevels(Pos(x, y - 1), regions, acc)
 
-          (levelsA ++ levelsB) + (pos -> erosionLevel(
-            levelsA(Pos(x - 1, y)) * levelsB(Pos(x, y - 1))
-          ))
+          (levelsA ++ levelsB) +
+            (pos -> erosionLevel(
+              levelsA(Pos(x - 1, y)) * levelsB(Pos(x, y - 1))
+            ))
 
   lazy val pt1: Int =
     Regions

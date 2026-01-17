@@ -29,8 +29,7 @@ case class Pos(x: Int, y: Int):
   def sign(that: Pos): Pos =
     Pos((x - that.x).sign, (y - that.y).sign)
 
-  def manhattan(that: Pos): Long =
-    (x - that.x).abs + (y - that.y).abs
+  def manhattan(that: Pos): Long = (x - that.x).abs + (y - that.y).abs
 
   def euclidean(that: Pos): Double =
     math.sqrt:
@@ -101,12 +100,11 @@ object Pos:
     legend10 + legend1 + rowFirst + body + rowLast
 
   extension (self: Seq[Pos])
-    def shoelaceFormula: Long =
-      (self.last +: self :+ self.head)
-        .sliding(3)
-        .map:
-          case Seq(a: Pos, b: Pos, c: Pos) =>
-            b.x.toLong * (c.y.toLong - a.y.toLong)
-        .sum
-        .abs
-        / 2
+    def shoelaceFormula: Long = (self.last +: self :+ self.head)
+      .sliding(3)
+      .map:
+        case Seq(a: Pos, b: Pos, c: Pos) =>
+          b.x.toLong * (c.y.toLong - a.y.toLong)
+      .sum
+      .abs
+      / 2

@@ -32,9 +32,10 @@ object Day10 extends AdventOfCode(Prod):
             case Some(p) if self(p) == 9 => loop(todo.tail, p :: acc)
             case Some(p)                 =>
               loop(
-                todo.tail ::: p
-                  .axisOffsetsFn(x => self(x) == self(p) + 1)
-                  .toList,
+                todo.tail :::
+                  p
+                    .axisOffsetsFn(x => self(x) == self(p) + 1)
+                    .toList,
                 acc
               )
 
