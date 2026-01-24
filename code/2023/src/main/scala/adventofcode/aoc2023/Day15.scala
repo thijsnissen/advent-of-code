@@ -46,7 +46,7 @@ object Day15 extends AdventOfCode(Prod):
       s.foldLeft(0): (acc: Int, c: Char) =>
         (acc + c.toInt) * 17 % 256
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     import Lens.*
 
     steps
@@ -54,7 +54,7 @@ object Day15 extends AdventOfCode(Prod):
         acc :+ HashAlgorithm(s)
       .sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     import Box.*
     import Lens.*
 
@@ -70,7 +70,3 @@ object Day15 extends AdventOfCode(Prod):
 
             acc.updated(box, acc(box).addLens(Lens(label, focalLength.toInt)))
       .totalFocusingPower
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

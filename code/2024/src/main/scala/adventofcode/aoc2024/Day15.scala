@@ -69,19 +69,15 @@ object Day15 extends AdventOfCode(Prod):
         case '.' => Vector('.', '.')
         case '@' => Vector('@', '.')
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     warehouse
       .move(moves)
       .GpsCoordinates
       .sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     warehouse
       .expand
       .move(moves)
       .GpsCoordinates
       .sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

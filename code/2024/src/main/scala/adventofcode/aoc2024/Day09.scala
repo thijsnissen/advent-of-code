@@ -68,16 +68,12 @@ object Day09 extends AdventOfCode(Prod):
 
   import DiskMap.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     diskMap
       .fragment
       .filesystemChecksum
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     diskMap
       .defragment
       .filesystemChecksum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

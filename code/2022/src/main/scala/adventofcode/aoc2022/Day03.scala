@@ -20,21 +20,17 @@ object Day03 extends AdventOfCode(Prod):
 
     a.intersect(b).intersect(c).charAt(0)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     rucksacks
       .map: s =>
         priorities
           .indexOf(itemInBothCompartments(s)) + 1
       .sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     rucksacks
       .grouped(3)
       .map: g =>
         priorities
           .indexOf(commonItem(g)) + 1
       .sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

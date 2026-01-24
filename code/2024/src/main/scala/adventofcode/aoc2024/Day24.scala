@@ -163,12 +163,12 @@ object Day24 extends AdventOfCode(Prod):
   import Gate.*
   import Wires.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     gates
       .run(wires)
       .number('z')
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     // Manual.print()
     if getEnv == Test then ""
     else
@@ -176,10 +176,6 @@ object Day24 extends AdventOfCode(Prod):
         .swaps
         .sorted
         .mkString(",")
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
 
   object Manual:
     // swaps:

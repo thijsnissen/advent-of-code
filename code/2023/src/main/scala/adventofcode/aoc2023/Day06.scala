@@ -34,14 +34,10 @@ object Day06 extends AdventOfCode(Prod):
 
       times.zip(distances).map(Race.apply)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     races
       .map(_.race)
       .product
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     race.race
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

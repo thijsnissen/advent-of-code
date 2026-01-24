@@ -101,7 +101,7 @@ object Day11 extends AdventOfCode(Prod):
           .take(2)
           .productBy(_.counter)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     Iterator
       .iterate(monkeys):
         Monkey.playRound(_, monkeys.map(_.test).reduce(_.lcm(_)))
@@ -109,14 +109,10 @@ object Day11 extends AdventOfCode(Prod):
       .next
       .monkeyBusiness
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     Iterator
       .iterate(monkeys):
         Monkey.playRound(_, monkeys.map(_.test).reduce(_.lcm(_)), true)
       .drop(10000)
       .next
       .monkeyBusiness
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

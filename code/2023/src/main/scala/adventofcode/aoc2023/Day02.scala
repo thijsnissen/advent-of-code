@@ -58,14 +58,10 @@ object Day02 extends AdventOfCode(Prod):
           case Green(count) => count
           case Blue(count)  => count
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     games
       .filter(_.isPossible(red = 12, green = 13, blue = 14))
       .sumBy(_.id)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     games.sumBy(_.powerOfMinSetOfCubes)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

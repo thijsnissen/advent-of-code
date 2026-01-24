@@ -134,7 +134,7 @@ object Day20 extends AdventOfCode(Prod):
       case Right(value) => value.get
       case Left(e)      => sys.error(e.asString)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val result =
       instructionsToFloorplan(parse(input.trim))
 
@@ -143,10 +143,6 @@ object Day20 extends AdventOfCode(Prod):
 
     maxDistance
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     instructionsToFloorplan(parse(input.trim))
       .count((_, i) => i >= 1000)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

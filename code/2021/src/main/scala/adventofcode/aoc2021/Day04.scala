@@ -69,12 +69,8 @@ object Day04 extends AdventOfCode(Prod):
 
   import Board.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     bingo(numbers, boards)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     bingo.tupled(lastBoard(numbers, boards))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

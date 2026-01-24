@@ -43,7 +43,7 @@ object Day21 extends AdventOfCode(Prod):
 
     Vector(r0, r1, r2, r3, r4, r5)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val registers: Vector[Int] =
       Iterator
         .iterate(Vector.fill(6)(0))(reverseEngineeringInput)
@@ -52,14 +52,10 @@ object Day21 extends AdventOfCode(Prod):
 
     registers(1)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     utilities.Cycle
       .find(reverseEngineeringInput, Vector.fill(6)(0))(r => r(1))
       .last(1)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
 
 //#ip 4
 //00: r1  = 123

@@ -104,12 +104,8 @@ object Day22 extends AdventOfCode(Prod):
 
   import Bricks.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     snapshot.size - snapshot.fall.notSafelyDisintegrated.size
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     snapshot.fall.chainReaction
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

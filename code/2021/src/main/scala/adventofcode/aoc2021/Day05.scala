@@ -37,14 +37,10 @@ object Day05 extends AdventOfCode(Prod):
           .groupBy(identity)
           .count((_, p: Vector[Pos]) => p.length > 1)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     lines
       .filterNot(_.isDiagonal)
       .countPointsWithOverlap
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     lines.countPointsWithOverlap
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

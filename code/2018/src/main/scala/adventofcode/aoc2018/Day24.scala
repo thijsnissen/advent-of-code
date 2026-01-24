@@ -185,14 +185,14 @@ object Day24 extends AdventOfCode(Prod):
       targetSelection
         .andThen(attacking)(groups)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     Iterator
       .iterate(immuneSystem ++ infection)(Fight.fight)
       .dropWhile(_.distinctBy(_.armyType).length == 2)
       .next
       .sumBy(_.units)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     @tailrec def loop(groups: Vector[Group], boost: Int = 0): Vector[Group] =
       val result = Fight.fight(groups)
 
@@ -204,7 +204,3 @@ object Day24 extends AdventOfCode(Prod):
 
     loop(immuneSystem ++ infection)
       .sumBy(_.units)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -32,16 +32,12 @@ object Day08 extends AdventOfCode(Prod):
     if next.endsWith("Z") then acc + 1
     else loop(next, instructions, nodes, acc + 1)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     loop(if getEnv == Test then "22A" else "AAA", instructions, nodes)
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     nodes
       .keys
       .filter(_.endsWith("A"))
       .map(loop(_, instructions, nodes))
       .reduce(_.lcm(_))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

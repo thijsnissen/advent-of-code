@@ -18,12 +18,8 @@ object Day05 extends AdventOfCode(Prod):
     .map(x => input.filterNot(_.toLower == x))
     .map(removeReactingUnits(_).length).min
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     removeReactingUnits(input).length
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     shortestPolymer(input)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -44,10 +44,10 @@ object Day14 extends AdventOfCode(Prod):
 
   import Platform.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     platform.tilt.totalLoad
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val cycle: Cycle[Platform] =
       Cycle.find((p: Platform) => p.cycle, platform)(identity)
 
@@ -60,7 +60,3 @@ object Day14 extends AdventOfCode(Prod):
           ((1_000_000_000 - cycle.stemLength) % cycle.cycleLength)
       .next
       .totalLoad
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

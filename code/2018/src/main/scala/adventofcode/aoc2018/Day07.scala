@@ -66,18 +66,14 @@ object Day07 extends AdventOfCode(Prod):
 
     go(edges, Workload(), currentTime = 0)
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     val (order, _) =
       orderSteps(myInput, timer = _ => 1, workers = 1)
 
     order.mkString("")
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (_, timeToComplete) =
       orderSteps(myInput, timer = _.toInt - 4, workers = 5)
 
     timeToComplete
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

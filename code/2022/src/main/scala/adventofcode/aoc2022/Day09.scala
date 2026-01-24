@@ -44,7 +44,7 @@ object Day09 extends AdventOfCode(Prod):
 
   import Rope.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val result: Vector[Rope] =
       instructions
         .scanLeft(Rope.init(2)): (rope, instr) =>
@@ -52,14 +52,10 @@ object Day09 extends AdventOfCode(Prod):
 
     uniqueTailPositions(result)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val result: Vector[Rope] =
       instructions
         .scanLeft(Rope.init(10)): (rope, instr) =>
           rope.move(instr)
 
     uniqueTailPositions(result)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -151,7 +151,7 @@ object Day19 extends AdventOfCode(Prod):
           Vector.empty[Ranges]
         )
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     import Part.*
 
     parts
@@ -159,14 +159,10 @@ object Day19 extends AdventOfCode(Prod):
       .map(_.totalRating)
       .sum
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     import Ranges.*
 
     workflows
       .acceptedRanges
       .map(_.combinations)
       .sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

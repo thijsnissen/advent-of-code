@@ -46,12 +46,8 @@ object Day01 extends AdventOfCode(Prod):
         case Some(_, digit) => digit
         case None           => endsWith(line.init)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     calibrationDocument.sumBy(calibrationValueFromDigits)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     calibrationDocument.sumBy(calibrationValueFromDigitsLetters)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

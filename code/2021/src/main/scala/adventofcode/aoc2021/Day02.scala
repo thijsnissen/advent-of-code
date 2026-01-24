@@ -14,14 +14,14 @@ object Day02 extends AdventOfCode(Prod):
         case s"down $x"    => Pos(0, x.toInt)
       .toVector
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val Pos(hpos, depth) =
       course.foldLeft(Pos.zero): (acc, pos) =>
         acc + pos
 
     hpos * depth
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (Pos(hpos, _), depth) =
       course.foldLeft((Pos.zero, 0)):
         case ((pos, depth), Pos(0, aim)) =>
@@ -31,7 +31,3 @@ object Day02 extends AdventOfCode(Prod):
         case (acc, _) => acc
 
     hpos * depth
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

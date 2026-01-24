@@ -20,12 +20,8 @@ object Day06 extends AdventOfCode(Prod):
         s"${dataStreamBuffer.head}$acc"
       )
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     findMarkerLocation(input, 4)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     findMarkerLocation(input, 14)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

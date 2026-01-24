@@ -26,12 +26,8 @@ object Day11 extends AdventOfCode(Prod):
         case Vector(a: Pos, b: Pos) => a.manhattan(b)
       .toVector
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     shortestPaths(image, 2).sum
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     shortestPaths(image, 1_000_000).sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

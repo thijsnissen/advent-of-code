@@ -41,12 +41,8 @@ object Day08 extends AdventOfCode(Prod):
 
     go(input.drop(2), input.head, input.drop(1).head)._1
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     parseTree(myInput).licenseNumber
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     parseTree(myInput).value
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

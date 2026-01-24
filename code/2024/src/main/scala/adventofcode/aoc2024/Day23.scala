@@ -71,17 +71,13 @@ object Day23 extends AdventOfCode(Prod):
 
   import LANParty.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     computers
       .cliquesOfThree
       .count(_.exists(_.startsWith("t")))
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     computers
       .maxCliques
       .maxBy(_.size)
       .password
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

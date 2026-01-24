@@ -81,12 +81,8 @@ object Day23 extends AdventOfCode(Prod):
 
       loop(start, adjacencyList(withSlopes), 0)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     Trails(hikingTrails).longestPath(withSlopes = true)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     Trails(hikingTrails).longestPath(withSlopes = false)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

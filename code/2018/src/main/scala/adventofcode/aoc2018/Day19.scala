@@ -74,21 +74,17 @@ object Day19 extends AdventOfCode(Prod):
 
   import Registers.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     device
       .run(instructions)
       .registers
       .getRegister(0)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val divisors = (1 to 10551330)
       .filter(i => 10551330 % i == 0)
 
     divisors.sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
 
 // the algorithm stores the sum of all numers r5 that
 // make up r3 when multiplied by a whole numer in r0.

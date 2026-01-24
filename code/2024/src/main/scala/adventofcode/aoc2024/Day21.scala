@@ -112,7 +112,7 @@ object Day21 extends AdventOfCode(Prod):
 
   import Keypad.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     codes
       .map: c =>
         val r1 = paths(c, numericKeypad)
@@ -123,12 +123,8 @@ object Day21 extends AdventOfCode(Prod):
       .zip(codes)
       .sumBy(complexity(_, _))
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     codes
       .find(robots = 25)
       .zip(codes)
       .sumBy(complexity(_, _))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

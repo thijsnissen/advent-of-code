@@ -47,12 +47,8 @@ object Day18 extends AdventOfCode(Prod):
 
   import Plan.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     digPlan.cubicMeters
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     digPlan.map(_.extract).cubicMeters
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

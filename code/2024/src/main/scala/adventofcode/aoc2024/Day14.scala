@@ -57,7 +57,7 @@ object Day14 extends AdventOfCode(Prod):
 
   import Robot.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val width: Int  = if getEnv == Test then 11 else 101
     val height: Int = if getEnv == Test then 7 else 103
 
@@ -67,12 +67,8 @@ object Day14 extends AdventOfCode(Prod):
       .next()
       .safetyFactor(width, height)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     robots.christmasTree(
       width = if getEnv == Test then 11 else 101,
       height = if getEnv == Test then 7 else 103
     )
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

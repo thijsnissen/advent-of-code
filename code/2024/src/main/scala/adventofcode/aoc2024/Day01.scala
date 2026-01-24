@@ -11,18 +11,14 @@ object Day01 extends AdventOfCode(Prod):
         case ((ls, rs), s"$l $r") => (l.trim.toInt :: ls, r.trim.toInt :: rs)
         case (acc, _)             => acc
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     left
       .sorted
       .zip(right.sorted)
       .map((l, r) => (l - r).abs)
       .sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     left
       .foldLeft(0): (acc, l) =>
         acc + l * right.count(_ == l)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

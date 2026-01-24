@@ -45,13 +45,13 @@ object Day12 extends AdventOfCode(Prod):
   // For both parts I find the path backwards,
   // from target position to start position.
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val start: Square  = grid.find(_.elevation == 'S').get
     val target: Square = grid.find(_.elevation == 'E').get
 
     fewestStepsToBestSignal(target)(_ == start)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val start: Square => Boolean =
       s => Square.normalize(s.elevation) == 'a'
 
@@ -59,7 +59,3 @@ object Day12 extends AdventOfCode(Prod):
       grid.find(_.elevation == 'E').get
 
     fewestStepsToBestSignal(target)(start)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -29,13 +29,9 @@ object Day02 extends AdventOfCode(Prod):
 
   import Report.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     reports.count(_.isSafe)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     reports.count: r =>
       r.isSafe || r.isSafeWithProblemDampener
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

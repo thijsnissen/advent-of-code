@@ -55,7 +55,7 @@ object Day09 extends AdventOfCode(Prod):
             lastMarble.toLong
           )
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     myInput
       .head
       .play()
@@ -63,14 +63,10 @@ object Day09 extends AdventOfCode(Prod):
       .maxBy((_, score) => score)
       ._2
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     myInput
       .head
       .play(100)
       .players
       .maxBy((_, score) => score)
       ._2
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

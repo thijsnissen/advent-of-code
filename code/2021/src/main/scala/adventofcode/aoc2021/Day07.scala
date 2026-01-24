@@ -17,14 +17,10 @@ object Day07 extends AdventOfCode(Prod):
       .map(p => submarines.map(s => f(p, s)).sum)
       .min
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     cheapest(submarines): (a, b) =>
       (a - b).abs
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     cheapest(submarines): (a, b) =>
       (a - b).abs.triangular
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

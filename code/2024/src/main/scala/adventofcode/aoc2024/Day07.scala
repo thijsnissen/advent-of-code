@@ -47,16 +47,12 @@ object Day07 extends AdventOfCode(Prod):
         case s"$test: $equations" =>
           Equation(test.toLong, equations.split(" ").map(_.toLong).toList)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     calibrationEquations
       .filter(_.isTrue(ops = Vector(Operator.Add, Operator.Mul)))
       .sumBy(_.test)
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     calibrationEquations
       .filter(_.isTrue(ops = Vector(Operator.Add, Operator.Mul, Operator.Con)))
       .sumBy(_.test)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

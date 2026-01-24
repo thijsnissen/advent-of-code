@@ -24,12 +24,8 @@ object Day03 extends AdventOfCode(Prod):
         .toIntOption
         .exists((0 to 999).contains)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     multiply(program)(withConditionals = false)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     multiply(program)(withConditionals = true)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

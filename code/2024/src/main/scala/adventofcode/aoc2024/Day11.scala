@@ -31,12 +31,8 @@ object Day11 extends AdventOfCode(Prod):
 
   import Stone.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     stones.sumBy(_.blink(times = 25))
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     stones.sumBy(_.blink(times = 75))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -117,18 +117,14 @@ object Day13 extends AdventOfCode(Prod):
 
     tick(carts.sortBy(_.loc), Vector.empty[Cart])
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     val Pos(x, y) =
       findFirstCollisionPos(carts, tracks)
 
     s"$x,$y"
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     val Pos(x, y) =
       findLastRemainingCartPos(carts, tracks)
 
     s"$x,$y"
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

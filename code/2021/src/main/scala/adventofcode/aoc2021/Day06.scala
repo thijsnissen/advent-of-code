@@ -56,12 +56,8 @@ object Day06 extends AdventOfCode(Prod):
 
   import State.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     initialState.sumAfterDays(80)
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     initialState.sumAfterDays(256)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

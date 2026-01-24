@@ -46,7 +46,7 @@ object Day20 extends AdventOfCode(Prod):
 
       loop(keys, Vector.empty[Int])
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     raceTrack
       .race(
         s = raceTrack.findPos('S'),
@@ -55,7 +55,7 @@ object Day20 extends AdventOfCode(Prod):
       .cheats(ps = 2)
       .count(_ >= (if getEnv == Test then 20 else 100))
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     raceTrack
       .race(
         s = raceTrack.findPos('S'),
@@ -63,7 +63,3 @@ object Day20 extends AdventOfCode(Prod):
       )
       .cheats(ps = 20)
       .count(_ >= (if getEnv == Test then 50 else 100))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

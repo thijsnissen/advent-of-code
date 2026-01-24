@@ -48,14 +48,14 @@ object Day21 extends AdventOfCode(Prod):
 
       loop(Vector(start -> 0), Map.empty[Pos, Int])
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val target: Int = if getEnv == Test then 6 else 64
 
     garden
       .steps(target)
       .count((_, s: Int) => s % 2 == target % 2)
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     if getEnv == Test then garden.steps(100).count((_, s: Int) => s % 2 == 0)
     else
       assert(garden.max.x == garden.max.y)
@@ -98,7 +98,3 @@ object Day21 extends AdventOfCode(Prod):
       val x: Int = (target - halfWidth) / width
 
       quadratic(y0, y1, y2)(x)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -65,16 +65,12 @@ object Day10 extends AdventOfCode(Prod):
 
   import Grid.*
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     val (message, _): (Grid[Char], Int) = lookForMessageInTheSky(myInput)
 
     message.asString
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (_, time): (Grid[Char], Int) = lookForMessageInTheSky(myInput)
 
     time
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

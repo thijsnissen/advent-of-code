@@ -31,12 +31,8 @@ object Day02 extends AdventOfCode(Prod):
 
     go(input.map(_.zipWithIndex.toVector))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     multipleLetterCount(myInput, 2) * multipleLetterCount(myInput, 3)
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     findCommonLetters(myInput).getOrElse("Not Found")
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

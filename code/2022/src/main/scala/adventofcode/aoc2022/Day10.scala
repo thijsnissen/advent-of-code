@@ -28,7 +28,7 @@ object Day10 extends AdventOfCode(Prod):
     def sprite: Set[Int] =
       Set(register - 1, register, register + 1)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val result: Vector[CPU] =
       program.scanLeft(CPU(1, 1)): (cpu, instr) =>
         cpu.execute(instr)
@@ -41,7 +41,7 @@ object Day10 extends AdventOfCode(Prod):
       .map(cpu => cpu.cycle * cpu.register)
       .sum
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     val result: Vector[CPU] =
       program.scanLeft(CPU(1, 1)): (cpu, instr) =>
         cpu.execute(instr)
@@ -58,7 +58,3 @@ object Day10 extends AdventOfCode(Prod):
           else
             acc
       .asString
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -119,13 +119,9 @@ object Day10 extends AdventOfCode(Prod):
 
   import Surface.*
 
-  lazy val pt1: Int = (surface.loop.length + 1) / 2
+  override lazy val pt1: Int = (surface.loop.length + 1) / 2
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     surface
       .inside(surface.loop)
       .size
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

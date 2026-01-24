@@ -46,7 +46,5 @@ object Day25 extends AdventOfCode(Prod):
 
   import Tumbler.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     tumblers.fits
-
-  answer(1)(pt1)

@@ -40,7 +40,7 @@ object Day14 extends AdventOfCode(Prod):
 
       loop(newScoreboard, newElves)(f)
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     val result =
       loop(Vector(3, 7), Vector(0, 1)): s =>
         s.length >= recipesCount + 10
@@ -49,7 +49,7 @@ object Day14 extends AdventOfCode(Prod):
       .slice(recipesCount, recipesCount + 10)
       .mkString
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val recipesCountSlice =
       recipesCount.fromInt
 
@@ -63,7 +63,3 @@ object Day14 extends AdventOfCode(Prod):
         )
 
     result.indexOfSlice(recipesCountSlice)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

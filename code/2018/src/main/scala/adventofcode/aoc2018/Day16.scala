@@ -158,11 +158,11 @@ object Day16 extends AdventOfCode(Prod):
 
   import Device.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     analyzeSamplesBySample
       .count(_.length >= 3)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     if getEnv == Test then 0
     else
       val opcodes: List[String] =
@@ -173,7 +173,3 @@ object Day16 extends AdventOfCode(Prod):
           device.run(opcodes(inst.opcode), inst.a, inst.b, inst.c)
 
       result(0)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

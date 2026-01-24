@@ -63,12 +63,8 @@ object Day06 extends AdventOfCode(Prod):
       .getOrElse((0, 0))
       ._2
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     LargestNonInfiniteArea
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     sizeOfSafeRegion
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

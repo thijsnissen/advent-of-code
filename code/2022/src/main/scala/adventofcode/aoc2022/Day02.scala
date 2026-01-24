@@ -40,16 +40,12 @@ object Day02 extends AdventOfCode(Prod):
       else // X == lose
         1 + Game.fromOrdinal((op.ordinal + 2) % 3).ordinal
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     strategy
       .map(Game.playPart1)
       .sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     strategy
       .map(Game.playPart2)
       .sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
