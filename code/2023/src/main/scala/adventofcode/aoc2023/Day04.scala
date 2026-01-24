@@ -40,10 +40,10 @@ object Day04 extends AdventOfCode(Prod):
 
         processAll(scratchcards.tail ++ copies, lookup, acc + copies.length)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     scratchcards.sumBy(_.score)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val lookup: Map[Int, Vector[Scratchcard]] =
       scratchcards
         .map: (card: Scratchcard) =>
@@ -51,7 +51,3 @@ object Day04 extends AdventOfCode(Prod):
         .toMap
 
     Scratchcard.processAll(scratchcards, lookup, scratchcards.length)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

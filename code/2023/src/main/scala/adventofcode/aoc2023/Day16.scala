@@ -69,10 +69,10 @@ object Day16 extends AdventOfCode(Prod):
           .map((b: Beam) => (b.x, b.y))
           .size
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     layout.energized(Beam(0, 0, Right))
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (xMax: Int, yMax: Int) = layout.size
 
     val startingBeams: List[Beam] = List(
@@ -83,7 +83,3 @@ object Day16 extends AdventOfCode(Prod):
     ).flatten
 
     startingBeams.map(layout.energized).max
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

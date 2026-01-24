@@ -45,20 +45,16 @@ object Day05 extends AdventOfCode(Prod):
         case s"move $count from $from to $to" =>
           Instruction(count.toInt, from.toInt, to.toInt)
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     instructions
       .foldLeft(startingStack): (s, i) =>
         i.executeByOne(s)
       .map((_, c) => c.head)
       .mkString
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     instructions
       .foldLeft(startingStack): (s, i) =>
         i.executeAtOnce(s)
       .map((_, c) => c.head)
       .mkString
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

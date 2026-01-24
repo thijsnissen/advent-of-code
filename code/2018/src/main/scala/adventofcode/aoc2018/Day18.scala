@@ -69,14 +69,14 @@ object Day18 extends AdventOfCode(Prod):
 
         loop(self, minutes)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val acres: Acres    = landscape.changeLandscape(10)
     val wooded: Int     = acres.count((_, a) => a == Wooded)
     val lumberyard: Int = acres.count((_, a) => a == Lumberyard)
 
     wooded * lumberyard
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     import utilities.Cycle
 
     val f: Acres => Acres =
@@ -98,7 +98,3 @@ object Day18 extends AdventOfCode(Prod):
     val index: Int = (1000000000 - cycle.stemLength) % cycle.cycleLength
 
     cycleSum(index)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

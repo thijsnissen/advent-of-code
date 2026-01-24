@@ -22,16 +22,12 @@ object Day01 extends AdventOfCode(Prod):
         case (acc, (a, b)) if a == b => acc + a
         case (acc, _)                => acc
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     captcha
       .zipWithOffset(1)
       .solve
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     captcha
       .zipWithOffset(captcha.length / 2)
       .solve
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

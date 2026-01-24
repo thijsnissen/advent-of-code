@@ -19,12 +19,8 @@ object Day01 extends AdventOfCode(Prod):
 
     go(input)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     myInput.sum
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     firstSumSeenTwice(myInput)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

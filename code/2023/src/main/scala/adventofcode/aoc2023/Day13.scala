@@ -39,14 +39,10 @@ object Day13 extends AdventOfCode(Prod):
 
   import Pattern.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     patterns.foldLeft(0): (acc: Int, p: Pattern) =>
       acc + p.summarize(_ == 0)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     patterns.foldLeft(0): (acc: Int, p: Pattern) =>
       acc + p.summarize(_ == 1)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

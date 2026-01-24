@@ -22,7 +22,7 @@ object Day25 extends AdventOfCode(Prod):
         case s"$a: $b" =>
           b.split(" ").map((b: String) => Edge(a, b)).toSet
 
-    given Random = Random(2023_12_25)
+    given Random = Random(2023_12_25) // finds min cut in 122 iterations
 
     extension (self: Vector[Edge])
       def toVertices: Set[Vertex] =
@@ -68,12 +68,10 @@ object Day25 extends AdventOfCode(Prod):
 
         karger(nextVertices, nextEdges)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     import Edge.*
     import Edge.given
 
     val (vertices: Set[Vertex], _) = components.minCut(3)
 
     vertices.head.size * vertices.last.size
-
-  answer(1)(pt1)

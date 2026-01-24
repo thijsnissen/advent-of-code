@@ -37,19 +37,15 @@ object Day03 extends AdventOfCode(Prod):
         case Square(_, _, id) => id
       .toSet
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     myInput
       .flatMap(_.getSquares)
       .groupBy:
         case Square(x, y, _) => (x, y)
       .count((_, s) => s.size > 1)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     myInput
       .map(_.id)
       .diff(findClaimIDsWithOverlap(myInput).toVector)
       .head
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -38,12 +38,12 @@ object Day06 extends AdventOfCode(Prod):
 
     loop(startPos, startDir, Set.empty[(Pos, Pos)])
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     walk(labMap, labMap.findPos('^'), Pos(0, -1))
       .get
       .size
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val guardPos   = labMap.findPos('^')
     val initialDir = Pos(0, -1)
 
@@ -54,7 +54,3 @@ object Day06 extends AdventOfCode(Prod):
         case Pos(x, y) =>
           walk(labMap.set(x, y)('#'), guardPos, initialDir)
       .count(_.isEmpty)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

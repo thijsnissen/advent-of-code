@@ -113,12 +113,12 @@ object Day22 extends AdventOfCode(Prod):
               levelsA(Pos(x - 1, y)) * levelsB(Pos(x, y - 1))
             ))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     Regions
       .unit(mouthOfCave, target, depth, 1)
       .riskLevel
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     import utilities.WeightedGraph
     import utilities.AStar.*
 
@@ -145,7 +145,3 @@ object Day22 extends AdventOfCode(Prod):
     graph.shortestPathTo(init, _ == last)(heuristic) match
       case Some(dist, _) => dist
       case None => sys.error(s"No path found from ${init.pos} to ${last.pos}")
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -91,16 +91,12 @@ object Day23 extends AdventOfCode(Prod):
       loop(Map.empty[Pos3D, Int], Set.empty[Box3D])
         .minBy(_.manhattan(closestTo))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     nanobots
       .maxBy(_.signalRadius)
       .nanobotsInRange(nanobots)
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     Nanobot
       .mostInRangeAtPos(nanobots)(closestTo = Pos3D.zero)
       .manhattan(Pos3D.zero)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

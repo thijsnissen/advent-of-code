@@ -204,7 +204,7 @@ object Day15 extends AdventOfCode(Prod):
         pos + Pos(0, -1)
       ).filter(map.contains)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val result =
       BattleState
         .fromInput(map, units(3))
@@ -212,7 +212,7 @@ object Day15 extends AdventOfCode(Prod):
 
     result.outcome
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val initialBattleState =
       BattleState.fromInput(map, units(4))
 
@@ -221,10 +221,6 @@ object Day15 extends AdventOfCode(Prod):
         .nextRoundSaveElves(initialBattleState.elfCount, 4)
 
     result.outcome
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
 
   def printer(
     units: Vector[CombatUnit],

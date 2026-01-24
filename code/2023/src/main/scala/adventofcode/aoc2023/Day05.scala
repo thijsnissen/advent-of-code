@@ -80,16 +80,12 @@ object Day05 extends AdventOfCode(Prod):
 
   import Ranges.*
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     Seeds
       .fromString(input.takeWhile(_ != '\n').trim)
       .lowestLocationNumber
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     Ranges
       .fromString(input.takeWhile(_ != '\n').trim)
       .lowestLocationNumber
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

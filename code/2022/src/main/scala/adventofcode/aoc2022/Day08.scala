@@ -43,17 +43,13 @@ object Day08 extends AdventOfCode(Prod):
         (down.length min (down.takeWhile(_.height < height).length + 1)) *
         (right.length min (right.takeWhile(_.height < height).length + 1))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     trees
       .map(_.isVisible(trees))
       .count(_ == true)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     trees
       .map(_.scenicScore(trees))
       .iterate
       .max
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

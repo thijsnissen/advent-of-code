@@ -40,13 +40,13 @@ object Day12 extends AdventOfCode(Prod):
     def empty: Mutation =
       Mutation("", Vector.empty[String], 0)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     Mutation
       .fromInput(myInput)
       .mutate(20)
       .sumOfAllPotsWithPlants
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     import utilities.Cycle
 
     val f: Mutation => Mutation =
@@ -64,7 +64,3 @@ object Day12 extends AdventOfCode(Prod):
       cycle.mutate(1).sumOfAllPotsWithPlants - cycle.sumOfAllPotsWithPlants
 
     sum + (50000000000L - generation) * interval
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

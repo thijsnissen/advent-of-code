@@ -39,21 +39,17 @@ object Day22 extends AdventOfCode(Prod):
         .take(2000)
         .distinctBy((c, _) => c)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     buyers.sumBy: b =>
       Iterator
         .iterate(b)(_.next)
         .drop(2000)
         .next
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     buyers
       .foldLeft(Map.empty[Seq[Long], Long].withDefaultValue(0L)): (acc, b) =>
         b.changes.foldLeft(acc):
           case (acc, (c, p)) => acc.updated(c, acc(c) + p)
       .values
       .max
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

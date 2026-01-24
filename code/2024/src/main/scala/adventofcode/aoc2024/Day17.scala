@@ -64,19 +64,15 @@ object Day17 extends AdventOfCode(Prod):
 
         quine(p, pi + 1, nans)
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     register
       .run(program)
       .printLine
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     Register
       .quine(program)
       .get
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
 
   // var a = 46323429
   // var b = 0

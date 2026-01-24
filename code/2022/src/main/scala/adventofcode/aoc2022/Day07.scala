@@ -50,13 +50,13 @@ object Day07 extends AdventOfCode(Prod):
           )
         case (acc, _) => acc
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     fileSystem
       .getDirSizes
       .filter((_, size) => size <= 100000)
       .sumBy((_, size) => size)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (_, directorySize) =
       fileSystem
         .getDirSizes
@@ -64,7 +64,3 @@ object Day07 extends AdventOfCode(Prod):
         .minBy((_, size) => size)
 
     directorySize
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

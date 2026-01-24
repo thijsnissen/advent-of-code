@@ -18,14 +18,10 @@ object Day04 extends AdventOfCode(Prod):
     def fullOverlap: Boolean =
       (aFrom <= bFrom && aTo >= bTo) || (bFrom <= aFrom && bTo >= aTo)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     elfPairs
       .count(_.fullOverlap)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     elfPairs
       .count(_.overlap)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

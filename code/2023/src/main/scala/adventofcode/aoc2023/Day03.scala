@@ -53,12 +53,8 @@ object Day03 extends AdventOfCode(Prod):
         else 0
       .toVector
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     partNumbers(engineSchematic).sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     gearRatios(engineSchematic).sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

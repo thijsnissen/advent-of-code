@@ -49,16 +49,12 @@ object Day10 extends AdventOfCode(Prod):
 
   import TopographicMap.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     topographicMap
       .trailheads
       .sumBy(topographicMap.score)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     topographicMap
       .trailheads
       .sumBy(topographicMap.rating)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

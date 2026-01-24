@@ -96,16 +96,12 @@ object Day12 extends AdventOfCode(Prod):
 
   import Region.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     gardenPlots
       .regions
       .sumBy(_.price(withDiscount = false))
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     gardenPlots
       .regions
       .sumBy(_.price(withDiscount = true))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

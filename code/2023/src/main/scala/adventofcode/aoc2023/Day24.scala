@@ -136,7 +136,7 @@ object Day24 extends AdventOfCode(Prod):
       def project(axis: Axis): Vector[Stone2D] =
         self.map(_.project(axis))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val windowMin: Long = if getEnv == Test then 7 else 200000000000000L
     val windowMax: Long = if getEnv == Test then 27 else 400000000000000L
 
@@ -144,7 +144,7 @@ object Day24 extends AdventOfCode(Prod):
       .project(Axis.Z)
       .intersections(windowMin, windowMax)
 
-  lazy val pt2: BigDecimal =
+  override lazy val pt2: BigDecimal =
     val range: Int = if getEnv == Test then 5 else 300
 
     val velocities: IndexedSeq[(Int, Int)] =
@@ -161,7 +161,3 @@ object Day24 extends AdventOfCode(Prod):
     assert(vx1 == vx2 && vy1 == vy2 && vz1 == vz2)
 
     x1 + y1 + z1
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

@@ -15,10 +15,10 @@ object Day01 extends AdventOfCode(Prod):
       .sliding(2)
       .count(depths => depths(1) > depths(0))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     countDepthMeasurementIncreases(sonarSweepReport)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val depths: Vector[Int] =
       sonarSweepReport
         .sliding(3)
@@ -26,7 +26,3 @@ object Day01 extends AdventOfCode(Prod):
         .toVector
 
     countDepthMeasurementIncreases(depths)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

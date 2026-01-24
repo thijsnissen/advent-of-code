@@ -17,7 +17,7 @@ object AdventOfCode:
     case Test extends Env("test")
     case Prod extends Env("input")
 
-  trait AdventOfCode(private val env: Env) extends App:
+  trait AdventOfCode(private val env: Env):
     lazy val day: Int =
       getClass
         .getName
@@ -61,20 +61,6 @@ object AdventOfCode:
             )
       )(_.mkString)
 
-    def answer[A](part: Int)(a: => A): Unit =
-      val startTime: Long =
-        System.currentTimeMillis
-
-      val envs: List[String] = List(
-        s"${Console.YELLOW} ${Env.fromOrdinal(getEnv.ordinal)} ${Console.RESET}",
-        s"${Console.GREEN} ${Env.fromOrdinal(getEnv.ordinal)} ${Console.RESET}"
-      )
-
-      println:
-        s"${envs(getEnv.ordinal)} The answer to $year day $day part $part is: " +
-          s"${Console.BLUE}${a.toString}${Console.RESET} [${System.currentTimeMillis -
-              startTime}ms]"
-
     private def createIfNotExists(file: File): File =
       if (!file.createNewFile && file.length() != 0) || getEnv == Env.Test then
         file
@@ -98,3 +84,27 @@ object AdventOfCode:
               Using.resource(new FileWriter(file))(_.write(source.mkString))
 
         file
+
+    private def answer[A](part: Int)(a: => A): Unit =
+      val startTime: Long =
+        System.currentTimeMillis
+
+      val envs: List[String] = List(
+        s"${Console.YELLOW} ${Env.fromOrdinal(getEnv.ordinal)} ${Console.RESET}",
+        s"${Console.GREEN} ${Env.fromOrdinal(getEnv.ordinal)} ${Console.RESET}"
+      )
+
+      println:
+        s"${envs(getEnv.ordinal)} The answer to $year day $day part $part is: " +
+          s"${Console.BLUE}${a.toString}${Console.RESET} [${
+              System.currentTimeMillis -
+                startTime
+            }ms]"
+
+    def pt1: Any
+
+    def pt2: Any = "unused"
+
+    def main(args: Array[String]): Unit =
+      answer(1)(pt1)
+      if pt2 != "unused" then answer(2)(pt2)

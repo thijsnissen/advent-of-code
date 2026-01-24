@@ -82,17 +82,13 @@ object Day11 extends AdventOfCode(Prod):
 
   lazy val window = Window(1, 300, 1, 300)
 
-  lazy val pt1: String =
+  override lazy val pt1: String =
     val r1 =
       largestTotalPowerForSquare(summedAreaTable(myInput, window), window, 3)
 
     s"${r1.cell.x},${r1.cell.y}"
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     val r2 = largestTotalPower(summedAreaTable(myInput, window), window)
 
     s"${r2.cell.x},${r2.cell.y},${r2.squareSize}"
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

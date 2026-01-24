@@ -124,7 +124,7 @@ object Day20 extends AdventOfCode(Prod):
         copy(pushed = pushed + 1)
       )
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val buttonModule: Iterator[ButtonModule] =
       Iterator.iterate(ButtonModule(moduleConfiguration))(_.push)
 
@@ -135,7 +135,7 @@ object Day20 extends AdventOfCode(Prod):
 
     low * high
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     if getEnv == Test then 0
     else
       val firstHighFor: List[String] =
@@ -155,7 +155,3 @@ object Day20 extends AdventOfCode(Prod):
         .firstHighFor
         .map((_, i: Int) => i.toLong)
         .reduce(_.lcm(_))
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

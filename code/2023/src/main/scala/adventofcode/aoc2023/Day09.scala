@@ -40,12 +40,8 @@ object Day09 extends AdventOfCode(Prod):
 
   import History.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     OASISReport.map(_.make(future)).sum
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     OASISReport.map(_.make(past)).sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

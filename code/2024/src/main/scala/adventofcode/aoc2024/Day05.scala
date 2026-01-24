@@ -53,20 +53,16 @@ object Day05 extends AdventOfCode(Prod):
 
   import Update.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val (correctlyOrdered, _) =
       pagesToProduce.partitioned(pageOrderingRules)
 
     correctlyOrdered.sumMiddlePages
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (_, incorrectlyOrdered) =
       pagesToProduce.partitioned(pageOrderingRules)
 
     incorrectlyOrdered
       .map(_.order(pageOrderingRules))
       .sumMiddlePages
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

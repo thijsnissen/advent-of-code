@@ -57,7 +57,7 @@ object Day18 extends AdventOfCode(Prod):
 
   import Bytes.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val (_, distance) =
       bytes
         .toExit(
@@ -69,7 +69,7 @@ object Day18 extends AdventOfCode(Prod):
 
     distance
 
-  lazy val pt2: String =
+  override lazy val pt2: String =
     val Pos(x, y) =
       bytes.blocking(
         start = Pos.zero,
@@ -77,7 +77,3 @@ object Day18 extends AdventOfCode(Prod):
       )
 
     s"$x,$y"
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

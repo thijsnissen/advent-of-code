@@ -48,12 +48,8 @@ object Day04 extends AdventOfCode(Prod):
       .map((x, y) => (x, y._1, y._2.size))
       .maxBy(_._3)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     guardIdIsMostAsleep * minuteIsMostAsleep
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     mostAsleepOnSameMinute._1 * mostAsleepOnSameMinute._2
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

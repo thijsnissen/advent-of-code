@@ -57,16 +57,12 @@ object Day13 extends AdventOfCode(Prod):
 
       Machine(poss(0).x, poss(0).y, poss(1).x, poss(1).y, poss(2).x, poss(2).y)
 
-  lazy val pt1: Long =
+  override lazy val pt1: Long =
     clawMachines
       .flatMap(_.win)
       .sum
 
-  lazy val pt2: Long =
+  override lazy val pt2: Long =
     clawMachines
       .flatMap(_.fix.win)
       .sum
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

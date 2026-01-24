@@ -115,7 +115,7 @@ object Day17 extends AdventOfCode(Prod):
                     maxY
                   )
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val Box(min, max) =
       Box.bounding(clay.keys)
 
@@ -131,16 +131,12 @@ object Day17 extends AdventOfCode(Prod):
       .filter((p, _) => boundingBox.contains(p))
       .count((_, t) => t == TileType.Still || t == TileType.Flow)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val Box(_, max) =
       Box.bounding(clay.keys)
 
     moveWater(Queue(springOfWater), clay, max.y)
       .count((_, t) => t == TileType.Still)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
 
   def printer(min: Pos, max: Pos, result: Tiles): Unit =
     val print =

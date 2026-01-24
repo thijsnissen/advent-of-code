@@ -66,18 +66,14 @@ object Day08 extends AdventOfCode(Prod):
 
   import Antenna.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     antennas
       .combinations
       .flatMap(antennas.antinodes(_, _)(withResonantHarmonics = false))
       .count(antennas.contains)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     antennas
       .combinations
       .flatMap(antennas.antinodes(_, _)(withResonantHarmonics = true))
       .count(antennas.contains)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

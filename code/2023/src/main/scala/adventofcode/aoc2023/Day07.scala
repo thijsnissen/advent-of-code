@@ -89,12 +89,8 @@ object Day07 extends AdventOfCode(Prod):
 
           loop(a.cards.zip(b.cards))
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     hands.winnings
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     hands.map(_.withJokers).winnings
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

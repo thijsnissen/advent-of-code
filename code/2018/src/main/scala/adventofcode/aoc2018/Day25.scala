@@ -47,11 +47,9 @@ object Day25 extends AdventOfCode(Prod):
       case Some(_) =>
         findConstellations(todo.tail, visited, points, constellations)
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     findConstellations(
       fixedPointsInSpacetime,
       Vector.empty[Pos4D],
       fixedPointsInSpacetime
     )
-
-  answer(1)(pt1)

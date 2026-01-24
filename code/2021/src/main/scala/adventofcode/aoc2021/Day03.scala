@@ -63,18 +63,14 @@ object Day03 extends AdventOfCode(Prod):
     filterByCriterium(diagnosticReport, leastCommonBit)
       .toDecimal
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val powerConsumption: Int =
       gammaRate * epsilonRate
 
     powerConsumption
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val lifeSupportRating: Int =
       oxygenGeneratorRating * CO2ScrubberRating
 
     lifeSupportRating
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

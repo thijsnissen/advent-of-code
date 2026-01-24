@@ -78,20 +78,16 @@ object Day17 extends AdventOfCode(Prod):
 
   import TrafficPatterns.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     val (xMax: Int, yMax: Int) = trafficPatterns.size
 
     trafficPatterns
       .toGraph(1, 3)
       .leastHeatlossTo(xMax, yMax)
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     val (xMax: Int, yMax: Int) = trafficPatterns.size
 
     trafficPatterns
       .toGraph(4, 10)
       .leastHeatlossTo(xMax, yMax)
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)

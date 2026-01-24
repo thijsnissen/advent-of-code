@@ -80,12 +80,8 @@ object Day04 extends AdventOfCode(Prod):
 
   import WordSearch.*
 
-  lazy val pt1: Int =
+  override lazy val pt1: Int =
     wordSearch.findXmas
 
-  lazy val pt2: Int =
+  override lazy val pt2: Int =
     wordSearch.findXedMas
-
-  answer(1)(pt1)
-
-  answer(2)(pt2)
