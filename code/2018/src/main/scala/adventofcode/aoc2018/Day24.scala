@@ -189,7 +189,7 @@ object Day24 extends AdventOfCode(Prod):
     Iterator
       .iterate(immuneSystem ++ infection)(Fight.fight)
       .dropWhile(_.distinctBy(_.armyType).length == 2)
-      .next
+      .next()
       .sumBy(_.units)
 
   override lazy val pt2: Int =

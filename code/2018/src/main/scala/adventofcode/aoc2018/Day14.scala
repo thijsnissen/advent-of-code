@@ -8,7 +8,7 @@ object Day14 extends AdventOfCode(Prod):
     input
       .linesIterator
       .map(_.toInt)
-      .next
+      .next()
 
   object Recipes:
     extension (self: Int)

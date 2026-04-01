@@ -91,7 +91,7 @@ object Day10 extends AdventOfCode(Prod):
         ): Set[Pos] =
           if !x.hasNext then inside
           else
-            val pos: Pos   = Pos(x.next, y)
+            val pos: Pos   = Pos(x.next(), y)
             val pipe: Char = self(pos)
 
             // Start counting...

@@ -7,7 +7,7 @@ object Day04 extends AdventOfCode(Prod):
   val numbers: Vector[Int] =
     input
       .linesIterator
-      .next
+      .next()
       .split(",")
       .map(_.toInt)
       .toVector

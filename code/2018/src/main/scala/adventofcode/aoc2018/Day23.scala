@@ -76,7 +76,7 @@ object Day23 extends AdventOfCode(Prod):
         )
 
       @tailrec def loop(acc: Map[Pos3D, Int], visited: Set[Box3D]): Set[Pos3D] =
-        queue.dequeue match
+        queue.dequeue() match
           case (box, _) if visited.contains(box) =>
             loop(acc, visited)
           case (_, inRange) if acc.values.exists(_ > inRange) =>

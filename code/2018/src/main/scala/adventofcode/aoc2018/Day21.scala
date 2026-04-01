@@ -25,7 +25,7 @@ object Day21 extends AdventOfCode(Prod):
         if 256 > r3 then
           // changed == to != to halt first time
           if r1 != r0 then
-            break
+            break()
           else
             r3 = r1 | 65536
             r1 = 6780005
@@ -48,7 +48,7 @@ object Day21 extends AdventOfCode(Prod):
       Iterator
         .iterate(Vector.fill(6)(0))(reverseEngineeringInput)
         .drop(1)
-        .next
+        .next()
 
     registers(1)
 

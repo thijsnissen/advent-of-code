@@ -58,5 +58,5 @@ object Day14 extends AdventOfCode(Prod):
       .drop:
         cycle.stemLength +
           ((1_000_000_000 - cycle.stemLength) % cycle.cycleLength)
-      .next
+      .next()
       .totalLoad
