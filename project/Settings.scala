@@ -14,7 +14,6 @@ object Settings {
       "-Werror",
       "-Wunused:imports",
       "-Wunused:locals",
-      "-print-lines",
       "-explain"
     ),
     Compile / run / fork         := true,
