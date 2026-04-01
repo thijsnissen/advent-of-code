@@ -106,7 +106,7 @@ object Day11 extends AdventOfCode(Prod):
       .iterate(monkeys):
         Monkey.playRound(_, monkeys.map(_.test).reduce(_.lcm(_)))
       .drop(20)
-      .next
+      .next()
       .monkeyBusiness
 
   override lazy val pt2: Long =
@@ -114,5 +114,5 @@ object Day11 extends AdventOfCode(Prod):
       .iterate(monkeys):
         Monkey.playRound(_, monkeys.map(_.test).reduce(_.lcm(_)), true)
       .drop(10000)
-      .next
+      .next()
       .monkeyBusiness

@@ -13,7 +13,7 @@ object Day19 extends AdventOfCode(Prod):
           Instruction(i0, i1.toInt, i2.toInt, i3.toInt)
 
   val device: Device =
-    input.linesIterator.next match
+    input.linesIterator.next() match
       case s"#ip $ip" =>
         Device(ip.toInt, Registers.empty)
 

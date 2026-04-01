@@ -131,7 +131,7 @@ object Day20 extends AdventOfCode(Prod):
     val ButtonModule(_, _, low, high, _) =
       buttonModule
         .drop(1000)
-        .next
+        .next()
 
     low * high
 
@@ -151,7 +151,7 @@ object Day20 extends AdventOfCode(Prod):
 
       buttonModule
         .dropWhile((bm: ButtonModule) => !bm.firstHighFor.values.forall(_ > 0))
-        .next
+        .next()
         .firstHighFor
         .map((_, i: Int) => i.toLong)
         .reduce(_.lcm(_))

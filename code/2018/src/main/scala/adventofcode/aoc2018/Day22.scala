@@ -13,14 +13,14 @@ object Day22 extends AdventOfCode(Prod):
       .linesIterator
       .collect:
         case s"depth: $d" => d.toInt
-      .next
+      .next()
 
   val target: Pos =
     input
       .linesIterator
       .collect:
         case s"target: $x,$y" => Pos(x.toInt, y.toInt)
-      .next
+      .next()
 
   lazy val mouthOfCave =
     Pos.zero

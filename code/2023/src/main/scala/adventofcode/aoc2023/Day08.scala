@@ -25,7 +25,7 @@ object Day08 extends AdventOfCode(Prod):
     acc: Int = 0
   ): Long =
     val next: String =
-      instructions.next match
+      instructions.next() match
         case 'L' => nodes(node)(0)
         case 'R' => nodes(node)(1)
 

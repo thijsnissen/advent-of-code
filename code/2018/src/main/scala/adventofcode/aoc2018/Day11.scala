@@ -8,7 +8,7 @@ object Day11 extends AdventOfCode(Prod):
     input
       .linesIterator
       .map(_.toInt)
-      .next
+      .next()
 
   case class Result(cell: Cell, squareSize: Int, totalPower: Int)
 

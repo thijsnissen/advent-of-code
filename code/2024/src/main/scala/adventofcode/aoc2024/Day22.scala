@@ -44,7 +44,7 @@ object Day22 extends AdventOfCode(Prod):
       Iterator
         .iterate(b)(_.next)
         .drop(2000)
-        .next
+        .next()
 
   override lazy val pt2: Long =
     buyers
