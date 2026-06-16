@@ -1,7 +1,7 @@
 import sbt.*
 import sbt.Keys.*
 
-object Settings {
+object Settings:
   lazy val common = Seq(
     scalacOptions ++= Seq(
       "-encoding",
@@ -31,4 +31,3 @@ object Settings {
         "scala.util.chaining"
       ).mkString("-Yimports:", ",", "")
   )
-}

@@ -1,6 +1,6 @@
 import sbt.*
 
-object Dependencies {
+object Dependencies:
   lazy val common = Seq(
     "com.lihaoyi" %% "pprint" % Version.pprint
   )
@@ -8,4 +8,3 @@ object Dependencies {
   lazy val test = Seq(
     "org.scalatest" %% "scalatest" % Version.scalatest % "test"
   )
-}
