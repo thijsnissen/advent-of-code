@@ -1,6 +1,6 @@
-ThisBuild / organization := "nl.thijsnissen"
-ThisBuild / version      := Version.version
-ThisBuild / scalaVersion := Version.scala
+organization := "nl.thijsnissen"
+version      := Version.version
+scalaVersion := Version.scala
 
 lazy val root =
   project
@@ -69,7 +69,6 @@ lazy val utilities =
     .settings(Settings.common ++ Settings.imports)
     .settings(libraryDependencies ++= Dependencies.common ++ Dependencies.test)
 
-ThisBuild / watchBeforeCommand := Watch.clearScreen
+watchBeforeCommand := Watch.clearScreen
 
 Global / concurrentRestrictions += Tags.limit(Tags.Test, 1)
-Global / onChangedBuildSource := ReloadOnSourceChanges
