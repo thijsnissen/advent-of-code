@@ -18,6 +18,6 @@ jobs:
           distribution: 'temurin'
           java-version: '25'
       - name: Setup SBT
-        uses: sbt/setup-sbt@6444f4c8111de4b9059c3975def104b03cfaa5f0 # v1.5.2
+        uses: sbt/setup-sbt@f6db8ab474efba716fc7f04441ab33714e4825af # v1.5.4
       - name: Formatting & Tests
         run: ENV=Test sbt -v "check; test"
